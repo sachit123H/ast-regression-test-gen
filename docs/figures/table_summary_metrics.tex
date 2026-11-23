@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Master Experimental Summary: Raw Unified Diff (Control) vs. Normalized AST Edit Script (Treatment) across all dimensions ($N=65$ Defects4J, $N=15$ Multi-SWE-bench).}
+\label{tab:summary_master}
+\begin{tabular}{llrrc}
+\toprule
+Evaluation Dimension & Metric / Scope & Raw Diff & AST Edit & Statistical Test / Significance \\
+\midrule
+\multirow{2}{*}{\textbf{RQ1: BRT Validity}} & Differential (Fail/Pass), $N=65$ & \textbf{41.5\%} (27/65) & 24.6\% (16/65) & McNemar $p = 0.0127$ \\
+ & Strict Assertion-Only, $N=65$ & \textbf{32.3\%} (21/65) & 18.5\% (12/65) & McNemar $p = 0.0225$ \\
+\midrule
+\multirow{4}{*}{\textbf{RQ2: Diagnostic Quality}} & Ochiai FDG (Paired, $N=13$) & 0.5144 & \textbf{0.5148} & Wilcoxon $p = 0.2500$ ($\hat{A}_{12} = 0.524$) \\
+ & DStar FDG (Paired, $N=13$) & 0.5141 & \textbf{0.5145} & Wilcoxon $p = 0.2500$ ($\hat{A}_{12} = 0.518$) \\
+ & Realized $\Delta$AP (Ochiai, $N=13$) & +0.0574 & \textbf{+0.0676} & Wilcoxon $p = 1.0000$ ($\hat{A}_{12} = 0.538$) \\
+ & \textbf{Expected Diagnosability $E[\text{FDG}]$ ($N=65$)} & \textbf{0.2131} & 0.1263 & Wilcoxon $p = 0.0157$ ($\hat{A}_{12} = 0.420$) \\
+\midrule
+\multirow{2}{*}{\textbf{RQ3: Efficiency \& Iterations}} & Mean Token Overhead / Bug & 26,027 & \textbf{22,505} & $-13.5\%$ reduction for AST \\
+ & Mean Iteration Attempts / Bug & 2.94 & 2.97 & Parity (5-retry budget) \\
+\midrule
+\textbf{Generalization Check} & Multi-SWE-bench Java, $N=15$ & \textbf{80.0\%} (12/15) & 33.3\% (5/15) & McNemar $p = 0.0156$ \\
+\bottomrule
+\end{tabular}
+\end{table}

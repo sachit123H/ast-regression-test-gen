@@ -1,0 +1,40 @@
+{
+  "bug_key": "Math-45",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 2957,
+  "completion_tokens": 435,
+  "wall_time_sec": 20.061,
+  "final_package_name": "org.apache.commons.math.linear",
+  "final_test_class_name": "AgentBRT_Math_45_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math.linear;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_45_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        try {\n            // Attempt to create a matrix with zero dimensions\n            OpenMapRealMatrix matrix = new OpenMapRealMatrix(0, 0);\n            // If no exception is thrown, check if dimensions are set correctly\n            assertEquals(0, matrix.getRowDimension());\n            assertEquals(0, matrix.getColumnDimension());\n        } catch (Exception e) {\n            // If an exception is thrown, it should be a specific type\n            fail(\"Unexpected exception: \" + e.getMessage());\n        }\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math.linear",
+      "test_class_name": "AgentBRT_Math_45_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.linear;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_45_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        try {\n            // Attempt to create a matrix with zero dimensions\n            OpenMapRealMatrix matrix = new OpenMapRealMatrix(0, 0);\n            // If no exception is thrown, check if dimensions are set correctly\n            assertEquals(0, matrix.getRowDimension());\n            assertEquals(0, matrix.getColumnDimension());\n        } catch (Exception e) {\n            // If an exception is thrown, it should be a specific type\n            fail(\"Unexpected exception: \" + e.getMessage());\n        }\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Unexpected exception: 0 is smaller than, or equal to, the minimum (0)",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        49
+      ],
+      "enclosing_method_missed_lines": [
+        50,
+        51,
+        52,
+        53
+      ]
+    }
+  ]
+}

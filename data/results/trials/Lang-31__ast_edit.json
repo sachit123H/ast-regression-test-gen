@@ -1,0 +1,45 @@
+{
+  "bug_key": "Lang-31",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3302,
+  "completion_tokens": 578,
+  "wall_time_sec": 12.818,
+  "final_package_name": "org.apache.commons.lang3",
+  "final_test_class_name": "AgentBRT_Lang_31_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // A string containing a supplementary character (U+1F600, GRINNING FACE)\n        String str = \"Hello \\uD83D\\uDE00 World\";\n        // Search array containing only part of the surrogate pair\n        char[] searchChars = {'\\uD83D'};\n        \n        // The method should return false because the searchChars does not contain the complete supplementary character\n        assertFalse(StringUtils.containsAny(str, searchChars));\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // A string containing a supplementary character (U+1F600, GRINNING FACE)\n        String str = \"Hello \\uD83D\\uDE00 World\";\n        // Search array containing only part of the surrogate pair\n        char[] searchChars = {'\\uD83D'};\n        \n        // The method should return false because the searchChars does not contain the complete supplementary character\n        assertFalse(StringUtils.containsAny(str, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    }
+  ]
+}

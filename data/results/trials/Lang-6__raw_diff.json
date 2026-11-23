@@ -1,0 +1,67 @@
+{
+  "bug_key": "Lang-6",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 13032,
+  "completion_tokens": 1462,
+  "wall_time_sec": 22.153,
+  "final_package_name": "org.apache.commons.lang3.text.translate",
+  "final_test_class_name": "AgentBRT_Lang_6_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.IOException;\nimport java.io.StringWriter;\nimport java.io.Writer;\n\npublic class AgentBRT_Lang_6_raw_diff_Test {\n\n    private static class HexTranslator extends CharSequenceTranslator {\n        @Override\n        public int translate(CharSequence input, int index, Writer out) throws IOException {\n            int codepoint = Character.codePointAt(input, index);\n            out.write(Integer.toHexString(codepoint));\n            return Character.charCount(codepoint);\n        }\n    }\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new HexTranslator();\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n        try {\n            translator.translate(input, writer);\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n        String expectedOutput = \"41\" + Integer.toHexString(Character.codePointAt(input, 1));\n        assertEquals(\"Translation did not produce expected output\", expectedOutput, writer.toString());\n    }\n}\n",
+  "final_prefix_failure_type": "RUNTIME_ERROR",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_6_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.IOException;\nimport java.io.StringWriter;\n\npublic class AgentBRT_Lang_6_raw_diff_Test {\n\n    private static class HexTranslator extends CharSequenceTranslator {\n        @Override\n        public int translate(CharSequence input, int index, Writer out) throws IOException {\n            int codepoint = Character.codePointAt(input, index);\n            out.write(Integer.toHexString(codepoint));\n            return Character.charCount(codepoint);\n        }\n    }\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new HexTranslator();\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n        try {\n            translator.translate(input, writer);\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n        String expectedOutput = \"41\" + Integer.toHexString(Character.codePointAt(input, 1));\n        assertEquals(\"Translation did not produce expected output\", expectedOutput, writer.toString());\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_6_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.IOException;\nimport java.io.StringWriter;\nimport java.io.Writer;\n\npublic class AgentBRT_Lang_6_raw_diff_Test {\n\n    private static class HexTranslator extends CharSequenceTranslator {\n        @Override\n        public int translate(CharSequence input, int index, Writer out) throws IOException {\n            int codepoint = Character.codePointAt(input, index);\n            out.write(Integer.toHexString(codepoint));\n            return Character.charCount(codepoint);\n        }\n    }\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new HexTranslator();\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n        try {\n            translator.translate(input, writer);\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n        String expectedOutput = \"41\" + Integer.toHexString(Character.codePointAt(input, 1));\n        assertEquals(\"Translation did not produce expected output\", expectedOutput, writer.toString());\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "RUNTIME_ERROR",
+      "exception_type": "java.lang.StringIndexOutOfBoundsException",
+      "exception_message": "String index out of range: 3",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        76,
+        79,
+        82,
+        83,
+        84,
+        85,
+        86,
+        94,
+        95,
+        97
+      ],
+      "enclosing_method_missed_lines": [
+        77,
+        80,
+        87,
+        88,
+        89,
+        90,
+        98
+      ]
+    }
+  ]
+}

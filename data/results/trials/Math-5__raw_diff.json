@@ -1,0 +1,48 @@
+{
+  "bug_key": "Math-5",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3154,
+  "completion_tokens": 353,
+  "wall_time_sec": 17.651,
+  "final_package_name": "org.apache.commons.math3.complex",
+  "final_test_class_name": "AgentBRT_Math_5_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math3.complex;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_5_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Complex zeroComplex = new Complex(0.0, 0.0);\n        Complex result = zeroComplex.reciprocal();\n        assertEquals(\"Reciprocal of zero complex should be infinity\", Complex.INF, result);\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math3.complex",
+      "test_class_name": "AgentBRT_Math_5_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.complex;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_5_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Complex zeroComplex = new Complex(0.0, 0.0);\n        Complex result = zeroComplex.reciprocal();\n        assertEquals(\"Reciprocal of zero complex should be infinity\", Complex.INF, result);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Reciprocal of zero complex should be infinity expected:<(Infinity, Infinity)> but was:<(NaN, NaN)>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        300,
+        304,
+        305
+      ],
+      "enclosing_method_missed_lines": [
+        301,
+        308,
+        309,
+        312,
+        313,
+        314,
+        315,
+        317,
+        318,
+        319
+      ]
+    }
+  ]
+}

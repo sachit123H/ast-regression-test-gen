@@ -1,0 +1,44 @@
+{
+  "bug_key": "Lang-37",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3581,
+  "completion_tokens": 276,
+  "wall_time_sec": 10.737,
+  "final_package_name": "org.apache.commons.lang3",
+  "final_test_class_name": "AgentBRT_Lang_37_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_37_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create two arrays of different types\n        Integer[] array1 = {1, 2, 3};\n        String[] array2 = {\"a\", \"b\", \"c\"};\n\n        try {\n            // This should throw an IllegalArgumentException due to incompatible types\n            ArrayUtils.addAll(array1, array2);\n            fail(\"Expected IllegalArgumentException due to incompatible array types\");\n        } catch (IllegalArgumentException e) {\n            // Expected exception\n            assertEquals(\"Cannot store java.lang.String in an array of java.lang.Integer\", e.getMessage());\n        }\n    }\n}",
+  "final_prefix_failure_type": "RUNTIME_ERROR",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_37_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_37_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create two arrays of different types\n        Integer[] array1 = {1, 2, 3};\n        String[] array2 = {\"a\", \"b\", \"c\"};\n\n        try {\n            // This should throw an IllegalArgumentException due to incompatible types\n            ArrayUtils.addAll(array1, array2);\n            fail(\"Expected IllegalArgumentException due to incompatible array types\");\n        } catch (IllegalArgumentException e) {\n            // Expected exception\n            assertEquals(\"Cannot store java.lang.String in an array of java.lang.Integer\", e.getMessage());\n        }\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "RUNTIME_ERROR",
+      "exception_type": "java.lang.ArrayStoreException",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        2954,
+        2956,
+        2959,
+        2960,
+        2961,
+        2962
+      ],
+      "enclosing_method_missed_lines": [
+        2955,
+        2957,
+        2964
+      ]
+    }
+  ]
+}

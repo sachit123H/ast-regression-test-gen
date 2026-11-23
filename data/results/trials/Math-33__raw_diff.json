@@ -1,0 +1,73 @@
+{
+  "bug_key": "Math-33",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 11146,
+  "completion_tokens": 1810,
+  "wall_time_sec": 28.693,
+  "final_package_name": "org.apache.commons.math3.optimization.linear",
+  "final_test_class_name": "AgentBRT_Math_33_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.RealMatrix;\nimport org.apache.commons.math3.optimization.GoalType;\nimport org.apache.commons.math3.optimization.linear.LinearConstraint;\nimport org.apache.commons.math3.optimization.linear.LinearObjectiveFunction;\nimport org.apache.commons.math3.optimization.linear.Relationship;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_33_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the objective function\n        LinearObjectiveFunction objectiveFunction = new LinearObjectiveFunction(new double[] {0.0000001, 1.0}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[] {1.0, 0.0}, Relationship.LEQ, 1.0));\n        constraints.add(new LinearConstraint(new double[] {0.0, 1.0}, Relationship.LEQ, 1.0));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(objectiveFunction, constraints, GoalType.MINIMIZE, false, 0.0000001);\n\n        // Call the method that should drop the phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check if the column with the small positive entry was dropped\n        // Before the fix, this column would not be dropped due to precision issues\n        assertEquals(\"Column with small positive entry should be dropped\", 2, tableau.getWidth());\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math3.optimization.linear",
+      "test_class_name": "AgentBRT_Math_33_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.RealMatrix;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_33_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Setup a tableau with a specific entry that should be positive\n        double[][] data = {\n            {0.0000001, 1.0, 0.0},  // Objective function row\n            {1.0, 0.0, 1.0},        // Constraint rows\n            {0.0, 1.0, 0.0}\n        };\n        RealMatrix matrix = new Array2DRowRealMatrix(data);\n        SimplexTableau tableau = new SimplexTableau(matrix, null, null, false, 0.0000001);\n\n        // Call the method that should drop the phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check if the column with the small positive entry was dropped\n        // Before the fix, this column would not be dropped due to precision issues\n        assertEquals(\"Column with small positive entry should be dropped\", 2, tableau.getWidth());\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math3.optimization.linear",
+      "test_class_name": "AgentBRT_Math_33_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.RealMatrix;\nimport org.apache.commons.math3.optimization.GoalType;\nimport org.apache.commons.math3.optimization.linear.LinearConstraint;\nimport org.apache.commons.math3.optimization.linear.LinearObjectiveFunction;\nimport org.apache.commons.math3.optimization.linear.Relationship;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_33_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the objective function\n        LinearObjectiveFunction objectiveFunction = new LinearObjectiveFunction(new double[] {0.0000001, 1.0}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[] {1.0, 0.0}, Relationship.LEQ, 1.0));\n        constraints.add(new LinearConstraint(new double[] {0.0, 1.0}, Relationship.LEQ, 1.0));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(objectiveFunction, constraints, GoalType.MINIMIZE, false, 0.0000001);\n\n        // Call the method that should drop the phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check if the column with the small positive entry was dropped\n        // Before the fix, this column would not be dropped due to precision issues\n        assertEquals(\"Column with small positive entry should be dropped\", 2, tableau.getWidth());\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Column with small positive entry should be dropped expected:<2> but was:<7>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        328,
+        329
+      ],
+      "enclosing_method_missed_lines": [
+        332,
+        333,
+        336,
+        337,
+        338,
+        339,
+        344,
+        345,
+        346,
+        347,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        361,
+        362,
+        365,
+        366,
+        367
+      ]
+    }
+  ]
+}

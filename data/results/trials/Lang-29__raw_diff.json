@@ -1,0 +1,52 @@
+{
+  "bug_key": "Lang-29",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 2,
+  "prompt_tokens": 8427,
+  "completion_tokens": 1224,
+  "wall_time_sec": 26.644,
+  "final_package_name": "org.apache.commons.lang3",
+  "final_test_class_name": "AgentBRT_Lang_29_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_29_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Example Java version string\n        String version = \"1.3.1\";\n        \n        // Expected integer representation of the version\n        int expectedVersionInt = 131;\n        \n        // Call the method under test\n        float result = SystemUtils.toJavaVersionInt(version);\n        \n        // Assert that the result is of type int (this will fail on pre-fix)\n        assertTrue(\"The method should return an integer type\", ((Object)result) instanceof Integer);\n        \n        // Assert that the result is equal to the expected integer representation\n        assertEquals(\"The method should return an integer representation of the version\", expectedVersionInt, (int)result);\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_29_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_29_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Example Java version string\n        String version = \"1.3.1\";\n        \n        // Expected integer representation of the version\n        int expectedVersionInt = 131;\n        \n        // Call the method under test\n        float result = SystemUtils.toJavaVersionInt(version);\n        \n        // Assert that the result is equal to the expected integer representation\n        // This will fail on the pre-fix version because the method returns a float\n        assertEquals(\"The method should return an integer representation of the version\", expectedVersionInt, result, 0.0);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1673
+      ],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_29_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_29_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Example Java version string\n        String version = \"1.3.1\";\n        \n        // Expected integer representation of the version\n        int expectedVersionInt = 131;\n        \n        // Call the method under test\n        float result = SystemUtils.toJavaVersionInt(version);\n        \n        // Assert that the result is of type int (this will fail on pre-fix)\n        assertTrue(\"The method should return an integer type\", ((Object)result) instanceof Integer);\n        \n        // Assert that the result is equal to the expected integer representation\n        assertEquals(\"The method should return an integer representation of the version\", expectedVersionInt, (int)result);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "The method should return an integer type",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1673
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

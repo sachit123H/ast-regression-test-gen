@@ -1,0 +1,38 @@
+{
+  "bug_key": "Lang-21",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3504,
+  "completion_tokens": 442,
+  "wall_time_sec": 12.288,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_21_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Calendar;\nimport java.util.GregorianCalendar;\n\npublic class AgentBRT_Lang_21_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create two Calendar instances\n        Calendar cal1 = new GregorianCalendar(2023, Calendar.OCTOBER, 10, 10, 30); // 10:30 AM\n        Calendar cal2 = new GregorianCalendar(2023, Calendar.OCTOBER, 10, 22, 30); // 10:30 PM\n\n        // Check if they are considered the same local time\n        boolean result = DateUtils.isSameLocalTime(cal1, cal2);\n\n        // Assert that the result should be false, but it will be true due to the bug\n        assertFalse(\"The calendars should not be considered the same local time\", result);\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_21_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Calendar;\nimport java.util.GregorianCalendar;\n\npublic class AgentBRT_Lang_21_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create two Calendar instances\n        Calendar cal1 = new GregorianCalendar(2023, Calendar.OCTOBER, 10, 10, 30); // 10:30 AM\n        Calendar cal2 = new GregorianCalendar(2023, Calendar.OCTOBER, 10, 22, 30); // 10:30 PM\n\n        // Check if they are considered the same local time\n        boolean result = DateUtils.isSameLocalTime(cal1, cal2);\n\n        // Assert that the result should be false, but it will be true due to the bug\n        assertFalse(\"The calendars should not be considered the same local time\", result);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "The calendars should not be considered the same local time",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        259,
+        262
+      ],
+      "enclosing_method_missed_lines": [
+        260
+      ]
+    }
+  ]
+}

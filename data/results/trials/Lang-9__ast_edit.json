@@ -1,0 +1,61 @@
+{
+  "bug_key": "Lang-9",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3120,
+  "completion_tokens": 724,
+  "wall_time_sec": 14.109,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_9_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport org.junit.Assert;\nimport java.util.Locale;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_9_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        String pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSZ\";\n        TimeZone timeZone = TimeZone.getTimeZone(\"UTC\");\n        Locale locale = Locale.US;\n\n        FastDateParser parser = new FastDateParser(pattern, timeZone, locale);\n\n        // The expected behavior is that the parse pattern should be correctly initialized\n        // and should not be null or malformed.\n        Assert.assertNotNull(\"Parse pattern should not be null\", parser.getParsePattern());\n        Assert.assertTrue(\"Parse pattern should contain expected regex\",\n                parser.getParsePattern().pattern().contains(\"\\\\d{4}-\\\\d{2}-\\\\d{2}\"));\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_9_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport org.junit.Assert;\nimport java.util.Locale;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_9_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        String pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSZ\";\n        TimeZone timeZone = TimeZone.getTimeZone(\"UTC\");\n        Locale locale = Locale.US;\n\n        FastDateParser parser = new FastDateParser(pattern, timeZone, locale);\n\n        // The expected behavior is that the parse pattern should be correctly initialized\n        // and should not be null or malformed.\n        Assert.assertNotNull(\"Parse pattern should not be null\", parser.getParsePattern());\n        Assert.assertTrue(\"Parse pattern should contain expected regex\",\n                parser.getParsePattern().pattern().contains(\"\\\\d{4}-\\\\d{2}-\\\\d{2}\"));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Parse pattern should contain expected regex",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        116,
+        118,
+        120,
+        121,
+        123,
+        124,
+        128,
+        129,
+        131,
+        132,
+        133,
+        134,
+        136,
+        137,
+        138,
+        139,
+        141,
+        142,
+        143,
+        144,
+        145,
+        147,
+        148,
+        149,
+        150
+      ],
+      "enclosing_method_missed_lines": [
+        125
+      ]
+    }
+  ]
+}

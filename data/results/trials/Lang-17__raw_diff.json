@@ -1,0 +1,70 @@
+{
+  "bug_key": "Lang-17",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 12375,
+  "completion_tokens": 1388,
+  "wall_time_sec": 18.409,
+  "final_package_name": "org.apache.commons.lang3.text.translate",
+  "final_test_class_name": "AgentBRT_Lang_17_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.StringWriter;\nimport java.io.Writer;\nimport java.io.IOException;\n\npublic class AgentBRT_Lang_17_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new CharSequenceTranslator() {\n            @Override\n            public int translate(CharSequence input, int index, Writer out) throws IOException {\n                // This simple translator just copies the input to the output\n                out.write(input.charAt(index));\n                return 1;\n            }\n        };\n\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n\n        try {\n            translator.translate(input, writer);\n            String result = writer.toString();\n            assertEquals(\"A\ud835\udd38\", result); // Expecting the input to be copied as is\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_17_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.StringWriter;\nimport java.io.IOException;\n\npublic class AgentBRT_Lang_17_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new CharSequenceTranslator() {\n            @Override\n            public int translate(CharSequence input, int index, Writer out) throws IOException {\n                // This simple translator just copies the input to the output\n                out.write(input.charAt(index));\n                return 1;\n            }\n        };\n\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n\n        try {\n            translator.translate(input, writer);\n            String result = writer.toString();\n            assertEquals(\"A\ud835\udd38\", result); // Expecting the input to be copied as is\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_17_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.io.StringWriter;\nimport java.io.Writer;\nimport java.io.IOException;\n\npublic class AgentBRT_Lang_17_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        CharSequenceTranslator translator = new CharSequenceTranslator() {\n            @Override\n            public int translate(CharSequence input, int index, Writer out) throws IOException {\n                // This simple translator just copies the input to the output\n                out.write(input.charAt(index));\n                return 1;\n            }\n        };\n\n        String input = \"A\\uD835\\uDD0A\"; // 'A' followed by a surrogate pair representing a mathematical italic capital A\n        StringWriter writer = new StringWriter();\n\n        try {\n            translator.translate(input, writer);\n            String result = writer.toString();\n            assertEquals(\"A\ud835\udd38\", result); // Expecting the input to be copied as is\n        } catch (IOException e) {\n            fail(\"IOException should not occur\");\n        }\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "expected:<A?[?]> but was:<A?[]>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        76,
+        79,
+        82,
+        83,
+        84,
+        85,
+        86,
+        93,
+        94,
+        97,
+        100,
+        102,
+        103,
+        104
+      ],
+      "enclosing_method_missed_lines": [
+        77,
+        80,
+        87,
+        88,
+        89,
+        95
+      ]
+    }
+  ]
+}

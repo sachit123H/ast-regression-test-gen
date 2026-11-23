@@ -1,0 +1,64 @@
+{
+  "bug_key": "Math-43",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 12,
+  "prompt_tokens": 110084,
+  "completion_tokens": 2144,
+  "wall_time_sec": 41.495,
+  "final_package_name": "org.apache.commons.math.stat.descriptive",
+  "final_test_class_name": "AgentBRT_Math_43_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math.stat.descriptive;\n\nimport org.apache.commons.math.stat.descriptive.moment.Mean;\nimport org.apache.commons.math.stat.descriptive.moment.Variance;\nimport org.apache.commons.math.stat.descriptive.moment.GeometricMean;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_43_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        SummaryStatistics stats = new SummaryStatistics();\n\n        // Custom implementations\n        Mean customMean = new Mean();\n        Variance customVariance = new Variance();\n        GeometricMean customGeoMean = new GeometricMean();\n\n        // Set custom implementations using setter methods\n        stats.setMeanImpl(customMean);\n        stats.setVarianceImpl(customVariance);\n        stats.setGeoMeanImpl(customGeoMean);\n\n        // Add a value\n        double value = 5.0;\n        stats.addValue(value);\n\n        // Check if custom implementations have been incremented\n        assertEquals(\"Custom mean should be incremented\", value, customMean.getResult(), 0.0001);\n        assertEquals(\"Custom variance should be incremented\", 0.0, customVariance.getResult(), 0.0001);\n        assertEquals(\"Custom geometric mean should be incremented\", value, customGeoMean.getResult(), 0.0001);\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math.stat.descriptive",
+      "test_class_name": "AgentBRT_Math_43_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.stat.descriptive;\n\nimport org.apache.commons.math.stat.descriptive.moment.Mean;\nimport org.apache.commons.math.stat.descriptive.moment.Variance;\nimport org.apache.commons.math.stat.descriptive.moment.GeometricMean;\nimport org.apache.commons.math.stat.descriptive.summary.Sum;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_43_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        SummaryStatistics stats = new SummaryStatistics();\n\n        // Custom implementations\n        Mean customMean = new Mean();\n        Variance customVariance = new Variance();\n        GeometricMean customGeoMean = new GeometricMean();\n\n        // Set custom implementations\n        stats.meanImpl = customMean;\n        stats.varianceImpl = customVariance;\n        stats.geoMeanImpl = customGeoMean;\n\n        // Add a value\n        double value = 5.0;\n        stats.addValue(value);\n\n        // Check if custom implementations have been incremented\n        assertEquals(\"Custom mean should be incremented\", value, customMean.getResult(), 0.0001);\n        assertEquals(\"Custom variance should be incremented\", 0.0, customVariance.getResult(), 0.0001);\n        assertEquals(\"Custom geometric mean should be incremented\", value, customGeoMean.getResult(), 0.0001);\n    }\n}",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math.stat.descriptive",
+      "test_class_name": "AgentBRT_Math_43_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.stat.descriptive;\n\nimport org.apache.commons.math.stat.descriptive.moment.Mean;\nimport org.apache.commons.math.stat.descriptive.moment.Variance;\nimport org.apache.commons.math.stat.descriptive.moment.GeometricMean;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_43_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        SummaryStatistics stats = new SummaryStatistics();\n\n        // Custom implementations\n        Mean customMean = new Mean();\n        Variance customVariance = new Variance();\n        GeometricMean customGeoMean = new GeometricMean();\n\n        // Set custom implementations using setter methods\n        stats.setMeanImpl(customMean);\n        stats.setVarianceImpl(customVariance);\n        stats.setGeoMeanImpl(customGeoMean);\n\n        // Add a value\n        double value = 5.0;\n        stats.addValue(value);\n\n        // Check if custom implementations have been incremented\n        assertEquals(\"Custom mean should be incremented\", value, customMean.getResult(), 0.0001);\n        assertEquals(\"Custom variance should be incremented\", 0.0, customVariance.getResult(), 0.0001);\n        assertEquals(\"Custom geometric mean should be incremented\", value, customGeoMean.getResult(), 0.0001);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Custom mean should be incremented expected:<5.0> but was:<NaN>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        158,
+        161,
+        164,
+        167,
+        168
+      ],
+      "enclosing_method_missed_lines": [
+        159,
+        162,
+        165
+      ]
+    }
+  ]
+}

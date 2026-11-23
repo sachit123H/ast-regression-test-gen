@@ -1,0 +1,153 @@
+{
+  "bug_key": "Lang-31",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "MAX_RETRIES_EXHAUSTED",
+  "num_run_test_attempts": 5,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 19876,
+  "completion_tokens": 2729,
+  "wall_time_sec": 58.217,
+  "final_package_name": "org.apache.commons.lang3",
+  "final_test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+  "final_prefix_failure_type": "PASS",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    },
+    {
+      "attempt_index": 3,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    },
+    {
+      "attempt_index": 4,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    },
+    {
+      "attempt_index": 5,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_31_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_31_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // U+1F600 is the code point for \ud83d\ude00 (GRINNING FACE), which is a supplementary character\n        String input = \"Hello \\uD83D\\uDE00 World\"; // \ud83d\ude00 is represented by the surrogate pair \\uD83D\\uDE00\n        char[] searchChars = {'\\uD83D', '\\uDE00'}; // The surrogate pair for \ud83d\ude00\n\n        // The pre-fix version incorrectly returns false\n        assertTrue(\"The method should return true for supplementary characters\", \n                   StringUtils.containsAny(input, searchChars));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1441,
+        1444,
+        1445,
+        1446,
+        1447,
+        1448,
+        1449,
+        1452
+      ],
+      "enclosing_method_missed_lines": [
+        1442,
+        1456
+      ]
+    }
+  ]
+}

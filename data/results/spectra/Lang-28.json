@@ -1,0 +1,101 @@
+{
+  "bug_key": "Lang-28",
+  "elements": [
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:29",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:37",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:38",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:39",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:41",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:42",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:43",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:44",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:47",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:48",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:49",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:54",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:55",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:57",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:59",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:60",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:61",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:63",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:64",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:66"
+  ],
+  "line_to_method": {
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:29": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#<init>()V",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:37": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:38": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:39": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:41": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:42": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:43": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:44": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:47": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:48": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:49": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:54": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:55": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:57": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:59": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:60": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:61": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:63": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:64": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I",
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper:66": "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I"
+  },
+  "faulty_methods": [
+    "org.apache.commons.lang3.text.translate.NumericEntityUnescaper#translate(Ljava/lang/CharSequence;ILjava/io/Writer;)I"
+  ],
+  "baseline_matrix": [
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0
+    ]
+  ],
+  "baseline_results": [
+    0
+  ],
+  "candidates": {
+    "raw_diff": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0
+    ]
+  }
+}

@@ -1,0 +1,3337 @@
+[
+  {
+    "bug_key": "Lang-1",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-1",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected instance of BigInteger"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-1",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-3",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-3",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-3",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<123.45.67 is not a valid number.> but was:<null>"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.88045,
+          "cover": 0.129032,
+          "fdg": 0.504741,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.88045,
+          "cover": 0.129032,
+          "fdg": 0.504741,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-5",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-5",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-5",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: IllegalArgumentException should not be thrown for valid input: en_US_"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-6",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-6",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-6",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.732252,
+          "cover": 0.333333,
+          "fdg": 0.532792,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.732252,
+          "cover": 0.333333,
+          "fdg": 0.532792,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.732252,
+          "cover": 0.333333,
+          "fdg": 0.532792,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.732252,
+          "cover": 0.333333,
+          "fdg": 0.532792,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-9",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-9",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-9",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Parse pattern should contain expected regex"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.735226,
+          "cover": 0.311111,
+          "fdg": 0.523169,
+          "ag_before": 3,
+          "ag_after": 5,
+          "baseline_best_rank": 21,
+          "augmented_best_rank": 17,
+          "rank_improvement": 4,
+          "baseline_ap": 0.047619,
+          "augmented_ap": 0.058824,
+          "delta_ap": 0.011204
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.734686,
+          "cover": 0.311111,
+          "fdg": 0.522899,
+          "ag_before": 3,
+          "ag_after": 5,
+          "baseline_best_rank": 21,
+          "augmented_best_rank": 17,
+          "rank_improvement": 4,
+          "baseline_ap": 0.047619,
+          "augmented_ap": 0.058824,
+          "delta_ap": 0.011204
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-10",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-10",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<a[\\ b\\] c> but was:<a[ b] c>"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-10",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The escaped regex did not match the expected output. expected:<a\\s*+b[?c*d+e(f)g[h]i{j}k|l^m$n].o> but was:<a\\s*+b[\\?c\\*d\\+e\\(f\\)g\\[h\\]i\\{j\\}k\\|l\\^m\\$n\\].o>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-13",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-13",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Unexpected IOException: null"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-13",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Serialization failed: org.apache.commons.lang3.AgentBRT_Lang_13_ast_edit_Test"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-14",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-14",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-14",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.998116,
+          "cover": 0.003137,
+          "fdg": 0.500627,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.998116,
+          "cover": 0.003137,
+          "fdg": 0.500627,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.99686,
+          "cover": 0.003922,
+          "fdg": 0.500391,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.99686,
+          "cover": 0.003922,
+          "fdg": 0.500391,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-16",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-16",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-16",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<[0x1.8p1 is not a valid number.]> but was:<[For input string: \"1.8p1\"]>"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.900522,
+          "cover": 0.106952,
+          "fdg": 0.503737,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 8,
+          "augmented_best_rank": 3,
+          "rank_improvement": 5,
+          "baseline_ap": 0.125,
+          "augmented_ap": 0.333333,
+          "delta_ap": 0.208333
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.900522,
+          "cover": 0.106952,
+          "fdg": 0.503737,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 8,
+          "augmented_best_rank": 3,
+          "rank_improvement": 5,
+          "baseline_ap": 0.125,
+          "augmented_ap": 0.333333,
+          "delta_ap": 0.208333
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-17",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-17",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<A?[?]> but was:<A?[]>"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-17",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.6875,
+          "cover": 0.333333,
+          "fdg": 0.510417,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.6875,
+          "cover": 0.333333,
+          "fdg": 0.510417,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.125
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-18",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-18",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-18",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected IllegalArgumentException for two-digit year pattern"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-19",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-19",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-19",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected translation length to be 0 due to missing semicolon expected:<0> but was:<4>"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.848988,
+          "cover": 0.353168,
+          "fdg": 0.601078,
+          "ag_before": 3,
+          "ag_after": 5,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.846154,
+          "cover": 0.314815,
+          "fdg": 0.580484,
+          "ag_before": 3,
+          "ag_after": 5,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-21",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-21",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-21",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.990291,
+          "cover": 0.012903,
+          "fdg": 0.501597,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.990291,
+          "cover": 0.012903,
+          "fdg": 0.501597,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.990291,
+          "cover": 0.012903,
+          "fdg": 0.501597,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.990291,
+          "cover": 0.012903,
+          "fdg": 0.501597,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-22",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-22",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected ArithmeticException due to overflow"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-22",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Fraction should be simplified to 0/1 expected:<0/1> but was:<0/5>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-24",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-24",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-24",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.763448,
+          "cover": 0.12,
+          "fdg": 0.441724,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 11,
+          "augmented_best_rank": 2,
+          "rank_improvement": 9,
+          "baseline_ap": 0.090909,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.409091
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.763448,
+          "cover": 0.12,
+          "fdg": 0.441724,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 11,
+          "augmented_best_rank": 2,
+          "rank_improvement": 9,
+          "baseline_ap": 0.090909,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.409091
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-26",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-26",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The formatted date should match the expected month name in Japanese. expected:<1[\u00e6\u009c\u0088]> but was:<1[\u6708]>"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-26",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The formatted date does not match the expected output. expected:<19[70-01-0]1> but was:<19[69-12-3]1>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-27",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-27",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-27",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected a Double instance"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-28",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-28",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-28",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "java.lang.StringIndexOutOfBoundsException: String index out of range: 5"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.413534,
+          "cover": 0.65,
+          "fdg": 0.531767,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.413534,
+          "cover": 0.65,
+          "fdg": 0.531767,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-29",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-29",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The method should return an integer type"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-29",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The version should be returned as an integer"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-31",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-31",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-31",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: "
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-37",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-37",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-37",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.975709,
+          "cover": 0.026288,
+          "fdg": 0.500998,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.083492,
+          "augmented_ap": 0.083492,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.975709,
+          "cover": 0.026288,
+          "fdg": 0.500998,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.083492,
+          "augmented_ap": 0.083492,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-38",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-38",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-38",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.6887,
+          "cover": 0.330396,
+          "fdg": 0.509548,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 28,
+          "augmented_best_rank": 27,
+          "rank_improvement": 1,
+          "baseline_ap": 0.050667,
+          "augmented_ap": 0.050856,
+          "delta_ap": 0.000189
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.6887,
+          "cover": 0.330396,
+          "fdg": 0.509548,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 28,
+          "augmented_best_rank": 27,
+          "rank_improvement": 1,
+          "baseline_ap": 0.050667,
+          "augmented_ap": 0.050856,
+          "delta_ap": 0.000189
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.6887,
+          "cover": 0.330396,
+          "fdg": 0.509548,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 28,
+          "augmented_best_rank": 27,
+          "rank_improvement": 1,
+          "baseline_ap": 0.050667,
+          "augmented_ap": 0.050856,
+          "delta_ap": 0.000189
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.6887,
+          "cover": 0.330396,
+          "fdg": 0.509548,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 28,
+          "augmented_best_rank": 27,
+          "rank_improvement": 1,
+          "baseline_ap": 0.050667,
+          "augmented_ap": 0.050856,
+          "delta_ap": 0.000189
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-40",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-40",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: "
+      },
+      "ast_edit": {
+        "bug_key": "Lang-40",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.997227,
+          "cover": 0.003693,
+          "fdg": 0.50046,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.997227,
+          "cover": 0.003693,
+          "fdg": 0.50046,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-44",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-44",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-44",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.ComparisonFailure: expected:<[0x1.8p1 is not a valid number.]> but was:<[For input string: \"1.8p1\"]>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-45",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-45",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-45",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.ComparisonFailure: Abbreviation did not occur as expected expected:<The quick[]...> but was:<The quick[ brown]...>"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.934307,
+          "cover": 0.072464,
+          "fdg": 0.503385,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.934307,
+          "cover": 0.072464,
+          "fdg": 0.503385,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-48",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-48",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-48",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-49",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-49",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-49",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.908662,
+          "cover": 0.111969,
+          "fdg": 0.510316,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 7,
+          "augmented_best_rank": 7,
+          "rank_improvement": 0,
+          "baseline_ap": 0.142857,
+          "augmented_ap": 0.142857,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.908662,
+          "cover": 0.111969,
+          "fdg": 0.510316,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 7,
+          "augmented_best_rank": 7,
+          "rank_improvement": 0,
+          "baseline_ap": 0.142857,
+          "augmented_ap": 0.142857,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.908662,
+          "cover": 0.111969,
+          "fdg": 0.510316,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 7,
+          "augmented_best_rank": 7,
+          "rank_improvement": 0,
+          "baseline_ap": 0.142857,
+          "augmented_ap": 0.142857,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.908662,
+          "cover": 0.111969,
+          "fdg": 0.510316,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 7,
+          "augmented_best_rank": 7,
+          "rank_improvement": 0,
+          "baseline_ap": 0.142857,
+          "augmented_ap": 0.142857,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-50",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-50",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The formatter pattern should not match the expected pattern for the default locale"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-50",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-51",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-51",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-51",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.899342,
+          "cover": 0.111801,
+          "fdg": 0.505572,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 0.256757,
+          "augmented_ap": 0.256757,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.899342,
+          "cover": 0.111801,
+          "fdg": 0.505572,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 0.256757,
+          "augmented_ap": 0.256757,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-52",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-52",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-52",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.9255,
+          "cover": 0.091429,
+          "fdg": 0.508464,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.75,
+          "delta_ap": 0.375
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.9255,
+          "cover": 0.091429,
+          "fdg": 0.508464,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.75,
+          "delta_ap": 0.375
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.9255,
+          "cover": 0.091429,
+          "fdg": 0.508464,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.75,
+          "delta_ap": 0.375
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.9255,
+          "cover": 0.091429,
+          "fdg": 0.508464,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.75,
+          "delta_ap": 0.375
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-53",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-53",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<0> but was:<59>"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-53",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<31> but was:<30>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-54",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-54",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-54",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-55",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-55",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-55",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected IllegalStateException to be thrown"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.625,
+          "cover": 0.385965,
+          "fdg": 0.505482,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 5,
+          "rank_improvement": 0,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.2,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.625,
+          "cover": 0.385965,
+          "fdg": 0.505482,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 5,
+          "rank_improvement": 0,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.2,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-57",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-57",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-57",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.933333,
+          "cover": 0.078947,
+          "fdg": 0.50614,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.933333,
+          "cover": 0.078947,
+          "fdg": 0.50614,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.933333,
+          "cover": 0.078947,
+          "fdg": 0.50614,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.933333,
+          "cover": 0.078947,
+          "fdg": 0.50614,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-58",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-58",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-58",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected a Double instance"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-59",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-59",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-59",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-61",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-61",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-61",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.977005,
+          "cover": 0.036139,
+          "fdg": 0.506572,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 6,
+          "augmented_best_rank": 4,
+          "rank_improvement": 2,
+          "baseline_ap": 0.087892,
+          "augmented_ap": 0.112363,
+          "delta_ap": 0.024471
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.97589,
+          "cover": 0.035823,
+          "fdg": 0.505856,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 6,
+          "augmented_best_rank": 4,
+          "rank_improvement": 2,
+          "baseline_ap": 0.087892,
+          "augmented_ap": 0.112363,
+          "delta_ap": 0.024471
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-63",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-63",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/compile_error",
+        "classification": "COMPILE_ERROR",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": "\nRunning ant (compile)...................................................... OK\nRunning ant (compile.tests)................................................ FAIL\nExecuted command:  cd /workspace/tmp/postfix_workspaces/Lang-63_eval_raw_diff && /opt/defects4j/major/bin/ant -f /opt/defects4j/framework/projects/defects4j.build.xml -Dd4j.home=/opt/defects4j -Dd4j.dir.projects=/opt/defects4j/framework/projects -Dbasedir=/workspace/tmp/postfix_workspaces/Lang-63_eval_raw_diff -Dbuild.compiler=javac1.7  compile.tests 2>&1\nOpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=1G; support was removed in 8.0\nBuildfile: /opt/defects4j/framework/projects/defects4j.build.xml\n\ninit:\n     [echo] -------- commons-lang 2.3-SNAPSHOT --------\n\nprepare:\n\nstatic:\n\ncompile:\n    [javac] /workspace/tmp/postfix_workspaces/Lang-63_eval_raw_diff/build.xml:65: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds\n\ncompile.tests:\n    [javac] /work"
+      },
+      "ast_edit": {
+        "bug_key": "Lang-63",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/compile_error",
+        "classification": "COMPILE_ERROR",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": "\nRunning ant (compile)...................................................... OK\nRunning ant (compile.tests)................................................ FAIL\nExecuted command:  cd /workspace/tmp/postfix_workspaces/Lang-63_eval_ast_edit && /opt/defects4j/major/bin/ant -f /opt/defects4j/framework/projects/defects4j.build.xml -Dd4j.home=/opt/defects4j -Dd4j.dir.projects=/opt/defects4j/framework/projects -Dbasedir=/workspace/tmp/postfix_workspaces/Lang-63_eval_ast_edit -Dbuild.compiler=javac1.7  compile.tests 2>&1\nOpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=1G; support was removed in 8.0\nBuildfile: /opt/defects4j/framework/projects/defects4j.build.xml\n\ninit:\n     [echo] -------- commons-lang 2.3-SNAPSHOT --------\n\nprepare:\n\nstatic:\n\ncompile:\n    [javac] /workspace/tmp/postfix_workspaces/Lang-63_eval_ast_edit/build.xml:65: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds\n\ncompile.tests:\n    [javac] /work"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Lang-64",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-64",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-64",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.823529,
+          "cover": 0.222222,
+          "fdg": 0.522876,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.823529,
+          "cover": 0.222222,
+          "fdg": 0.522876,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 2,
+          "augmented_best_rank": 2,
+          "rank_improvement": 0,
+          "baseline_ap": 0.5,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Lang-65",
+    "project": "Lang",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Lang-65",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Lang-65",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-2",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-2",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-2",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-5",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-5",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-5",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.915764,
+          "cover": 0.093137,
+          "fdg": 0.50445,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 5,
+          "rank_improvement": 0,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.2,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.915764,
+          "cover": 0.093137,
+          "fdg": 0.50445,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 5,
+          "rank_improvement": 0,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.2,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.947783,
+          "cover": 0.068627,
+          "fdg": 0.508205,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 3,
+          "rank_improvement": 2,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.333333,
+          "delta_ap": 0.133333
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.947783,
+          "cover": 0.068627,
+          "fdg": 0.508205,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 5,
+          "augmented_best_rank": 3,
+          "rank_improvement": 2,
+          "baseline_ap": 0.2,
+          "augmented_ap": 0.333333,
+          "delta_ap": 0.133333
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-8",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-8",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-8",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/compile_error",
+        "classification": "COMPILE_ERROR",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": "\nRunning ant (compile)...................................................... OK\nRunning ant (compile.tests)................................................ FAIL\nExecuted command:  cd /workspace/tmp/postfix_workspaces/Math-8_eval_ast_edit && /opt/defects4j/major/bin/ant -f /opt/defects4j/framework/projects/defects4j.build.xml -Dd4j.home=/opt/defects4j -Dd4j.dir.projects=/opt/defects4j/framework/projects -Dbasedir=/workspace/tmp/postfix_workspaces/Math-8_eval_ast_edit -Dbuild.compiler=javac1.7  compile.tests 2>&1\nOpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=1G; support was removed in 8.0\nBuildfile: /opt/defects4j/framework/projects/defects4j.build.xml\n\ninit:\n     [echo] -------- Commons MATH 3.1-SNAPSHOT --------\n\ncompile:\n\ncheck-availability:\n     [echo] doing check-availability...\n\ndownload-dependencies:\n     [echo] doing download-dependencies...\n\ndownload-junit:\n\ncompile.tests:\n    [javac] Compiling 1 source file to /workspace/tmp/postfix_workspaces/Math-8_eval_ast_ed"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.405405,
+          "cover": 0.605263,
+          "fdg": 0.505334,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.375,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.405405,
+          "cover": 0.605263,
+          "fdg": 0.505334,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.375,
+          "augmented_ap": 0.375,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-9",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-9",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-9",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-11",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-11",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-11",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Density calculation is incorrect expected:<0.09653235263005391> but was:<0.05854983152431917>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-13",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-13",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-13",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: "
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-15",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-15",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-15",
+        "condition": "ast_edit",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-17",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-17",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-17",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.616183,
+          "cover": 0.44898,
+          "fdg": 0.532582,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 34,
+          "augmented_best_rank": 33,
+          "rank_improvement": 1,
+          "baseline_ap": 0.044118,
+          "augmented_ap": 0.045455,
+          "delta_ap": 0.001337
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.616183,
+          "cover": 0.44898,
+          "fdg": 0.532582,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 34,
+          "augmented_best_rank": 33,
+          "rank_improvement": 1,
+          "baseline_ap": 0.044118,
+          "augmented_ap": 0.045455,
+          "delta_ap": 0.001337
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.618609,
+          "cover": 0.447036,
+          "fdg": 0.532822,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 34,
+          "augmented_best_rank": 33,
+          "rank_improvement": 1,
+          "baseline_ap": 0.044118,
+          "augmented_ap": 0.045455,
+          "delta_ap": 0.001337
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.618609,
+          "cover": 0.447036,
+          "fdg": 0.532822,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 34,
+          "augmented_best_rank": 33,
+          "rank_improvement": 1,
+          "baseline_ap": 0.044118,
+          "augmented_ap": 0.045455,
+          "delta_ap": 0.001337
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-19",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-19",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "java.lang.Exception: Unexpected exception, expected<org.apache.commons.math3.exception.NumberIsTooLargeException> but was<java.lang.reflect.InvocationTargetException>"
+      },
+      "ast_edit": {
+        "bug_key": "Math-19",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "java.lang.Exception: Unexpected exception, expected<org.apache.commons.math3.exception.MathUnsupportedOperationException> but was<java.lang.NoSuchFieldException>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-20",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-20",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-20",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The optimization result did not respect the boundaries as expected.: arrays first differed at element [0]; expected:<1.0> but was:<-0.04516158002079437>"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.218242,
+          "cover": 0.796943,
+          "fdg": 0.507593,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 47,
+          "augmented_best_rank": 45,
+          "rank_improvement": 2,
+          "baseline_ap": 0.021277,
+          "augmented_ap": 0.022222,
+          "delta_ap": 0.000946
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.218242,
+          "cover": 0.796943,
+          "fdg": 0.507593,
+          "ag_before": 2,
+          "ag_after": 4,
+          "baseline_best_rank": 47,
+          "augmented_best_rank": 45,
+          "rank_improvement": 2,
+          "baseline_ap": 0.021277,
+          "augmented_ap": 0.022222,
+          "delta_ap": 0.000946
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-23",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-23",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<1.0> but was:<-1.9999999997129319>"
+      },
+      "ast_edit": {
+        "bug_key": "Math-23",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<2.0> but was:<2.352104356668654>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-24",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-24",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<2.0> but was:<4.246424292181517>"
+      },
+      "ast_edit": {
+        "bug_key": "Math-24",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<-1.5> but was:<4.612221554777439>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-25",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-25",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Unexpected exception: org.apache.commons.math3.optimization.fitting.HarmonicFitter.guessAOmega()"
+      },
+      "ast_edit": {
+        "bug_key": "Math-25",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "java.lang.NoSuchFieldException: observations"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-27",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-27",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-27",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The percentage value should be 50.0 expected:<100.0> but was:<50.0>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-28",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-28",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected exception due to unhandled degeneracy and artificial variables"
+      },
+      "ast_edit": {
+        "bug_key": "Math-28",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected an exception due to the bug"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-31",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-31",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The evaluation should not throw an exception: illegal state: Continued fraction convergents failed to converge (in less than 10,000 iterations) for value 0"
+      },
+      "ast_edit": {
+        "bug_key": "Math-31",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "org.apache.commons.math3.exception.MaxCountExceededException: illegal state: Continued fraction convergents failed to converge (in less than 10 iterations) for value 1"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-32",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-32",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "java.lang.NullPointerException: "
+      },
+      "ast_edit": {
+        "bug_key": "Math-32",
+        "condition": "ast_edit",
+        "outcome_pair": "invalid/n_a",
+        "classification": "COMPILE_ERROR",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "COMPILE_ERROR",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-33",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-33",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Column with small positive entry should be dropped expected:<2> but was:<7>"
+      },
+      "ast_edit": {
+        "bug_key": "Math-33",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<2> but was:<3>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-34",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-34",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-34",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_EXCEPTION",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": true,
+        "prefix_failure_type": "RUNTIME_ERROR",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.853968,
+          "cover": 0.195652,
+          "fdg": 0.52481,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.25
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.853968,
+          "cover": 0.195652,
+          "fdg": 0.52481,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.25
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.853968,
+          "cover": 0.195652,
+          "fdg": 0.52481,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.25
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.853968,
+          "cover": 0.195652,
+          "fdg": 0.52481,
+          "ag_before": 2,
+          "ag_after": 3,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 2,
+          "rank_improvement": 2,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.5,
+          "delta_ap": 0.25
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-35",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-35",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-35",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.910083,
+          "cover": 0.16428,
+          "fdg": 0.537181,
+          "ag_before": 4,
+          "ag_after": 4,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.911111,
+          "cover": 0.157895,
+          "fdg": 0.534503,
+          "ag_before": 4,
+          "ag_after": 4,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.910083,
+          "cover": 0.16428,
+          "fdg": 0.537181,
+          "ag_before": 4,
+          "ag_after": 4,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.911111,
+          "cover": 0.157895,
+          "fdg": 0.534503,
+          "ag_before": 4,
+          "ag_after": 4,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 1.0,
+          "augmented_ap": 1.0,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-40",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-40",
+        "condition": "raw_diff",
+        "outcome_pair": "pass/n_a",
+        "classification": "PREFIX_PASS",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "PASS",
+        "postfix_compiled": false,
+        "postfix_passed": false,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-40",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: expected:<0.5> but was:<1.0>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-42",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-42",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Expected at least one coefficient to be non-zero due to the bug"
+      },
+      "ast_edit": {
+        "bug_key": "Math-42",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: The solution coefficients are incorrect due to the bug.: arrays first differed at element [0]; expected:<10.0> but was:<0.0>"
+      }
+    },
+    "fdg": {}
+  },
+  {
+    "bug_key": "Math-43",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-43",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-43",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.851624,
+          "cover": 0.211028,
+          "fdg": 0.531326,
+          "ag_before": 5,
+          "ag_after": 8,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.848291,
+          "cover": 0.207182,
+          "fdg": 0.527736,
+          "ag_before": 5,
+          "ag_after": 8,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.851142,
+          "cover": 0.214218,
+          "fdg": 0.53268,
+          "ag_before": 5,
+          "ag_after": 7,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.847863,
+          "cover": 0.209945,
+          "fdg": 0.528904,
+          "ag_before": 5,
+          "ag_after": 7,
+          "baseline_best_rank": 4,
+          "augmented_best_rank": 4,
+          "rank_improvement": 0,
+          "baseline_ap": 0.25,
+          "augmented_ap": 0.25,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-45",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-45",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-45",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/fail",
+        "classification": "FAIL_FAIL",
+        "is_valid_strict_assertion": false,
+        "is_valid_libro": false,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": false,
+        "postfix_failure_details": "junit.framework.AssertionFailedError: Unexpected exception: 0 is smaller than, or equal to, the minimum (0)"
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.957895,
+          "cover": 0.052083,
+          "fdg": 0.504989,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 0.558824,
+          "augmented_ap": 0.558824,
+          "delta_ap": 0.0
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.957895,
+          "cover": 0.052083,
+          "fdg": 0.504989,
+          "ag_before": 2,
+          "ag_after": 2,
+          "baseline_best_rank": 1,
+          "augmented_best_rank": 1,
+          "rank_improvement": 0,
+          "baseline_ap": 0.558824,
+          "augmented_ap": 0.558824,
+          "delta_ap": 0.0
+        }
+      }
+    }
+  },
+  {
+    "bug_key": "Math-46",
+    "project": "Math",
+    "verdicts": {
+      "raw_diff": {
+        "bug_key": "Math-46",
+        "condition": "raw_diff",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      },
+      "ast_edit": {
+        "bug_key": "Math-46",
+        "condition": "ast_edit",
+        "outcome_pair": "fail/pass",
+        "classification": "VALID_ASSERTION",
+        "is_valid_strict_assertion": true,
+        "is_valid_libro": true,
+        "prefix_failure_type": "ASSERTION_FAILURE",
+        "postfix_compiled": true,
+        "postfix_passed": true,
+        "postfix_failure_details": ""
+      }
+    },
+    "fdg": {
+      "raw_diff": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.903521,
+          "cover": 0.070989,
+          "fdg": 0.487255,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 3,
+          "augmented_best_rank": 4,
+          "rank_improvement": -1,
+          "baseline_ap": 0.189394,
+          "augmented_ap": 0.183824,
+          "delta_ap": -0.00557
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.909945,
+          "cover": 0.069832,
+          "fdg": 0.489889,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 3,
+          "augmented_best_rank": 4,
+          "rank_improvement": -1,
+          "baseline_ap": 0.189394,
+          "augmented_ap": 0.183824,
+          "delta_ap": -0.00557
+        }
+      },
+      "ast_edit": {
+        "ochiai": {
+          "formula": "ochiai",
+          "split": 0.903521,
+          "cover": 0.070989,
+          "fdg": 0.487255,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 3,
+          "augmented_best_rank": 4,
+          "rank_improvement": -1,
+          "baseline_ap": 0.189394,
+          "augmented_ap": 0.183824,
+          "delta_ap": -0.00557
+        },
+        "dstar": {
+          "formula": "dstar",
+          "split": 0.909945,
+          "cover": 0.069832,
+          "fdg": 0.489889,
+          "ag_before": 4,
+          "ag_after": 7,
+          "baseline_best_rank": 3,
+          "augmented_best_rank": 4,
+          "rank_improvement": -1,
+          "baseline_ap": 0.189394,
+          "augmented_ap": 0.183824,
+          "delta_ap": -0.00557
+        }
+      }
+    }
+  }
+]

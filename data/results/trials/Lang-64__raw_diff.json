@@ -1,0 +1,67 @@
+{
+  "bug_key": "Lang-64",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 3,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 10606,
+  "completion_tokens": 1415,
+  "wall_time_sec": 27.48,
+  "final_package_name": "org.apache.commons.lang.enums",
+  "final_test_class_name": "AgentBRT_Lang_64_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang.enums;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_64_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        ValuedEnum enumInstance = new ValuedEnum(\"TestEnum\", 1) {};\n        ValuedEnum anotherEnumInstance = new ValuedEnum(\"AnotherEnum\", 2) {};\n\n        // Attempt to compare two different ValuedEnum instances\n        // Expecting a ClassCastException or incorrect comparison result\n        try {\n            int result = enumInstance.compareTo(anotherEnumInstance);\n            fail(\"Expected ClassCastException or incorrect comparison result, but got: \" + result);\n        } catch (ClassCastException e) {\n            // Expected exception\n        }\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang.enums",
+      "test_class_name": "AgentBRT_Lang_64_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.enums;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_64_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        ValuedEnum enumInstance = new ValuedEnum(\"TestEnum\", 1) {};\n        Object differentClassObject = new Object();\n\n        try {\n            enumInstance.compareTo(differentClassObject);\n            fail(\"Expected ClassCastException to be thrown\");\n        } catch (ClassCastException e) {\n            // Expected exception\n        }\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang.enums",
+      "test_class_name": "AgentBRT_Lang_64_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.enums;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_64_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        ValuedEnum enumInstance = new ValuedEnum(\"TestEnum\", 1) {};\n        Object differentClassObject = new Object();\n\n        try {\n            enumInstance.compareTo(differentClassObject);\n            fail(\"Expected ClassCastException to be thrown\");\n        } catch (ClassCastException e) {\n            // Expected exception\n        }\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        183
+      ],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 3,
+      "package_name": "org.apache.commons.lang.enums",
+      "test_class_name": "AgentBRT_Lang_64_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.enums;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_64_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        ValuedEnum enumInstance = new ValuedEnum(\"TestEnum\", 1) {};\n        ValuedEnum anotherEnumInstance = new ValuedEnum(\"AnotherEnum\", 2) {};\n\n        // Attempt to compare two different ValuedEnum instances\n        // Expecting a ClassCastException or incorrect comparison result\n        try {\n            int result = enumInstance.compareTo(anotherEnumInstance);\n            fail(\"Expected ClassCastException or incorrect comparison result, but got: \" + result);\n        } catch (ClassCastException e) {\n            // Expected exception\n        }\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Expected ClassCastException or incorrect comparison result, but got: -1",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        183
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

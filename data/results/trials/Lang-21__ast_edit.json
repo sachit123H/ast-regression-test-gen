@@ -1,0 +1,38 @@
+{
+  "bug_key": "Lang-21",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3304,
+  "completion_tokens": 745,
+  "wall_time_sec": 13.623,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_21_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Calendar;\n\npublic class AgentBRT_Lang_21_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Calendar cal1 = Calendar.getInstance();\n        cal1.set(Calendar.HOUR_OF_DAY, 10); // 10 AM\n        cal1.set(Calendar.MINUTE, 30);\n        cal1.set(Calendar.SECOND, 0);\n        cal1.set(Calendar.MILLISECOND, 0);\n\n        Calendar cal2 = Calendar.getInstance();\n        cal2.set(Calendar.HOUR_OF_DAY, 22); // 10 PM\n        cal2.set(Calendar.MINUTE, 30);\n        cal2.set(Calendar.SECOND, 0);\n        cal2.set(Calendar.MILLISECOND, 0);\n\n        // The test should fail because the method incorrectly uses Calendar.HOUR\n        assertFalse(DateUtils.isSameLocalTime(cal1, cal2));\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_21_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Calendar;\n\npublic class AgentBRT_Lang_21_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Calendar cal1 = Calendar.getInstance();\n        cal1.set(Calendar.HOUR_OF_DAY, 10); // 10 AM\n        cal1.set(Calendar.MINUTE, 30);\n        cal1.set(Calendar.SECOND, 0);\n        cal1.set(Calendar.MILLISECOND, 0);\n\n        Calendar cal2 = Calendar.getInstance();\n        cal2.set(Calendar.HOUR_OF_DAY, 22); // 10 PM\n        cal2.set(Calendar.MINUTE, 30);\n        cal2.set(Calendar.SECOND, 0);\n        cal2.set(Calendar.MILLISECOND, 0);\n\n        // The test should fail because the method incorrectly uses Calendar.HOUR\n        assertFalse(DateUtils.isSameLocalTime(cal1, cal2));\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        259,
+        262
+      ],
+      "enclosing_method_missed_lines": [
+        260
+      ]
+    }
+  ]
+}

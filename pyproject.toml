@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ast-brt-gen"
+version = "1.0.0"
+description = "CS.91000 Graduation Research: AST Edit Scripts vs. Raw Diffs for Agentic Bug-Reproducing Test Generation"
+authors = [{ name = "Sachit Varshney", email = "sachit_varshney@kaist.ac.kr" }]
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

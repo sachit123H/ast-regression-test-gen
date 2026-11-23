@@ -1,0 +1,61 @@
+{
+  "bug_key": "Lang-9",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3276,
+  "completion_tokens": 597,
+  "wall_time_sec": 13.293,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_9_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.Locale;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_9_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        String pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX'Extra'\";\n        TimeZone timeZone = TimeZone.getTimeZone(\"UTC\");\n        Locale locale = Locale.US;\n\n        try {\n            new FastDateParser(pattern, timeZone, locale);\n            fail(\"Expected IllegalArgumentException due to unparsed pattern part\");\n        } catch (IllegalArgumentException e) {\n            assertTrue(e.getMessage().contains(\"Failed to parse\"));\n        }\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_9_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.Locale;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_9_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        String pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX'Extra'\";\n        TimeZone timeZone = TimeZone.getTimeZone(\"UTC\");\n        Locale locale = Locale.US;\n\n        try {\n            new FastDateParser(pattern, timeZone, locale);\n            fail(\"Expected IllegalArgumentException due to unparsed pattern part\");\n        } catch (IllegalArgumentException e) {\n            assertTrue(e.getMessage().contains(\"Failed to parse\"));\n        }\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Expected IllegalArgumentException due to unparsed pattern part",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        116,
+        118,
+        120,
+        121,
+        123,
+        124,
+        128,
+        129,
+        131,
+        132,
+        133,
+        134,
+        136,
+        137,
+        138,
+        139,
+        141,
+        142,
+        143,
+        144,
+        145,
+        147,
+        148,
+        149,
+        150
+      ],
+      "enclosing_method_missed_lines": [
+        125
+      ]
+    }
+  ]
+}

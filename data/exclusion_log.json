@@ -1,0 +1,109 @@
+{
+  "total_scanned": 139,
+  "total_curated_initial": 80,
+  "total_evaluated_completed": 65,
+  "localized_filter_relaxed": false,
+  "exclusion_counts": {
+    "checkout_or_build_failed": 0,
+    "multi_file_or_multi_method": 56,
+    "gumtree_parse_failed": 3,
+    "api_quota_exhausted_aborted": 15,
+    "no_triggering_tests": 0
+  },
+  "project_breakdown": {
+    "Commons-Lang": {
+      "scanned": 65,
+      "curated": 40,
+      "evaluated_completed": 40,
+      "multi_method": 22,
+      "gumtree_failed": 3,
+      "build_failed": 0,
+      "api_aborted": 0
+    },
+    "Commons-Math": {
+      "scanned": 74,
+      "curated": 40,
+      "evaluated_completed": 25,
+      "multi_method": 34,
+      "gumtree_failed": 0,
+      "build_failed": 0,
+      "api_aborted": 15
+    }
+  },
+  "gumtree_parse_failed_bugs": [
+    {
+      "bug_key": "Lang-2",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    },
+    {
+      "bug_key": "Lang-4",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    },
+    {
+      "bug_key": "Lang-36",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    }
+  ],
+  "api_quota_exhausted_aborted_bugs": [
+    {
+      "bug_key": "Math-48",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-50",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-51",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-52",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-55",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-56",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-57",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-58",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-59",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-60",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-61",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-63",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-68",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-69",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    },
+    {
+      "bug_key": "Math-75",
+      "reason": "API 429 quota exhaustion during batch execution (pre-fix sandbox run aborted)"
+    }
+  ]
+}

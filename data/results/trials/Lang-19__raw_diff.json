@@ -1,0 +1,61 @@
+{
+  "bug_key": "Lang-19",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3996,
+  "completion_tokens": 488,
+  "wall_time_sec": 11.458,
+  "final_package_name": "org.apache.commons.lang3.text.translate",
+  "final_test_class_name": "AgentBRT_Lang_19_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport java.io.StringWriter;\nimport java.io.IOException;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Lang_19_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws IOException {\n        NumericEntityUnescaper unescaper = new NumericEntityUnescaper();\n        StringWriter writer = new StringWriter();\n        \n        // Malformed input that should not cause an exception\n        String input = \"&#x\";\n        int result = unescaper.translate(input, 0, writer);\n        \n        // Expecting 0 because the input is incomplete and should not be translated\n        assertEquals(\"Translation should not occur for incomplete input\", 0, result);\n    }\n}",
+  "final_prefix_failure_type": "RUNTIME_ERROR",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_19_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport java.io.StringWriter;\nimport java.io.IOException;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Lang_19_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws IOException {\n        NumericEntityUnescaper unescaper = new NumericEntityUnescaper();\n        StringWriter writer = new StringWriter();\n        \n        // Malformed input that should not cause an exception\n        String input = \"&#x\";\n        int result = unescaper.translate(input, 0, writer);\n        \n        // Expecting 0 because the input is incomplete and should not be translated\n        assertEquals(\"Translation should not occur for incomplete input\", 0, result);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "RUNTIME_ERROR",
+      "exception_type": "java.lang.StringIndexOutOfBoundsException",
+      "exception_message": "String index out of range: 3",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        38,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        52,
+        54
+      ],
+      "enclosing_method_missed_lines": [
+        56,
+        61,
+        62,
+        64,
+        66,
+        67,
+        68,
+        69,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        80,
+        82
+      ]
+    }
+  ]
+}

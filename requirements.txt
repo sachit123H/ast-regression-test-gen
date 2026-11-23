@@ -1,0 +1,20 @@
+# Core MCP & LLM dependencies
+mcp>=1.2.0
+openai>=1.50.0
+anthropic>=0.39.0
+pyyaml>=6.0.1
+pydantic>=2.7.0
+tqdm>=4.66.0
+
+# Scientific computing, statistics, and publication plotting
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.13.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Optional: Multi-SWE-bench (Java) loader from Hugging Face
+datasets>=2.19.0
+
+# Testing
+pytest>=8.2.0

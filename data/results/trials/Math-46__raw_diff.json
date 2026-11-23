@@ -1,0 +1,66 @@
+{
+  "bug_key": "Math-46",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 5666,
+  "completion_tokens": 495,
+  "wall_time_sec": 45.614,
+  "final_package_name": "org.apache.commons.math.complex",
+  "final_test_class_name": "AgentBRT_Math_46_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math.complex;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_46_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Complex nonZeroComplex = new Complex(1.0, 1.0);\n        Complex result = nonZeroComplex.divide(0.0);\n        assertTrue(\"Expected result to be NaN\", result.isNaN());\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math.complex",
+      "test_class_name": "AgentBRT_Math_46_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.complex;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_46_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Complex zeroComplex = new Complex(0.0, 0.0);\n        Complex result = zeroComplex.divide(0.0);\n        assertTrue(\"Expected result to be NaN\", result.isNaN());\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        292,
+        295,
+        297
+      ],
+      "enclosing_method_missed_lines": [
+        293,
+        299,
+        300,
+        302
+      ]
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math.complex",
+      "test_class_name": "AgentBRT_Math_46_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.complex;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_46_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Complex nonZeroComplex = new Complex(1.0, 1.0);\n        Complex result = nonZeroComplex.divide(0.0);\n        assertTrue(\"Expected result to be NaN\", result.isNaN());\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Expected result to be NaN",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        292,
+        295,
+        297
+      ],
+      "enclosing_method_missed_lines": [
+        293,
+        299,
+        300,
+        302
+      ]
+    }
+  ]
+}

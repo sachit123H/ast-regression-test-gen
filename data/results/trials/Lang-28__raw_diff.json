@@ -1,0 +1,54 @@
+{
+  "bug_key": "Lang-28",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3190,
+  "completion_tokens": 552,
+  "wall_time_sec": 12.015,
+  "final_package_name": "org.apache.commons.lang3.text.translate",
+  "final_test_class_name": "AgentBRT_Lang_28_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.io.StringWriter;\nimport java.io.IOException;\n\npublic class AgentBRT_Lang_28_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws IOException {\n        NumericEntityUnescaper unescaper = new NumericEntityUnescaper();\n        StringWriter writer = new StringWriter();\n        String input = \"&#x1F600;\"; // Grinning face emoji, code point 0x1F600\n        \n        int result = unescaper.translate(input, 0, writer);\n        \n        // The expected output should be the surrogate pair for the grinning face emoji\n        String expectedOutput = new String(Character.toChars(0x1F600));\n        \n        assertEquals(\"The translation did not produce the expected surrogate pair.\", expectedOutput, writer.toString());\n        assertEquals(\"The return value should indicate the number of characters consumed.\", input.length(), result);\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.text.translate",
+      "test_class_name": "AgentBRT_Lang_28_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.text.translate;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.io.StringWriter;\nimport java.io.IOException;\n\npublic class AgentBRT_Lang_28_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws IOException {\n        NumericEntityUnescaper unescaper = new NumericEntityUnescaper();\n        StringWriter writer = new StringWriter();\n        String input = \"&#x1F600;\"; // Grinning face emoji, code point 0x1F600\n        \n        int result = unescaper.translate(input, 0, writer);\n        \n        // The expected output should be the surrogate pair for the grinning face emoji\n        String expectedOutput = new String(Character.toChars(0x1F600));\n        \n        assertEquals(\"The translation did not produce the expected surrogate pair.\", expectedOutput, writer.toString());\n        assertEquals(\"The return value should indicate the number of characters consumed.\", input.length(), result);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "The translation did not produce the expected surrogate pair. expected:<[\ud83d\ude00]> but was:<[\uf600]>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        47,
+        48,
+        49,
+        54,
+        55,
+        61,
+        63,
+        64
+      ],
+      "enclosing_method_missed_lines": [
+        57,
+        59,
+        60,
+        66
+      ]
+    }
+  ]
+}

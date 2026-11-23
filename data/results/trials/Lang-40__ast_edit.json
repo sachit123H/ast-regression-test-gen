@@ -1,0 +1,38 @@
+{
+  "bug_key": "Lang-40",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3566,
+  "completion_tokens": 396,
+  "wall_time_sec": 12.003,
+  "final_package_name": "org.apache.commons.lang",
+  "final_test_class_name": "AgentBRT_Lang_40_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Locale;\n\npublic class AgentBRT_Lang_40_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Locale defaultLocale = Locale.getDefault();\n        try {\n            Locale.setDefault(new Locale(\"tr\", \"TR\")); // Set Turkish locale\n            String str = \"istanbul\";\n            String searchStr = \"I\";\n            // This should return true, but due to locale issues, it may return false\n            assertTrue(StringUtils.containsIgnoreCase(str, searchStr));\n        } finally {\n            Locale.setDefault(defaultLocale); // Restore default locale\n        }\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang",
+      "test_class_name": "AgentBRT_Lang_40_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Locale;\n\npublic class AgentBRT_Lang_40_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Locale defaultLocale = Locale.getDefault();\n        try {\n            Locale.setDefault(new Locale(\"tr\", \"TR\")); // Set Turkish locale\n            String str = \"istanbul\";\n            String searchStr = \"I\";\n            // This should return true, but due to locale issues, it may return false\n            assertTrue(StringUtils.containsIgnoreCase(str, searchStr));\n        } finally {\n            Locale.setDefault(defaultLocale); // Restore default locale\n        }\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        1045,
+        1048
+      ],
+      "enclosing_method_missed_lines": [
+        1046
+      ]
+    }
+  ]
+}

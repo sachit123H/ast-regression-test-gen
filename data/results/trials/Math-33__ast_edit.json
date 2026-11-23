@@ -1,0 +1,73 @@
+{
+  "bug_key": "Math-33",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 3,
+  "prompt_tokens": 27599,
+  "completion_tokens": 1247,
+  "wall_time_sec": 28.677,
+  "final_package_name": "org.apache.commons.math3.optimization.linear",
+  "final_test_class_name": "AgentBRT_Math_33_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.MatrixUtils;\nimport org.apache.commons.math3.linear.RealVector;\nimport org.apache.commons.math3.optimization.GoalType;\nimport org.apache.commons.math3.optimization.linear.LinearConstraint;\nimport org.apache.commons.math3.optimization.linear.LinearObjectiveFunction;\nimport org.apache.commons.math3.optimization.linear.Relationship;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_33_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the linear objective function\n        LinearObjectiveFunction f = new LinearObjectiveFunction(new double[] {1, 0.5}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[] {0, 0.5}, Relationship.LEQ, 2));\n        constraints.add(new LinearConstraint(new double[] {0, 0}, Relationship.LEQ, 3));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(f, constraints, GoalType.MAXIMIZE, false, 0.0001);\n\n        // Invoke the method that should drop phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check the resulting tableau dimensions\n        // Expecting the first row to be removed and the last column to be dropped\n        assertEquals(2, tableau.getHeight());\n        assertEquals(3, tableau.getWidth());\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math3.optimization.linear",
+      "test_class_name": "AgentBRT_Math_33_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.RealMatrix;\nimport org.apache.commons.math3.linear.RealVector;\nimport org.apache.commons.math3.optimization.PointValuePair;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_33_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Setup a tableau with specific entries\n        double[][] data = {\n            {1.0, 0.5, 0.0, 0.0, 1.0},\n            {0.0, 0.5, 1.0, 0.0, 2.0},\n            {0.0, 0.0, 0.0, 1.0, 3.0}\n        };\n        RealMatrix matrix = new Array2DRowRealMatrix(data);\n        SimplexTableau tableau = new SimplexTableau(matrix, null, null, false, 0.0001);\n\n        // Invoke the method that should drop phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check the resulting tableau dimensions\n        // Expecting the first row to be removed and the last column to be dropped\n        assertEquals(2, tableau.getHeight());\n        assertEquals(4, tableau.getWidth());\n    }\n}",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math3.optimization.linear",
+      "test_class_name": "AgentBRT_Math_33_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.optimization.linear;\n\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.MatrixUtils;\nimport org.apache.commons.math3.linear.RealVector;\nimport org.apache.commons.math3.optimization.GoalType;\nimport org.apache.commons.math3.optimization.linear.LinearConstraint;\nimport org.apache.commons.math3.optimization.linear.LinearObjectiveFunction;\nimport org.apache.commons.math3.optimization.linear.Relationship;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_33_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the linear objective function\n        LinearObjectiveFunction f = new LinearObjectiveFunction(new double[] {1, 0.5}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[] {0, 0.5}, Relationship.LEQ, 2));\n        constraints.add(new LinearConstraint(new double[] {0, 0}, Relationship.LEQ, 3));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(f, constraints, GoalType.MAXIMIZE, false, 0.0001);\n\n        // Invoke the method that should drop phase 1 objective\n        tableau.dropPhase1Objective();\n\n        // Check the resulting tableau dimensions\n        // Expecting the first row to be removed and the last column to be dropped\n        assertEquals(2, tableau.getHeight());\n        assertEquals(3, tableau.getWidth());\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "expected:<2> but was:<3>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        328,
+        329
+      ],
+      "enclosing_method_missed_lines": [
+        332,
+        333,
+        336,
+        337,
+        338,
+        339,
+        344,
+        345,
+        346,
+        347,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        361,
+        362,
+        365,
+        366,
+        367
+      ]
+    }
+  ]
+}

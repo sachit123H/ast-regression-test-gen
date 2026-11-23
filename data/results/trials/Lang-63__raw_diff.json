@@ -1,0 +1,57 @@
+{
+  "bug_key": "Lang-63",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 2,
+  "prompt_tokens": 11802,
+  "completion_tokens": 1462,
+  "wall_time_sec": 18.354,
+  "final_package_name": "org.apache.commons.lang.time",
+  "final_test_class_name": "AgentBRT_Lang_63_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\nimport java.util.Calendar;\n\npublic class AgentBRT_Lang_63_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        Calendar start = Calendar.getInstance();\n        Calendar end = Calendar.getInstance();\n        \n        // Set start to January 31st\n        start.set(2023, Calendar.JANUARY, 31);\n        // Set end to March 1st\n        end.set(2023, Calendar.MARCH, 1);\n        \n        // Attempt to reduce end by 1 month and 1 day\n        int daysReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.DAY_OF_MONTH, 1);\n        int monthsReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.MONTH, 1);\n        \n        // Check if the end date is correctly adjusted\n        assertEquals(\"End day should be 31 after reduction\", 31, end.get(Calendar.DAY_OF_MONTH));\n        assertEquals(\"End month should be January after reduction\", Calendar.JANUARY, end.get(Calendar.MONTH));\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_63_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Calendar;\n\npublic class AgentBRT_Lang_63_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        Calendar start = Calendar.getInstance();\n        Calendar end = Calendar.getInstance();\n        \n        // Set start to January 31st\n        start.set(2023, Calendar.JANUARY, 31);\n        // Set end to March 1st\n        end.set(2023, Calendar.MARCH, 1);\n        \n        // Attempt to reduce end by 1 month and 1 day\n        int daysReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.DAY_OF_MONTH, 1);\n        int monthsReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.MONTH, 1);\n        \n        // Check if the end date is correctly adjusted\n        assertEquals(\"End day should be 31 after reduction\", 31, end.get(Calendar.DAY_OF_MONTH));\n        assertEquals(\"End month should be January after reduction\", Calendar.JANUARY, end.get(Calendar.MONTH));\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_63_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\nimport java.util.Calendar;\n\npublic class AgentBRT_Lang_63_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        Calendar start = Calendar.getInstance();\n        Calendar end = Calendar.getInstance();\n        \n        // Set start to January 31st\n        start.set(2023, Calendar.JANUARY, 31);\n        // Set end to March 1st\n        end.set(2023, Calendar.MARCH, 1);\n        \n        // Attempt to reduce end by 1 month and 1 day\n        int daysReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.DAY_OF_MONTH, 1);\n        int monthsReduced = DurationFormatUtils.reduceAndCorrect(start, end, Calendar.MONTH, 1);\n        \n        // Check if the end date is correctly adjusted\n        assertEquals(\"End day should be 31 after reduction\", 31, end.get(Calendar.DAY_OF_MONTH));\n        assertEquals(\"End month should be January after reduction\", Calendar.JANUARY, end.get(Calendar.MONTH));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "End day should be 31 after reduction expected:<31> but was:<3>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        441
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

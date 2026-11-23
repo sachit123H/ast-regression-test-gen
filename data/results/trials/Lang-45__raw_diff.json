@@ -1,0 +1,70 @@
+{
+  "bug_key": "Lang-45",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 6245,
+  "completion_tokens": 736,
+  "wall_time_sec": 15.444,
+  "final_package_name": "org.apache.commons.lang",
+  "final_test_class_name": "AgentBRT_Lang_45_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_45_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        String input = \"short\";\n        int lower = 10; // greater than input length\n        int upper = 15;\n        String appendToEnd = \"...\";\n\n        // Expected behavior: since lower > input.length(), it should return the whole string\n        // without abbreviation, as the fix adjusts lower to input.length().\n        String result = WordUtils.abbreviate(input, lower, upper, appendToEnd);\n\n        // In the buggy version, this would incorrectly abbreviate or throw an error.\n        assertEquals(\"short\", result);\n    }\n}",
+  "final_prefix_failure_type": "RUNTIME_ERROR",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang",
+      "test_class_name": "AgentBRT_Lang_45_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_45_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        String input = \"short\";\n        int lower = 10; // greater than input length\n        int upper = 15;\n        String appendToEnd = \"...\";\n\n        // Expected behavior: since lower > input.length(), it should return the whole string\n        // without abbreviation, as the fix adjusts lower to input.length().\n        String result = WordUtils.abbreviate(input, lower, upper, appendToEnd);\n\n        // In the buggy version, this would incorrectly abbreviate or throw an error.\n        assertEquals(\"short\", result);\n    }\n}",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang",
+      "test_class_name": "AgentBRT_Lang_45_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_45_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        String input = \"short\";\n        int lower = 10; // greater than input length\n        int upper = 15;\n        String appendToEnd = \"...\";\n\n        // Expected behavior: since lower > input.length(), it should return the whole string\n        // without abbreviation, as the fix adjusts lower to input.length().\n        String result = WordUtils.abbreviate(input, lower, upper, appendToEnd);\n\n        // In the buggy version, this would incorrectly abbreviate or throw an error.\n        assertEquals(\"short\", result);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "RUNTIME_ERROR",
+      "exception_type": "java.lang.StringIndexOutOfBoundsException",
+      "exception_message": "String index out of range: 10",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        607,
+        610,
+        618,
+        619,
+        622,
+        623,
+        626,
+        627,
+        628,
+        629
+      ],
+      "enclosing_method_missed_lines": [
+        608,
+        611,
+        631,
+        632,
+        634,
+        635,
+        636,
+        638,
+        639,
+        641
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.zip
+
+# Testing & Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+cobertura.ser
+coverage.xml
+
+# IDEs & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Defects4J / Experiment execution artifacts
+benchmarks/
+tmp/
+*.log
+
+# LaTeX intermediates
+docs/thesis/*.aux
+docs/thesis/*.bbl
+docs/thesis/*.blg
+docs/thesis/*.log
+docs/thesis/*.out
+docs/thesis/*.toc
+
+# Private research playbooks & notes
+cs91000_complete_research_execution_playbook.md
+*playbook*.md
+
+

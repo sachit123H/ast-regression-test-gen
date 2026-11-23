@@ -1,0 +1,47 @@
+# CS.91000 Graduation Research — Experiment Configuration
+# Prioritizes Prof. Shin Yoo's email guidance (BRT framing, triggering-test isolation, Multi-SWE-bench support)
+
+paths:
+  data_dir: "data"
+  curated_manifest: "data/curated_bugs.json"
+  exclusion_log: "data/exclusion_log.json"
+  prefix_root: "tmp/prefix_workspaces"       # Agent MCP server operates ONLY here
+  postfix_root: "tmp/postfix_workspaces"     # Evaluation harness ONLY (unreachable by agent)
+  results_dir: "data/results"
+  figures_dir: "docs/figures"
+
+tools:
+  defects4j_bin: "defects4j"
+  gumtree_bin: "gumtree"
+  gumtree_java_home: "/usr/lib/jvm/java-17-openjdk-amd64"                      # Point GumTree to Java 17 while Defects4J runs on Java 8
+  compile_timeout_sec: 180
+  test_timeout_sec: 180
+  coverage_timeout_sec: 240
+
+dataset:
+  # Primary Defects4J projects evaluated end-to-end (Lang and Math, N=80)
+  projects: ["Lang", "Math"]
+  # Set to true to enforce single-method localized fix filter (Proposal Sec. 4.1)
+  require_single_method_fix: true
+  # Minimum viable bug set size before relaxing localized-fix filter (Proposal Sec. 5.1)
+  min_viable_bugs: 50
+  # Set to null or 150 to evaluate full 5-project Defects4J benchmark
+  max_bugs: null
+  # Strip pre-existing Defects4J triggering tests from agent's pre-fix sandbox (Aug 12 email)
+  strip_triggering_tests: true
+
+agent:
+  provider: "openai"                         # "openai" | "anthropic" | "openai_compatible"
+  model: "gpt-4o-2024-08-06"                 # Pin exact snapshot for reproducibility
+  temperature: 0.0                           # Deterministic decoding for fair A/B comparison
+  max_tokens: 4096
+  max_retries: 5                             # Proposal Sec. 4.2: retry limit of 5
+  max_tool_calls_per_retry: 6                # Prevent runaway get_context loops
+  api_base_url: null                         # Optional custom endpoint (e.g., Gemini OpenAI-compat / vLLM)
+
+evaluation:
+  fdg_alpha: 0.5                             # An & Yoo (ISSTA 2022) default alpha = 0.5
+  dstar_star: 2                              # Wong et al. (2014) DStar (* = 2)
+  acc_n_values: [1, 3, 5, 10]                # Top-n accuracy cutoffs
+  # Proposal Sec. 4.5 strict mode: require AssertionError on pre-fix (also logs LIBRO-style fail/pass)
+  strict_assertion_only: false

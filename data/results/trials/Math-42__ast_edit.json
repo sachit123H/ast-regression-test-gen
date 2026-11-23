@@ -1,0 +1,66 @@
+{
+  "bug_key": "Math-42",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 5,
+  "prompt_tokens": 43597,
+  "completion_tokens": 2097,
+  "wall_time_sec": 34.528,
+  "final_package_name": "org.apache.commons.math.optimization.linear",
+  "final_test_class_name": "AgentBRT_Math_42_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math.optimization.linear;\n\nimport org.apache.commons.math.optimization.GoalType;\nimport org.apache.commons.math.optimization.RealPointValuePair;\nimport org.junit.Assert;\nimport org.junit.Test;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_42_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the linear objective function\n        LinearObjectiveFunction objectiveFunction = new LinearObjectiveFunction(new double[]{1, 1}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[]{1, -1}, Relationship.LEQ, 10));\n        constraints.add(new LinearConstraint(new double[]{0, 1}, Relationship.LEQ, 20));\n        constraints.add(new LinearConstraint(new double[]{0, 0}, Relationship.LEQ, 30));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(\n            objectiveFunction,\n            constraints,\n            GoalType.MAXIMIZE,\n            true,\n            1e-6\n        );\n\n        // Call getSolution and check the result\n        RealPointValuePair solution = tableau.getSolution();\n        double[] expectedCoefficients = {10, 20}; // Expected solution coefficients\n        Assert.assertArrayEquals(\"The solution coefficients are incorrect due to the bug.\",\n                                 expectedCoefficients, solution.getPoint(), 1e-6);\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math.optimization.linear",
+      "test_class_name": "AgentBRT_Math_42_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.optimization.linear;\n\nimport org.apache.commons.math.optimization.RealPointValuePair;\nimport org.junit.Assert;\nimport org.junit.Test;\n\nimport java.util.Arrays;\n\npublic class AgentBRT_Math_42_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Setup a SimplexTableau with a specific configuration\n        double[][] tableauData = {\n            {1, -1, 0, 0, 0, 10},\n            {0, 1, 1, 0, 0, 20},\n            {0, 0, 0, 1, 1, 30}\n        };\n        SimplexTableau tableau = new SimplexTableau(\n            tableauData,\n            new double[]{1, 1, 1},\n            GoalType.MAXIMIZE,\n            true,\n            0\n        );\n\n        // Call getSolution and check the result\n        RealPointValuePair solution = tableau.getSolution();\n        double[] expectedCoefficients = {10, 20, 0}; // Expected solution coefficients\n        Assert.assertArrayEquals(\"The solution coefficients are incorrect due to the bug.\",\n                                 expectedCoefficients, solution.getPoint(), 1e-6);\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math.optimization.linear",
+      "test_class_name": "AgentBRT_Math_42_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.optimization.linear;\n\nimport org.apache.commons.math.optimization.GoalType;\nimport org.apache.commons.math.optimization.RealPointValuePair;\nimport org.junit.Assert;\nimport org.junit.Test;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\n\npublic class AgentBRT_Math_42_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Define the linear objective function\n        LinearObjectiveFunction objectiveFunction = new LinearObjectiveFunction(new double[]{1, 1}, 0);\n\n        // Define the constraints\n        Collection<LinearConstraint> constraints = new ArrayList<>();\n        constraints.add(new LinearConstraint(new double[]{1, -1}, Relationship.LEQ, 10));\n        constraints.add(new LinearConstraint(new double[]{0, 1}, Relationship.LEQ, 20));\n        constraints.add(new LinearConstraint(new double[]{0, 0}, Relationship.LEQ, 30));\n\n        // Create the SimplexTableau\n        SimplexTableau tableau = new SimplexTableau(\n            objectiveFunction,\n            constraints,\n            GoalType.MAXIMIZE,\n            true,\n            1e-6\n        );\n\n        // Call getSolution and check the result\n        RealPointValuePair solution = tableau.getSolution();\n        double[] expectedCoefficients = {10, 20}; // Expected solution coefficients\n        Assert.assertArrayEquals(\"The solution coefficients are incorrect due to the bug.\",\n                                 expectedCoefficients, solution.getPoint(), 1e-6);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "The solution coefficients are incorrect due to the bug.: arrays first differed at element [0]; expected:<10.0> but was:<0.0>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        397,
+        398,
+        399,
+        401,
+        402,
+        403,
+        404,
+        405,
+        409,
+        413,
+        416,
+        418,
+        419,
+        424
+      ],
+      "enclosing_method_missed_lines": [
+        406,
+        407
+      ]
+    }
+  ]
+}

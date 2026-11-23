@@ -1,0 +1,117 @@
+{
+  "bug_key": "Math-11",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "MAX_RETRIES_EXHAUSTED",
+  "num_run_test_attempts": 5,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 33326,
+  "completion_tokens": 3901,
+  "wall_time_sec": 83.971,
+  "final_package_name": "org.apache.commons.math3.distribution",
+  "final_test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covariances);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+  "final_prefix_failure_type": "PASS",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math3.distribution",
+      "test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.apache.commons.math3.linear.Array2DRowRealMatrix;\nimport org.apache.commons.math3.linear.RealMatrix;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        RealMatrix covarianceMatrix = new Array2DRowRealMatrix(covariances);\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covarianceMatrix);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.math3.distribution",
+      "test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covariances);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        178,
+        179,
+        183
+      ],
+      "enclosing_method_missed_lines": [
+        180
+      ]
+    },
+    {
+      "attempt_index": 3,
+      "package_name": "org.apache.commons.math3.distribution",
+      "test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covariances);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        178,
+        179,
+        183
+      ],
+      "enclosing_method_missed_lines": [
+        180
+      ]
+    },
+    {
+      "attempt_index": 4,
+      "package_name": "org.apache.commons.math3.distribution",
+      "test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covariances);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        178,
+        179,
+        183
+      ],
+      "enclosing_method_missed_lines": [
+        180
+      ]
+    },
+    {
+      "attempt_index": 5,
+      "package_name": "org.apache.commons.math3.distribution",
+      "test_class_name": "AgentBRT_Math_11_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math3.distribution;\n\nimport org.apache.commons.math3.exception.DimensionMismatchException;\nimport org.junit.Test;\nimport static org.junit.Assert.assertEquals;\n\npublic class AgentBRT_Math_11_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        double[] means = {0.0, 0.0};\n        double[][] covariances = {\n            {1.0, 0.0},\n            {0.0, 1.0}\n        };\n        MultivariateNormalDistribution distribution = new MultivariateNormalDistribution(means, covariances);\n\n        double[] point = {0.0, 0.0};\n        double expectedDensity = 1 / (2 * Math.PI); // Correct density for 2D standard normal at mean\n        double actualDensity = distribution.density(point);\n\n        assertEquals(\"Density calculation is incorrect\", expectedDensity, actualDensity, 1e-9);\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        178,
+        179,
+        183
+      ],
+      "enclosing_method_missed_lines": [
+        180
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "bug_key": "Math-45",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3137,
+  "completion_tokens": 345,
+  "wall_time_sec": 26.753,
+  "final_package_name": "org.apache.commons.math.linear",
+  "final_test_class_name": "AgentBRT_Math_45_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.math.linear;\n\nimport org.apache.commons.math.exception.NumberIsTooLargeException;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_45_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        int rowDimension = 50000;\n        int columnDimension = 50000;\n        try {\n            new OpenMapRealMatrix(rowDimension, columnDimension);\n            fail(\"Expected NumberIsTooLargeException\");\n        } catch (NumberIsTooLargeException e) {\n            // Expected exception\n        }\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.math.linear",
+      "test_class_name": "AgentBRT_Math_45_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.math.linear;\n\nimport org.apache.commons.math.exception.NumberIsTooLargeException;\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Math_45_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        int rowDimension = 50000;\n        int columnDimension = 50000;\n        try {\n            new OpenMapRealMatrix(rowDimension, columnDimension);\n            fail(\"Expected NumberIsTooLargeException\");\n        } catch (NumberIsTooLargeException e) {\n            // Expected exception\n        }\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Expected NumberIsTooLargeException",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "bug_key": "Lang-26",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 2,
+  "prompt_tokens": 5108,
+  "completion_tokens": 750,
+  "wall_time_sec": 14.562,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_26_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.text.FieldPosition;\nimport java.util.Date;\nimport java.util.Locale;\n\npublic class AgentBRT_Lang_26_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create a FastDateFormat instance with a specific pattern and locale\n        FastDateFormat fastDateFormat = FastDateFormat.getInstance(\"yyyy-MM-dd\", Locale.FRANCE);\n\n        // Create a Date object to format\n        Date date = new Date(0); // Epoch time\n\n        // Format the date\n        String formattedDate = fastDateFormat.format(date);\n\n        // The expected formatted date string in the French locale\n        String expectedDate = \"1970-01-01\";\n\n        // Assert that the formatted date matches the expected date\n        assertEquals(\"The formatted date does not match the expected output.\", expectedDate, formattedDate);\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_26_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.text.FieldPosition;\nimport java.util.Date;\nimport java.util.Locale;\n\npublic class AgentBRT_Lang_26_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Create a FastDateFormat instance with a specific pattern and locale\n        FastDateFormat fastDateFormat = FastDateFormat.getInstance(\"yyyy-MM-dd\", Locale.FRANCE);\n\n        // Create a Date object to format\n        Date date = new Date(0); // Epoch time\n\n        // Format the date\n        String formattedDate = fastDateFormat.format(date);\n\n        // The expected formatted date string in the French locale\n        String expectedDate = \"1970-01-01\";\n\n        // Assert that the formatted date matches the expected date\n        assertEquals(\"The formatted date does not match the expected output.\", expectedDate, formattedDate);\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "The formatted date does not match the expected output. expected:<19[70-01-0]1> but was:<19[69-12-3]1>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        820,
+        821,
+        822
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

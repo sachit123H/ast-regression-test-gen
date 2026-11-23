@@ -1,0 +1,66 @@
+{
+  "bug_key": "Lang-10",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 2,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 11538,
+  "completion_tokens": 1153,
+  "wall_time_sec": 18.835,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_10_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.lang.reflect.Method;\n\npublic class AgentBRT_Lang_10_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws Exception {\n        StringBuilder regex = new StringBuilder();\n        String value = \"a b c\"; // String with whitespace\n        boolean unquote = false;\n\n        // Use reflection to access the private method\n        Method escapeRegexMethod = FastDateParser.class.getDeclaredMethod(\"escapeRegex\", StringBuilder.class, String.class, boolean.class);\n        escapeRegexMethod.setAccessible(true);\n\n        // Call the buggy method\n        escapeRegexMethod.invoke(null, regex, value, unquote);\n\n        // The expected behavior after the fix is that whitespace is not replaced with \"\\\\s*+\"\n        String expected = \"a\\\\ b\\\\ c\"; // Expected regex without \"\\\\s*+\"\n        assertEquals(expected, regex.toString());\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_10_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_10_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        StringBuilder regex = new StringBuilder();\n        String value = \"a b c\"; // String with whitespace\n        boolean unquote = false;\n\n        // Call the buggy method\n        FastDateParser.escapeRegex(regex, value, unquote);\n\n        // The expected behavior after the fix is that whitespace is not replaced with \"\\\\s*+\"\n        String expected = \"a\\\\ b\\\\ c\"; // Expected regex without \"\\\\s*+\"\n        assertEquals(expected, regex.toString());\n    }\n}\n",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_10_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\nimport java.lang.reflect.Method;\n\npublic class AgentBRT_Lang_10_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() throws Exception {\n        StringBuilder regex = new StringBuilder();\n        String value = \"a b c\"; // String with whitespace\n        boolean unquote = false;\n\n        // Use reflection to access the private method\n        Method escapeRegexMethod = FastDateParser.class.getDeclaredMethod(\"escapeRegex\", StringBuilder.class, String.class, boolean.class);\n        escapeRegexMethod.setAccessible(true);\n\n        // Call the buggy method\n        escapeRegexMethod.invoke(null, regex, value, unquote);\n\n        // The expected behavior after the fix is that whitespace is not replaced with \"\\\\s*+\"\n        String expected = \"a\\\\ b\\\\ c\"; // Expected regex without \"\\\\s*+\"\n        assertEquals(expected, regex.toString());\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "expected:<a\\[ b\\ ]c> but was:<a\\[s*+b\\s*+]c>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        314,
+        315,
+        340,
+        342
+      ],
+      "enclosing_method_missed_lines": [
+        317,
+        318,
+        319,
+        321,
+        338
+      ]
+    }
+  ]
+}

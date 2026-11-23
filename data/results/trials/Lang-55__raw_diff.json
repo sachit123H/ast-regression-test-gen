@@ -1,0 +1,92 @@
+{
+  "bug_key": "Lang-55",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 4,
+  "num_get_context_calls": 3,
+  "prompt_tokens": 28201,
+  "completion_tokens": 1533,
+  "wall_time_sec": 31.043,
+  "final_package_name": "org.apache.commons.lang.time",
+  "final_test_class_name": "AgentBRT_Lang_55_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_55_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() throws Exception {\n        StopWatch stopWatch = new StopWatch();\n        stopWatch.start();\n        stopWatch.suspend();\n        long suspendedTime = stopWatch.getTime();\n        Thread.sleep(10); // Ensure some time passes\n        stopWatch.stop();\n        // The bug is that getTime() should not change when stopwatch is suspended\n        assertEquals(\"Time should not change when stopwatch is suspended\", suspendedTime, stopWatch.getTime());\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_55_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_55_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        StopWatch stopWatch = new StopWatch();\n        stopWatch.start();\n        stopWatch.suspend();\n        long suspendedTime = stopWatch.getTime();\n        stopWatch.stop();\n        // The bug is that stopTime should not be set when the stopwatch is suspended\n        assertEquals(\"Stop time should not change when stopwatch is suspended\", suspendedTime, stopWatch.getTime());\n    }\n}",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 2,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_55_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_55_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() {\n        StopWatch stopWatch = new StopWatch();\n        stopWatch.start();\n        stopWatch.suspend();\n        long suspendedTime = stopWatch.getTime();\n        stopWatch.stop();\n        // The bug is that stopTime should not be set when the stopwatch is suspended\n        assertEquals(\"Stop time should not change when stopwatch is suspended\", suspendedTime, stopWatch.getTime());\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": true,
+      "failure_type": "PASS",
+      "exception_type": "",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        115,
+        118,
+        119,
+        120
+      ],
+      "enclosing_method_missed_lines": [
+        116
+      ]
+    },
+    {
+      "attempt_index": 3,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_55_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_55_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() throws Exception {\n        StopWatch stopWatch = new StopWatch();\n        stopWatch.start();\n        stopWatch.suspend();\n        long suspendedStopTime = stopWatch.stopTime;\n        Thread.sleep(10); // Ensure some time passes\n        stopWatch.stop();\n        // The bug is that stopTime should not be updated when the stopwatch is suspended\n        assertEquals(\"Stop time should not change when stopwatch is suspended\", suspendedStopTime, stopWatch.stopTime);\n    }\n}",
+      "compiled": false,
+      "passed_on_prefix": null,
+      "failure_type": "COMPILE_ERROR",
+      "exception_type": "CompileError",
+      "exception_message": "Candidate test failed to compile on pre-fix version",
+      "enclosing_method_hit": false,
+      "enclosing_method_covered_lines": [],
+      "enclosing_method_missed_lines": []
+    },
+    {
+      "attempt_index": 4,
+      "package_name": "org.apache.commons.lang.time",
+      "test_class_name": "AgentBRT_Lang_55_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang.time;\n\nimport junit.framework.TestCase;\n\npublic class AgentBRT_Lang_55_raw_diff_Test extends TestCase {\n\n    public void testReproduceBug() throws Exception {\n        StopWatch stopWatch = new StopWatch();\n        stopWatch.start();\n        stopWatch.suspend();\n        long suspendedTime = stopWatch.getTime();\n        Thread.sleep(10); // Ensure some time passes\n        stopWatch.stop();\n        // The bug is that getTime() should not change when stopwatch is suspended\n        assertEquals(\"Time should not change when stopwatch is suspended\", suspendedTime, stopWatch.getTime());\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Time should not change when stopwatch is suspended expected:<0> but was:<11>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        115,
+        118,
+        119,
+        120
+      ],
+      "enclosing_method_missed_lines": [
+        116
+      ]
+    }
+  ]
+}

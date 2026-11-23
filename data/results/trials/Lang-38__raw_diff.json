@@ -1,0 +1,38 @@
+{
+  "bug_key": "Lang-38",
+  "condition": "raw_diff",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 2981,
+  "completion_tokens": 575,
+  "wall_time_sec": 12.798,
+  "final_package_name": "org.apache.commons.lang3.time",
+  "final_test_class_name": "AgentBRT_Lang_38_raw_diff_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport org.junit.Assert;\nimport java.util.Calendar;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_38_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Set up a FastDateFormat instance with a forced time zone\n        TimeZone timeZone = TimeZone.getTimeZone(\"GMT\");\n        FastDateFormat fastDateFormat = FastDateFormat.getInstance(\"yyyy-MM-dd HH:mm:ss\", timeZone);\n\n        // Create a Calendar instance\n        Calendar calendar = Calendar.getInstance();\n        calendar.set(2023, Calendar.JANUARY, 1, 0, 0, 0);\n        calendar.setTimeZone(TimeZone.getTimeZone(\"PST\")); // Different time zone\n\n        // Format the calendar\n        StringBuffer formatted = fastDateFormat.format(calendar, new StringBuffer());\n\n        // The expected result should be in GMT, not PST\n        String expected = \"2023-01-01 08:00:00\"; // PST to GMT conversion\n\n        // Assert that the formatted result is as expected\n        Assert.assertEquals(\"Formatted date is incorrect due to missing calendar.getTime() call.\", expected, formatted.toString());\n    }\n}",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3.time",
+      "test_class_name": "AgentBRT_Lang_38_raw_diff_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3.time;\n\nimport org.junit.Test;\nimport org.junit.Assert;\nimport java.util.Calendar;\nimport java.util.TimeZone;\n\npublic class AgentBRT_Lang_38_raw_diff_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Set up a FastDateFormat instance with a forced time zone\n        TimeZone timeZone = TimeZone.getTimeZone(\"GMT\");\n        FastDateFormat fastDateFormat = FastDateFormat.getInstance(\"yyyy-MM-dd HH:mm:ss\", timeZone);\n\n        // Create a Calendar instance\n        Calendar calendar = Calendar.getInstance();\n        calendar.set(2023, Calendar.JANUARY, 1, 0, 0, 0);\n        calendar.setTimeZone(TimeZone.getTimeZone(\"PST\")); // Different time zone\n\n        // Format the calendar\n        StringBuffer formatted = fastDateFormat.format(calendar, new StringBuffer());\n\n        // The expected result should be in GMT, not PST\n        String expected = \"2023-01-01 08:00:00\"; // PST to GMT conversion\n\n        // Assert that the formatted result is as expected\n        Assert.assertEquals(\"Formatted date is incorrect due to missing calendar.getTime() call.\", expected, formatted.toString());\n    }\n}",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "Formatted date is incorrect due to missing calendar.getTime() call. expected:<2023-01-01 0[8]:00:00> but was:<2023-01-01 0[0]:00:00>",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        871,
+        872,
+        873,
+        875
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}

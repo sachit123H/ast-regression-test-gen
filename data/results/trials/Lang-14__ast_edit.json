@@ -1,0 +1,39 @@
+{
+  "bug_key": "Lang-14",
+  "condition": "ast_edit",
+  "model": "gpt-4o-2024-08-06",
+  "terminated_reason": "PREFIX_FAIL_REACHED",
+  "num_run_test_attempts": 1,
+  "num_get_context_calls": 1,
+  "prompt_tokens": 3149,
+  "completion_tokens": 520,
+  "wall_time_sec": 12.246,
+  "final_package_name": "org.apache.commons.lang3",
+  "final_test_class_name": "AgentBRT_Lang_14_ast_edit_Test",
+  "final_test_method_name": "testReproduceBug",
+  "final_java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_14_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Test case where both CharSequences are null\n        assertTrue(StringUtils.equals(null, null));\n        \n        // Test case where one CharSequence is null\n        assertFalse(StringUtils.equals(null, \"abc\"));\n        assertFalse(StringUtils.equals(\"abc\", null));\n        \n        // Test case where both CharSequences are empty\n        assertTrue(StringUtils.equals(\"\", \"\"));\n        \n        // Test case where CharSequences are equal\n        assertTrue(StringUtils.equals(\"abc\", \"abc\"));\n        \n        // Test case where CharSequences are not equal\n        assertFalse(StringUtils.equals(\"abc\", \"ABC\"));\n        assertFalse(StringUtils.equals(\"abc\", \"abcd\"));\n        \n        // Test case with different CharSequence implementations\n        CharSequence cs1 = new StringBuilder(\"abc\");\n        CharSequence cs2 = new StringBuilder(\"abc\");\n        assertTrue(StringUtils.equals(cs1, cs2));\n    }\n}\n",
+  "final_prefix_failure_type": "ASSERTION_FAILURE",
+  "attempts": [
+    {
+      "attempt_index": 1,
+      "package_name": "org.apache.commons.lang3",
+      "test_class_name": "AgentBRT_Lang_14_ast_edit_Test",
+      "test_method_name": "testReproduceBug",
+      "java_source": "package org.apache.commons.lang3;\n\nimport org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class AgentBRT_Lang_14_ast_edit_Test {\n\n    @Test\n    public void testReproduceBug() {\n        // Test case where both CharSequences are null\n        assertTrue(StringUtils.equals(null, null));\n        \n        // Test case where one CharSequence is null\n        assertFalse(StringUtils.equals(null, \"abc\"));\n        assertFalse(StringUtils.equals(\"abc\", null));\n        \n        // Test case where both CharSequences are empty\n        assertTrue(StringUtils.equals(\"\", \"\"));\n        \n        // Test case where CharSequences are equal\n        assertTrue(StringUtils.equals(\"abc\", \"abc\"));\n        \n        // Test case where CharSequences are not equal\n        assertFalse(StringUtils.equals(\"abc\", \"ABC\"));\n        assertFalse(StringUtils.equals(\"abc\", \"abcd\"));\n        \n        // Test case with different CharSequence implementations\n        CharSequence cs1 = new StringBuilder(\"abc\");\n        CharSequence cs2 = new StringBuilder(\"abc\");\n        assertTrue(StringUtils.equals(cs1, cs2));\n    }\n}\n",
+      "compiled": true,
+      "passed_on_prefix": false,
+      "failure_type": "ASSERTION_FAILURE",
+      "exception_type": "junit.framework.AssertionFailedError",
+      "exception_message": "",
+      "enclosing_method_hit": true,
+      "enclosing_method_covered_lines": [
+        782,
+        783,
+        785,
+        786,
+        788
+      ],
+      "enclosing_method_missed_lines": []
+    }
+  ]
+}
