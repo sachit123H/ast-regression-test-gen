@@ -1,8 +1,9 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Multi-SWE-bench (Java) Contamination-Free Pilot Validation ($N=15$). All instances represent isolated single-method defect tasks derived from contemporary GitHub pull requests whose problem descriptions lacked bug-reproducing tests.}
+\caption{Cross-Repository Validation on Contemporary Java Pull Requests Outside Defects4J ($N=15$). All instances represent isolated single-method defect tasks from Multi-SWE-bench lacking bug-reproducing tests.}
 \label{tab:multiswe}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llllcc}
 \toprule
 Repository & Instance ID & Defect Mechanism & Target Class & Raw Diff & AST Edit \\
@@ -26,5 +27,6 @@ netty/netty & netty-12045 & Zero-byte SSL packet unwrap & SslHandler & \checkmar
 \multicolumn{4}{l}{\textbf{Summary: Valid BRT Rate}} & \textbf{12/15 (80.0\%)} & \textbf{5/15 (33.3\%)} \\
 \multicolumn{4}{l}{\textbf{Exact McNemar's Test on Discordant Pairs ($7$ vs $0$)}} & \multicolumn{2}{c}{$\boldsymbol{p = 0.0156}$} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
