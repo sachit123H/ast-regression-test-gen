@@ -19,7 +19,7 @@ tools:
   coverage_timeout_sec: 240
 
 dataset:
-  # Primary Defects4J projects evaluated end-to-end (Lang and Math, N=80)
+  # Primary Defects4J projects evaluated end-to-end (Lang and Math, N=80 curated -> 65 completed)
   projects: ["Lang", "Math"]
   # Set to true to enforce single-method localized fix filter (Proposal Sec. 4.1)
   require_single_method_fix: true
@@ -29,6 +29,8 @@ dataset:
   max_bugs: null
   # Strip pre-existing Defects4J triggering tests from agent's pre-fix sandbox (Aug 12 email)
   strip_triggering_tests: true
+  # Strip balanced GumTree TypeDeclaration header churn (Modifier/TYPE_DECLARATION_KIND/SimpleName)
+  filter_ast_header_noise: true
 
 agent:
   provider: "openai"                         # "openai" | "anthropic" | "openai_compatible"
@@ -38,6 +40,7 @@ agent:
   max_retries: 5                             # Proposal Sec. 4.2: retry limit of 5
   max_tool_calls_per_retry: 6                # Prevent runaway get_context loops
   api_base_url: null                         # Optional custom endpoint (e.g., Gemini OpenAI-compat / vLLM)
+  inline_enclosing_method: true              # Prof. Yoo Nov 25 Q3: inline enclosing pre-fix method context
 
 evaluation:
   fdg_alpha: 0.5                             # An & Yoo (ISSTA 2022) default alpha = 0.5
@@ -45,3 +48,6 @@ evaluation:
   acc_n_values: [1, 3, 5, 10]                # Top-n accuracy cutoffs
   # Proposal Sec. 4.5 strict mode: require AssertionError on pre-fix (also logs LIBRO-style fail/pass)
   strict_assertion_only: false
+  # Include passing tests from tests.relevant alongside tests.trigger for full SBFL/FDG spectra
+  include_passing_baseline_tests: true
+  max_baseline_passing_tests: 25

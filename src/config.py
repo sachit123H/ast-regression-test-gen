@@ -49,6 +49,7 @@ class DatasetConfig:
     min_viable_bugs: int = 50
     max_bugs: Optional[int] = None
     strip_triggering_tests: bool = True
+    filter_ast_header_noise: bool = True
 
 
 @dataclass
@@ -60,6 +61,7 @@ class AgentConfig:
     max_retries: int = 5
     max_tool_calls_per_retry: int = 6
     api_base_url: Optional[str] = None
+    inline_enclosing_method: bool = True
 
 
 @dataclass
@@ -68,6 +70,8 @@ class EvaluationConfig:
     dstar_star: int = 2
     acc_n_values: List[int] = field(default_factory=lambda: [1, 3, 5, 10])
     strict_assertion_only: bool = False
+    include_passing_baseline_tests: bool = True
+    max_baseline_passing_tests: int = 25
 
 
 @dataclass

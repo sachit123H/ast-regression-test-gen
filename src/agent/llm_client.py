@@ -12,7 +12,23 @@ import json
 import os
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
+
+
+def _load_dotenv_if_present(dotenv_path: Path = Path(".env")) -> None:
+    """Populate missing env vars from a local gitignored `.env` file if present."""
+    if not dotenv_path.is_file():
+        return
+    for raw_line in dotenv_path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, val = line.split("=", 1)
+        key = key.strip()
+        val = val.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = val
 
 
 def _retry_with_backoff(
@@ -87,6 +103,7 @@ class LLMClient:
         if self.provider in {"openai", "openai_compatible"}:
             from openai import OpenAI  # type: ignore
 
+            _load_dotenv_if_present()
             kwargs: Dict[str, Any] = {}
             if api_base_url:
                 kwargs["base_url"] = api_base_url

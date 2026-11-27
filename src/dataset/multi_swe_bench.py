@@ -106,9 +106,17 @@ def build_multi_swe_manifest(
     output_path: Path,
     gumtree_bin: str = "gumtree",
     java_home: str = "",
+    exclusion_log_path: Optional[Path] = None,
 ) -> List[MultiSWEJavaInstance]:
-    """Checkout base & patched file snapshots, run GumTree, and save manifest."""
+    """Checkout base & patched file snapshots, run GumTree, and save manifest + exclusion audit."""
     instances: List[MultiSWEJavaInstance] = []
+    exclusions: Dict[str, List[Dict[str, str]]] = {
+        "issue_leaked_brt": [],
+        "non_single_java_file": [],
+        "multi_method_fix": [],
+        "clone_or_patch_failed": [],
+        "gumtree_parse_failed": [],
+    }
     repos_cache_dir.mkdir(parents=True, exist_ok=True)
 
     for row in rows:
@@ -119,6 +127,9 @@ def build_multi_swe_manifest(
         problem_stmt = str(row.get("problem_statement", row.get("body", "")))
 
         if not issue_lacks_brt(problem_stmt):
+            exclusions["issue_leaked_brt"].append(
+                {"instance_id": instance_id, "reason": "Problem statement contains JUnit test hints"}
+            )
             continue
 
         # Check if pre-code and post-code are directly bundled
@@ -136,6 +147,11 @@ def build_multi_swe_manifest(
 
                 changed_lines = parse_diff_changed_lines(patch_text) or [3]
                 methods = find_enclosing_methods(pre_code, changed_lines)
+                if len(methods) > 1:
+                    exclusions["multi_method_fix"].append(
+                        {"instance_id": instance_id, "reason": f"Spans {len(methods)} methods"}
+                    )
+                    continue
                 enclosing_method = methods[0].name if methods else "targetMethod"
 
                 ast_res = run_gumtree_diff(
@@ -176,6 +192,9 @@ def build_multi_swe_manifest(
 
         java_files = extract_modified_java_files(patch_text)
         if len(java_files) != 1:
+            exclusions["non_single_java_file"].append(
+                {"instance_id": instance_id, "reason": f"Modified {len(java_files)} non-test Java files"}
+            )
             continue
 
         rel_file = java_files[0]
@@ -188,6 +207,9 @@ def build_multi_swe_manifest(
                 errors="replace",
             )
             if clone.returncode != 0:
+                exclusions["clone_or_patch_failed"].append(
+                    {"instance_id": instance_id, "reason": f"git clone failed for {repo}"}
+                )
                 continue
 
         # Extract pre-fix file at base_commit and apply patch in a temp dir for GumTree
@@ -198,6 +220,9 @@ def build_multi_swe_manifest(
             errors="replace",
         )
         if show.returncode != 0:
+            exclusions["clone_or_patch_failed"].append(
+                {"instance_id": instance_id, "reason": f"git show failed at {base_commit}:{rel_file}"}
+            )
             continue
 
         with tempfile.TemporaryDirectory(prefix="mswe_gt_") as tmp:
@@ -216,10 +241,18 @@ def build_multi_swe_manifest(
                 errors="replace",
             )
             if patch_proc.returncode != 0:
+                exclusions["clone_or_patch_failed"].append(
+                    {"instance_id": instance_id, "reason": "patch -u failed on base file"}
+                )
                 continue
 
             changed_lines = parse_diff_changed_lines(patch_text)
             methods = find_enclosing_methods(show.stdout, changed_lines)
+            if len(methods) > 1:
+                exclusions["multi_method_fix"].append(
+                    {"instance_id": instance_id, "reason": f"Edits span {len(methods)} methods"}
+                )
+                continue
             enclosing_method = methods[0].name if methods else "<unknown>"
 
             ast_res = run_gumtree_diff(
@@ -231,6 +264,9 @@ def build_multi_swe_manifest(
                 java_home=java_home,
             )
             if not ast_res.success or ast_res.raw_action_count == 0:
+                exclusions["gumtree_parse_failed"].append(
+                    {"instance_id": instance_id, "reason": ast_res.error or "Zero AST actions"}
+                )
                 continue
 
             instances.append(
@@ -251,6 +287,15 @@ def build_multi_swe_manifest(
     output_path.write_text(
         json.dumps([asdict(x) for x in instances], indent=2), encoding="utf-8"
     )
+    if exclusion_log_path is not None:
+        audit = {
+            "total_scanned": len(rows),
+            "total_curated": len(instances),
+            "exclusion_counts": {k: len(v) for k, v in exclusions.items()},
+            "exclusions": exclusions,
+        }
+        exclusion_log_path.parent.mkdir(parents=True, exist_ok=True)
+        exclusion_log_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
     return instances
 
 
@@ -259,10 +304,16 @@ def main() -> None:
     parser.add_argument("--local-jsonl", type=Path, default=None)
     parser.add_argument("--cache-dir", type=Path, default=Path("tmp/multi_swe_repos"))
     parser.add_argument("--output", type=Path, default=Path("data/multi_swe_java.json"))
+    parser.add_argument("--exclusion-log", type=Path, default=Path("data/swe_bench_exclusion_log.json"))
     parser.add_argument("--limit", type=int, default=30)
     args = parser.parse_args()
     rows = load_multi_swe_java(local_jsonl=args.local_jsonl, limit=args.limit)
-    items = build_multi_swe_manifest(rows, args.cache_dir, args.output)
+    items = build_multi_swe_manifest(
+        rows,
+        args.cache_dir,
+        args.output,
+        exclusion_log_path=args.exclusion_log,
+    )
     print(f"Prepared {len(items)} Multi-SWE-bench Java instances missing BRTs -> {args.output}")
 
 

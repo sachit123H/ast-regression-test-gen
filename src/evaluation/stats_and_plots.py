@@ -86,30 +86,65 @@ def compute_tost_equivalence(
         return {"tost_p_value": 1.0, "equivalent": False}
 
     mean_diff = float(np.mean(diffs))
-    se = float(np.std(diffs, ddof=1) / np.sqrt(n))
+    sd_diff = float(np.std(diffs, ddof=1))
+    se = float(sd_diff / np.sqrt(n))
     df = n - 1
 
-    t1 = (mean_diff - (-margin)) / se
-    t2 = (margin - mean_diff) / se
-    p1 = float(1 - stats.t.cdf(t1, df=df))
-    p2 = float(1 - stats.t.cdf(t2, df=df))
+    if se == 0.0:
+        in_band = abs(mean_diff) < margin
+        t1, t2 = (float("inf"), float("inf")) if in_band else (0.0, 0.0)
+        p1, p2 = (0.0, 0.0) if in_band else (1.0, 1.0)
+    else:
+        t1 = (mean_diff - (-margin)) / se
+        t2 = (margin - mean_diff) / se
+        p1 = float(stats.t.sf(t1, df=df))
+        p2 = float(stats.t.sf(t2, df=df))
     p_tost = max(p1, p2)
 
     n_exact_ties = int(np.sum(np.isclose(diffs, 0.0, atol=1e-9)))
     n_positive = int(np.sum(diffs > 1e-9))
     n_negative = int(np.sum(diffs < -1e-9))
+    tie_fraction = round(n_exact_ties / n, 4)
 
     return {
         "n_paired": n,
         "equivalence_margin": margin,
         "mean_diff": round(mean_diff, 6),
+        "sd_diff": round(sd_diff, 6),
+        "se_diff": round(se, 6),
         "t1_stat": round(t1, 4),
         "t2_stat": round(t2, 4),
+        "p1": p1,
+        "p2": p2,
         "p_tost": p_tost,
         "equivalent_at_005": bool(p_tost < 0.05),
         "n_exact_ties": n_exact_ties,
         "n_positive_diffs": n_positive,
         "n_negative_diffs": n_negative,
+        "zero_tie_fraction": tie_fraction,
+        "parametric_caution": bool(tie_fraction >= 0.5),
+    }
+
+
+def compute_exact_sign_test(
+    raw_vals: Sequence[float],
+    ast_vals: Sequence[float],
+) -> Dict[str, Any]:
+    """Exact two-sided binomial sign test over non-zero paired differences."""
+    r = np.asarray(raw_vals, dtype=np.float64)
+    a = np.asarray(ast_vals, dtype=np.float64)
+    diffs = a - r
+    n_pos = int(np.sum(diffs > 1e-9))
+    n_neg = int(np.sum(diffs < -1e-9))
+    n_ties = int(np.sum(np.isclose(diffs, 0.0, atol=1e-9)))
+    discordant = n_pos + n_neg
+    p_val = float(stats.binomtest(min(n_pos, n_neg), discordant, 0.5).pvalue) if discordant > 0 else 1.0
+    return {
+        "n_total": int(len(diffs)),
+        "n_positive_ast": n_pos,
+        "n_negative_raw": n_neg,
+        "n_exact_ties": n_ties,
+        "p_value_two_sided": round(p_val, 6),
     }
 
 
@@ -273,20 +308,46 @@ def analyze_evaluation_records(
             for n in n_values
         }
 
-    # TOST equivalence, BCa bootstrap CI, and Cohen power analysis
+    # TOST equivalence, exact sign test, BCa bootstrap CI, and Cohen power analysis
     tost_ochiai = compute_tost_equivalence(paired_ochiai_raw, paired_ochiai_ast, margin=0.01)
+    sign_test_ochiai = compute_exact_sign_test(paired_ochiai_raw, paired_ochiai_ast)
     bca_bootstrap = compute_bca_bootstrap_ci(paired_ochiai_raw, paired_ochiai_ast, n_resamples=10000)
     power_d08 = compute_cohen_power(n=len(paired_ochiai_raw), d=0.8)
     power_d09 = compute_cohen_power(n=len(paired_ochiai_raw), d=0.9)
 
+    # Project-stratified RQ1 breakdown and failure-mode distribution
+    rq1_by_project: Dict[str, Any] = {}
+    for proj in sorted({str(r.get("project", "Unknown")) for r in eval_records}):
+        sub = [r for r in eval_records if str(r.get("project", "Unknown")) == proj]
+        pr = [bool(r["verdicts"].get("raw_diff", {}).get("is_valid_libro", False)) for r in sub]
+        pa = [bool(r["verdicts"].get("ast_edit", {}).get("is_valid_libro", False)) for r in sub]
+        rq1_by_project[proj] = mcnemar_exact(pr, pa)
+
+    rq1_failure_modes: Dict[str, Any] = {}
+    for cond in ("raw_diff", "ast_edit"):
+        cls_counts: Dict[str, int] = {}
+        for r in eval_records:
+            c = str(r["verdicts"].get(cond, {}).get("classification", "MISSING"))
+            cls_counts[c] = cls_counts.get(c, 0) + 1
+        n_fail = sum(v for k, v in cls_counts.items() if not k.startswith("VALID_"))
+        rq1_failure_modes[cond] = {
+            "counts": cls_counts,
+            "total_failures": n_fail,
+            "fail_fail_share_of_failures": round(cls_counts.get("FAIL_FAIL", 0) / max(1, n_fail), 4),
+            "prefix_pass_share_of_failures": round(cls_counts.get("PREFIX_PASS", 0) / max(1, n_fail), 4),
+        }
+
     summary = {
         "rq1_libro_validity": rq1_libro,
         "rq1_strict_assertion_validity": rq1_strict,
+        "rq1_by_project": rq1_by_project,
+        "rq1_failure_modes": rq1_failure_modes,
         "rq2_fdg_ochiai_paired": rq2_ochiai,
         "rq2_fdg_dstar_paired": rq2_dstar,
         "rq2_delta_ap_ochiai_paired": rq2_delta_ap,
         "rq2_expected_fdg_global": rq2_expected_fdg,
         "rq2_acc_at_n": acc_summary,
+        "rq2_sign_test_ochiai": sign_test_ochiai,
         "rq2_tost_ochiai": tost_ochiai,
         "rq2_bca_bootstrap_ci": bca_bootstrap,
         "rq2_power_analysis": {

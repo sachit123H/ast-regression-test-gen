@@ -55,6 +55,7 @@ class CuratedBug:
     ast_edit_script: str              # Treatment condition input (normalized GumTree)
     ast_action_count: int
     is_single_method_fix: bool
+    enclosing_method_source: str = "" # Bounded pre-fix enclosing method lines for inline context
 
 
 def _run_d4j(
@@ -307,12 +308,20 @@ def curate_defects4j(cfg: ExperimentConfig) -> Tuple[List[CuratedBug], Dict[str,
                 enclosing_method=primary_method.name,
                 gumtree_bin=cfg.tools.gumtree_bin,
                 java_home=cfg.tools.gumtree_java_home,
+                filter_header_noise=cfg.dataset.filter_ast_header_noise,
             )
             if not ast_res.success or ast_res.raw_action_count == 0:
                 exclusions["gumtree_parse_failed"].append(
                     {"bug": bug_key, "reason": ast_res.error or "Zero AST actions"}
                 )
                 continue
+
+            pre_lines = pre_source.splitlines()
+            m_start = max(1, primary_method.start_line)
+            m_end = min(len(pre_lines), max(m_start, primary_method.end_line), m_start + 249)
+            enclosing_src = "\n".join(
+                f"{ln:4d} | {pre_lines[ln - 1]}" for ln in range(m_start, m_end + 1)
+            ) if pre_lines and primary_method.end_line >= primary_method.start_line else ""
 
             record = CuratedBug(
                 bug_key=bug_key,
@@ -331,6 +340,7 @@ def curate_defects4j(cfg: ExperimentConfig) -> Tuple[List[CuratedBug], Dict[str,
                 ast_edit_script=ast_res.normalized_text,
                 ast_action_count=ast_res.raw_action_count,
                 is_single_method_fix=is_single_method,
+                enclosing_method_source=enclosing_src,
             )
 
             if is_single_method or not cfg.dataset.require_single_method_fix:

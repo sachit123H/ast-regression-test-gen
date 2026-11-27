@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -69,6 +70,75 @@ def _measure_single_test_cobertura(
     if proc.returncode != 0 or not cov_xml.exists():
         return None
     return parse_cobertura_xml(cov_xml, relevant_classes=relevant_classes)
+
+
+def extract_relevant_passing_test_fqns(
+    prefix_work_dir: Path,
+    dir_src_tests: str,
+    triggering_tests: List[str],
+    d4j_bin: str = "defects4j",
+    max_tests: int = 25,
+    is_chart: bool = False,
+) -> List[str]:
+    """Discover non-triggering test methods from `tests.relevant` for full SBFL/FDG suites."""
+    if max_tests <= 0:
+        return []
+    proc = subprocess.run(
+        wrap_d4j_cmd([d4j_bin, "export", "-p", "tests.relevant", "-w", str(prefix_work_dir)], is_chart=is_chart),
+        capture_output=True,
+        text=True,
+        errors="replace",
+        timeout=60,
+        env=get_d4j_env(),
+    )
+    if proc.returncode != 0:
+        return []
+
+    trig_set = {t.strip() for t in triggering_tests}
+    method_re = re.compile(
+        r"^\s*(?:@Test(?:\s*\([^)]*\))?\s+)?public\s+void\s+([A-Za-z_]\w*)\s*\(\s*\)",
+        re.MULTILINE,
+    )
+    passing_candidates: List[str] = []
+
+    for cls_fqn in [ln.strip() for ln in proc.stdout.splitlines() if ln.strip()]:
+        rel_test_file = prefix_work_dir / f"{dir_src_tests}/{cls_fqn.replace('.', '/')}.java"
+        if not rel_test_file.exists():
+            continue
+        src = rel_test_file.read_text(encoding="utf-8", errors="replace")
+        # Extract JUnit4 @Test methods and JUnit3 public void test... methods
+        for m in method_re.finditer(src):
+            m_name = m.group(1)
+            prefix_slice = src[max(0, m.start() - 40) : m.start()]
+            if "@Test" not in m.group(0) and "@Test" not in prefix_slice and not m_name.startswith("test"):
+                continue
+            fqn = f"{cls_fqn}::{m_name}"
+            if fqn in trig_set or fqn in passing_candidates:
+                continue
+            passing_candidates.append(fqn)
+            if len(passing_candidates) >= max_tests:
+                return passing_candidates
+    return passing_candidates
+
+
+def _is_test_passing_on_prefix(
+    prefix_work_dir: Path,
+    fqn_test: str,
+    d4j_bin: str = "defects4j",
+    timeout: int = 120,
+    is_chart: bool = False,
+) -> bool:
+    """Confirm a candidate baseline test passes cleanly on pre-fix before labeling R(t)=1."""
+    proc = subprocess.run(
+        wrap_d4j_cmd([d4j_bin, "test", "-t", fqn_test], is_chart=is_chart),
+        cwd=str(prefix_work_dir),
+        capture_output=True,
+        text=True,
+        errors="replace",
+        timeout=timeout,
+        env=get_d4j_env(),
+    )
+    return proc.returncode == 0 and "Failing tests: 0" in proc.stdout
 
 
 def _find_faulty_methods(
@@ -212,8 +282,10 @@ def run_evaluation_pipeline(cfg: ExperimentConfig) -> Dict[str, Any]:
 
         fdg_by_cond: Dict[str, Dict[str, Any]] = {}
         if valid_conds and raw_pre_dir.exists():
-            # Measure baseline `tests.trigger` coverage ONCE on clean pre-fix copy
+            is_chart = bug.get("project") == "Chart" or "org.jfree" in bug.get("target_rel_file", "")
+            # Measure baseline failing `tests.trigger` + optional passing `tests.relevant`
             base_covs: List[CoberturaCoverage] = []
+            base_results: List[int] = []
             for trig in bug["triggering_tests"]:
                 cov = _measure_single_test_cobertura(
                     raw_pre_dir,
@@ -221,14 +293,45 @@ def run_evaluation_pipeline(cfg: ExperimentConfig) -> Dict[str, Any]:
                     bug["relevant_classes"],
                     d4j_bin=cfg.tools.defects4j_bin,
                     timeout=cfg.tools.coverage_timeout_sec,
+                    is_chart=is_chart,
                 )
                 if cov is not None:
                     base_covs.append(cov)
+                    base_results.append(0)  # Triggering test fails on pre-fix
+
+            if cfg.evaluation.include_passing_baseline_tests:
+                pass_fqns = extract_relevant_passing_test_fqns(
+                    raw_pre_dir,
+                    bug["dir_src_tests"],
+                    bug["triggering_tests"],
+                    d4j_bin=cfg.tools.defects4j_bin,
+                    max_tests=cfg.evaluation.max_baseline_passing_tests,
+                    is_chart=is_chart,
+                )
+                for pfqn in pass_fqns:
+                    if not _is_test_passing_on_prefix(
+                        raw_pre_dir,
+                        pfqn,
+                        d4j_bin=cfg.tools.defects4j_bin,
+                        timeout=cfg.tools.test_timeout_sec,
+                        is_chart=is_chart,
+                    ):
+                        continue
+                    pcov = _measure_single_test_cobertura(
+                        raw_pre_dir,
+                        pfqn,
+                        bug["relevant_classes"],
+                        d4j_bin=cfg.tools.defects4j_bin,
+                        timeout=cfg.tools.coverage_timeout_sec,
+                        is_chart=is_chart,
+                    )
+                    if pcov is not None:
+                        base_covs.append(pcov)
+                        base_results.append(1)  # Passing baseline test
 
             if base_covs:
                 elements, base_mat_list, line_to_method = build_coverage_matrix(base_covs)
                 base_mat = np.asarray(base_mat_list, dtype=np.int64)
-                base_results = [0] * len(base_covs)  # All triggering tests fail on pre-fix
                 faulty_methods = _find_faulty_methods(
                     bug["modified_classes"][0],
                     bug["enclosing_method"],
@@ -244,6 +347,8 @@ def run_evaluation_pipeline(cfg: ExperimentConfig) -> Dict[str, Any]:
                     "faulty_methods": sorted(faulty_methods),
                     "baseline_matrix": base_mat_list,
                     "baseline_results": base_results,
+                    "num_baseline_failing": sum(1 for r in base_results if r == 0),
+                    "num_baseline_passing": sum(1 for r in base_results if r == 1),
                     "candidates": {},
                 }
 

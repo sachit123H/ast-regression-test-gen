@@ -52,6 +52,7 @@ def build_opening_prompt(
     condition: Condition,
     raw_diff: str,
     ast_edit_script: str,
+    enclosing_method_source: str = "",
 ) -> str:
     """Build the opening user prompt with identical structure across both conditions."""
     package_name = (
@@ -71,6 +72,24 @@ def build_opening_prompt(
     else:
         raise ValueError(f"Unsupported condition: {condition!r}")
 
+    context_section = ""
+    if enclosing_method_source.strip():
+        context_section = (
+            f"\n## Enclosing Method Context (Pre-Fix `{enclosing_method}`, "
+            f"lines {enclosing_method_start}-{enclosing_method_end})\n"
+            f"```java\n{enclosing_method_source.strip()}\n```\n"
+        )
+        ctx_step = (
+            f"1. Inspect the inlined pre-fix enclosing method above; if you need imports, fields, "
+            f"or helper classes, call `get_context` on `{target_rel_file}` or related files."
+        )
+    else:
+        ctx_step = (
+            f"1. If you need surrounding pre-fix code, call `get_context` on `{target_rel_file}` "
+            f"(for example lines {max(1, enclosing_method_start - 30)}-{enclosing_method_end + 30}) "
+            f"or related helper classes."
+        )
+
     return f"""## Target Bug Context
 - **Bug ID:** `{bug_key}`
 - **Modified File (pre-fix):** `{target_rel_file}`
@@ -79,12 +98,12 @@ def build_opening_prompt(
 - **Enclosing Method (pre-fix lines {enclosing_method_start}-{enclosing_method_end}):** `{enclosing_method}`
 - **Required Test Class Name:** `{suggested_test_class}`
 - **Required Test Method Name:** `{suggested_test_method}`
-
+{context_section}
 ## Bug-Fixing Change Representation ({rep_label})
 {rep_body}
 
 ## Instructions
-1. If you need surrounding pre-fix code, call `get_context` on `{target_rel_file}` (for example lines {max(1, enclosing_method_start - 30)}-{enclosing_method_end + 30}) or related helper classes.
+{ctx_step}
 2. Call `run_test` with a complete, compilable Java test class named `{suggested_test_class}` in package `{package_name}` containing `@Test public void {suggested_test_method}()`.
 3. Use the compiler output, execution outcome, and diagnostic method coverage from `run_test` to refine your test until it compiles and reproduces the bug on the pre-fix version (up to 5 test-execution attempts).
 """

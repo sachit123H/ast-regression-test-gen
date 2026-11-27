@@ -16,5 +16,9 @@ print('Undefined citations [?]:', len(q_cites))
 print('Undefined references ??:', len(q_refs))
 
 # Check for presence of key numbers and sections
-for term in ['65', '41.5%', '24.6%', '0.5144', '0.5148', '67.3%', 'Math-45', 'Math-5', 'Lang-17', 'HyRep-BRT', 'Table 1']:
+for term in [
+    '65', '41.5%', '24.6%', '45.0%', '36.0%', '1.59',
+    '0.5144', '0.5148', '67.3%', 'Math-45', 'Math-5', 'Lang-17',
+    'HyRep-BRT', 'Multi-SWE-bench', 'Table 1'
+]:
     print(f'Found "{term}":', term in full_text)

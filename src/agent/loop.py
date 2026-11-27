@@ -66,6 +66,33 @@ class AgentTrialResult:
         return asdict(self)
 
 
+def _resolve_enclosing_method_source(
+    bug: Dict[str, Any],
+    sandbox: PrefixSandbox,
+    max_lines: int = 250,
+) -> str:
+    """Return pre-fix enclosing method source, bounded to avoid prompt overflow."""
+    precomputed = str(bug.get("enclosing_method_source") or "").strip()
+    if precomputed:
+        return precomputed
+    start = int(bug.get("enclosing_method_start", 1))
+    end = int(bug.get("enclosing_method_end", start))
+    if end < start:
+        return ""
+    bounded_end = min(end, start + max_lines - 1)
+    try:
+        snippet = sandbox.get_context(
+            rel_path=bug["target_rel_file"],
+            start_line=max(1, start),
+            end_line=bounded_end,
+        )
+    except SandboxSecurityError:
+        return ""
+    if end > bounded_end:
+        snippet += f"\n// ... [truncated at {max_lines} lines; call get_context for lines {bounded_end + 1}-{end}]"
+    return snippet
+
+
 def run_agentic_trial(
     bug: Dict[str, Any],
     condition: Condition,
@@ -73,6 +100,7 @@ def run_agentic_trial(
     llm: LLMClient,
     max_retries: int = 5,
     max_tool_calls_per_retry: int = 6,
+    inline_enclosing_method: bool = True,
 ) -> AgentTrialResult:
     """Execute one closed agentic BRT generation trial for `(bug, condition)`."""
     t0 = time.monotonic()
@@ -81,6 +109,12 @@ def run_agentic_trial(
     target_class_fqn = bug["modified_classes"][0]
     suggested_class = f"AgentBRT_{safe_key}_{condition}_Test"
     suggested_method = "testReproduceBug"
+
+    enclosing_src = (
+        _resolve_enclosing_method_source(bug, sandbox)
+        if inline_enclosing_method
+        else ""
+    )
 
     opening_prompt = build_opening_prompt(
         bug_key=bug_key,
@@ -94,6 +128,7 @@ def run_agentic_trial(
         condition=condition,
         raw_diff=bug["raw_diff"],
         ast_edit_script=bug["ast_edit_script"],
+        enclosing_method_source=enclosing_src,
     )
 
     messages: List[Dict[str, Any]] = [

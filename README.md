@@ -128,14 +128,14 @@ Evaluated on all $N=65$ clean Defects4J bugs across Apache Commons-Lang (40 bugs
 |:-------|:-------------------|:----------------------------|:------------------------------|
 | **Differential Validity (RQ1)** | **41.5%** (27/65) | 24.6% (16/65) | McNemar $p = 0.0127$ (Statistically Significant) |
 | **Strict Assertion Validity (RQ1)** | **32.3%** (21/65) | 18.5% (12/65) | McNemar $p = 0.0225$ (Statistically Significant) |
-| **Mean FDG (Ochiai, RQ2, $N_{\text{paired}}=13$)** | 0.5144 | **0.5148** | Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.524$, TOST $p < 10^{-12}$ |
+| **Mean FDG (Ochiai, RQ2, $N_{\text{paired}}=13$)** | 0.5144 | **0.5148** | Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.524$, 95\% BCa CI $[0.000019, 0.001463]$ (secondary TOST $p = 2.71 \times 10^{-13}$) |
 | **Mean FDG (DStar $*=2$, RQ2)** | 0.5141 | **0.5145** | Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.518$ |
 | **Realised Mean $\Delta\text{AP}$ (RQ2)** | +0.0574 | **+0.0676** | Wilcoxon $p = 1.0000$, $\hat{A}_{12} = 0.538$ (AST slight refinement) |
 | **Method acc@3 (RQ2)** | 7 ($\Delta = +2$) | **8** ($\Delta = +3$) | Baseline = 5 |
 | **Expected Diagnosability $E[\text{FDG}]$ ($N=65$)** | **0.2131** | 0.1263 | Wilcoxon $p = 0.0157$, $\hat{A}_{12} = 0.420$ (68.7% Raw advantage) |
 | **Mean Token Overhead (RQ3)** | 26,027 tokens | **22,505 tokens** | **13.5% reduction** with AST |
 
-**Key Finding:** Modern LLMs reproduce defects with significantly higher validity from raw unified diffs due to extensive pre-training priors on Git diffs and lexical literal preservation. However, conditioned on producing a valid test ($N_{\text{paired}}=13$), AST edit scripts achieve statistically equivalent fault diagnosability (confirmed via Two One-Sided Tests equivalence at $\pm 0.01$), slightly higher realized fault ranking gains ($\Delta\text{AP} = +0.0676$ vs. $+0.0574$, $\text{acc@}3 = 8$ vs. $7$), and a 13.5% token overhead reduction. Across the entire $N=65$ population, raw diff delivers 68.7% higher Expected Diagnosability ($0.2131$ vs. $0.1263$, $p=0.0157$). To synthesize both benefits, we propose and prototype **HyRep-BRT** (`src/ast_diff/hyrep.py`), a hybrid representation embedding AST node tags into unified diffs.
+**Key Finding:** In the evaluated benchmark, raw unified diffs significantly outperformed the initial over-normalized AST edit scripts (41.5% vs. 24.6% validity; 45.0% vs. 25.0% on Lang, 36.0% vs. 24.0% on Math) because GumTree v3.0.0 JSON omitted nested subtrees (stripping operand literals across all 65 bugs) and retained spurious `TypeDeclaration` header noise in 49/65 bugs. Conditioned on producing a valid test ($N_{\text{paired}}=13$), both representations achieve practically equivalent fault diagnosability (3 AST wins / 9 ties / 1 raw win; 95% BCa CI $[0.000019, 0.001463] \subset [-0.01, +0.01]$), while AST scripts reduce token overhead by 13.5%. Note that the 30 stored spectra use failing-only `tests.trigger` baselines ($e_p = 0$). To address all identified limitations for follow-up evaluation, we subsequently patched `gumtree_normalizer.py` (offset-based literal recovery + balanced header-noise filtering), added `inline_enclosing_method` support in `prompts.py`, added passing-test support (`tests.relevant`) in `pipeline.py`, and upgraded the conceptual `HyRep-BRT` prototype (`src/ast_diff/hyrep.py`).
 
 ---
 

@@ -28,7 +28,7 @@ def main() -> None:
         "--conditions",
         nargs="+",
         default=["raw_diff", "ast_edit"],
-        choices=["raw_diff", "ast_edit"],
+        choices=["raw_diff", "ast_edit", "hyrep"],
     )
     parser.add_argument("--limit", type=int, default=None, help="Limit number of bugs (e.g., pilot run)")
     parser.add_argument("--resume", action="store_true", default=True, help="Skip already completed trials")
@@ -88,6 +88,7 @@ def main() -> None:
                     llm=llm,
                     max_retries=cfg.agent.max_retries,
                     max_tool_calls_per_retry=cfg.agent.max_tool_calls_per_retry,
+                    inline_enclosing_method=cfg.agent.inline_enclosing_method,
                 )
                 out_path.write_text(json.dumps(res.to_dict(), indent=2), encoding="utf-8")
                 print(

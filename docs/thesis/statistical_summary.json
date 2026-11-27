@@ -19,6 +19,54 @@
     "ast_rate": 0.1846,
     "p_value": 0.022461
   },
+  "rq1_by_project": {
+    "Lang": {
+      "n_total": 40,
+      "both_valid": 7,
+      "raw_only_valid": 11,
+      "ast_only_valid": 3,
+      "both_invalid": 19,
+      "raw_rate": 0.45,
+      "ast_rate": 0.25,
+      "p_value": 0.057373
+    },
+    "Math": {
+      "n_total": 25,
+      "both_valid": 6,
+      "raw_only_valid": 3,
+      "ast_only_valid": 0,
+      "both_invalid": 16,
+      "raw_rate": 0.36,
+      "ast_rate": 0.24,
+      "p_value": 0.25
+    }
+  },
+  "rq1_failure_modes": {
+    "raw_diff": {
+      "counts": {
+        "FAIL_FAIL": 19,
+        "VALID_ASSERTION": 21,
+        "PREFIX_PASS": 18,
+        "VALID_EXCEPTION": 6,
+        "COMPILE_ERROR": 1
+      },
+      "total_failures": 38,
+      "fail_fail_share_of_failures": 0.5,
+      "prefix_pass_share_of_failures": 0.4737
+    },
+    "ast_edit": {
+      "counts": {
+        "PREFIX_PASS": 13,
+        "FAIL_FAIL": 33,
+        "VALID_EXCEPTION": 4,
+        "VALID_ASSERTION": 12,
+        "COMPILE_ERROR": 3
+      },
+      "total_failures": 49,
+      "fail_fail_share_of_failures": 0.6735,
+      "prefix_pass_share_of_failures": 0.2653
+    }
+  },
   "rq2_fdg_ochiai_paired": {
     "n_paired": 13,
     "raw_mean": 0.5144,
@@ -105,17 +153,30 @@
       "delta_ast": 0
     }
   },
+  "rq2_sign_test_ochiai": {
+    "n_total": 13,
+    "n_positive_ast": 3,
+    "n_negative_raw": 1,
+    "n_exact_ties": 9,
+    "p_value_two_sided": 0.625
+  },
   "rq2_tost_ochiai": {
     "n_paired": 13,
     "equivalence_margin": 0.01,
     "mean_diff": 0.000393,
+    "sd_diff": 0.001081,
+    "se_diff": 0.0003,
     "t1_stat": 34.6497,
     "t2_stat": 32.0273,
-    "p_tost": 2.710054403110007e-13,
+    "p1": 1.0639159079144792e-13,
+    "p2": 2.7101125870900494e-13,
+    "p_tost": 2.7101125870900494e-13,
     "equivalent_at_005": true,
     "n_exact_ties": 9,
     "n_positive_diffs": 3,
-    "n_negative_diffs": 1
+    "n_negative_diffs": 1,
+    "zero_tie_fraction": 0.6923,
+    "parametric_caution": true
   },
   "rq2_bca_bootstrap_ci": {
     "confidence_level": 0.95,

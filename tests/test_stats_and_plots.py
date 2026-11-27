@@ -49,6 +49,10 @@ def test_analyze_evaluation_records_generates_tables_and_plots(tmp_path: Path):
     assert summary["rq2_fdg_ochiai_paired"]["a12"] > 0.71
     assert "rq2_expected_fdg_global" in summary
     assert summary["rq2_expected_fdg_global"]["n_paired"] == 6
+    assert "rq1_by_project" in summary and "Lang" in summary["rq1_by_project"]
+    assert "rq1_failure_modes" in summary
+    assert "rq2_sign_test_ochiai" in summary
+    assert "p1" in summary["rq2_tost_ochiai"] and "p2" in summary["rq2_tost_ochiai"]
     assert "rq2_acc_at_n" in summary
     assert summary["rq2_acc_at_n"]["acc@1"]["ast_edit"] == 6
     assert (tmp_path / "table_rq1.tex").exists()

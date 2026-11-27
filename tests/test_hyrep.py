@@ -60,3 +60,32 @@ AST Edit Operations (1):
     # Verifies AST node annotation
     assert "[AST: UPDATE InfixExpression" in hyrep_diff
     assert "[AST-Node: IfStatement -> InfixExpression (OR)]" in hyrep_diff
+
+
+def test_hyrep_filters_header_noise_and_aligns_multihunk():
+    raw_diff = """--- a/Demo.java
++++ b/Demo.java
+@@ -10,3 +10,4 @@
++        if (x > 100) {
++            throw new IllegalArgumentException();
+@@ -40,2 +41,3 @@
++        return flag ? 1 : 0;
+"""
+    noisy_script = """File: src/Demo.java
+Enclosing Method: check
+AST Edit Operations (8):
+  1. INSERT Modifier(public) into TypeDeclaration
+  2. INSERT TYPE_DECLARATION_KIND(class) into TypeDeclaration
+  3. INSERT SimpleName(Demo) into TypeDeclaration
+  4. INSERT ThrowStatement into Block :: `throw new IllegalArgumentException()`
+  5. INSERT ReturnStatement into Block :: `return flag ? 1 : 0;`
+  6. DELETE Modifier(public)
+  7. DELETE TYPE_DECLARATION_KIND(class)
+  8. DELETE SimpleName(Demo)
+"""
+    hyrep = generate_hyrep_diff(raw_diff, noisy_script)
+    assert "Modifier(public)" not in hyrep
+    assert "TYPE_DECLARATION_KIND" not in hyrep
+    assert "@@ -10,3 +10,4 @@ [AST: INSERT ThrowStatement" in hyrep
+    assert "@@ -40,2 +41,3 @@ [AST: INSERT ReturnStatement" in hyrep
+    assert "[AST-Node: ReturnStatement -> ConditionalExpression]" in hyrep

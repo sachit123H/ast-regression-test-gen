@@ -68,3 +68,48 @@ to Block [15,60] at 2
     assert actions[0].new_label == "<="
     assert actions[1].action == "INSERT"
     assert actions[1].parent_type == "Block"
+
+
+def test_filter_phantom_header_noise_preserves_genuine_edits():
+    payload = {
+        "actions": [
+            {"action": "insert-node", "tree": "Modifier: public [0,6]", "parent": "TypeDeclaration [0,100]"},
+            {"action": "insert-node", "tree": "TYPE_DECLARATION_KIND: class [7,12]", "parent": "TypeDeclaration [0,100]"},
+            {"action": "insert-node", "tree": "SimpleName: NumberUtils [13,24]", "parent": "TypeDeclaration [0,100]"},
+            {"action": "insert-tree", "tree": "MethodInvocation [50,70]", "parent": "InfixExpression [30,70]"},
+            {"action": "delete-node", "tree": "SimpleName: oldHelper [40,49]"},
+            {"action": "delete-node", "tree": "Modifier: public [0,6]"},
+            {"action": "delete-node", "tree": "TYPE_DECLARATION_KIND: class [7,12]"},
+            {"action": "delete-node", "tree": "SimpleName: NumberUtils [13,24]"},
+        ]
+    }
+    dst_src = "0" * 50 + 'str.startsWith("0X")' + "0" * 40
+    pre_src = "0" * 40 + "oldHelper" + "0" * 40
+    actions = parse_gumtree_json(payload, src_text=pre_src, dst_text=dst_src)
+    # Phantom TypeDeclaration header churn must be dropped; real method edit & method-body delete kept
+    assert len(actions) == 2
+    assert actions[0].action == "INSERT"
+    assert actions[0].node_type == "MethodInvocation"
+    assert '"0X"' in actions[0].subtree_summary
+    assert actions[1].action == "DELETE"
+    assert actions[1].label == "oldHelper"
+
+
+def test_parse_gumtree_v3_text_with_dash_separators():
+    raw_text = """===
+insert-tree
+---
+IfStatement [100,160]
+    InfixExpression: >= [104,135]
+        SimpleName: lRow [104,108]
+        SimpleName: Integer.MAX_VALUE [120,135]
+---
+to
+Block [80,200]
+at 1
+"""
+    actions = parse_gumtree_text(raw_text)
+    assert len(actions) == 1
+    assert actions[0].action == "INSERT"
+    assert actions[0].parent_type == "Block"
+    assert "Integer.MAX_VALUE" in actions[0].subtree_summary
