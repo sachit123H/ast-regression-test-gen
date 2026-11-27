@@ -338,7 +338,7 @@ We also measure empirical localization gain: Mean Average Precision change ($\De
   \item \textbf{RQ2 (Diagnostic Quality):} Evaluated on the jointly valid paired subset ($N_{\text{paired}} = 13$) using the paired Wilcoxon signed-rank test and Vargha--Delaney $\hat{A}_{12}$ effect size~\citep{vargha2000a12}.
   \item \textbf{Bootstrap Confidence Intervals:} 95\% bias-corrected and accelerated (BCa) bootstrap intervals for $\Delta\text{FDG}$ over 10,000 resamples ($[0.000019, 0.001463]$).
   \item \textbf{Statistical Power Analysis:} In empirical software engineering, non-significant Wilcoxon tests ($p > 0.05$) often suffer from low statistical power when sample sizes are constrained by joint validity. Following \citet{cohen1988power}, we compute post-hoc statistical power for the paired test. At $N_{\text{paired}} = 13$, statistical power to detect a large effect ($d=0.8$) is $1-\beta = 0.75$ ($1-\beta = 0.84$ at $d=0.9$), confirming adequate sensitivity to detect substantial diagnostic disparities.
-  \item \textbf{TOST Equivalence Testing:} Because modest sample sizes prevent interpreting $p > 0.05$ as evidence of equivalence, we employ Two One-Sided Tests (TOST)~\citep{schuirmann1987tost} with an equivalence boundary of $\pm \Delta_E = \pm 0.01$ (a 1\% margin on normalized FDG). Rejecting both one-sided null hypotheses ($H_{01}: \Delta\text{FDG} \le -0.01$ and $H_{02}: \Delta\text{FDG} \ge +0.01$) at $\alpha = 0.05$ mathematically confirms equivalence within practical limits ($p_{\text{TOST}} < 10^{-12}$).
+  \item \textbf{TOST Equivalence Testing:} Because modest sample sizes prevent interpreting $p > 0.05$ as evidence of equivalence, we employ Two One-Sided Tests (TOST)~\citep{schuirmann1987tost} with an equivalence boundary of $\pm \Delta_E = \pm 0.01$ (a 1\% margin on normalized FDG). Rejecting both one-sided null hypotheses ($H_{01}: \Delta\text{FDG} \le -0.01$ and $H_{02}: \Delta\text{FDG} \ge +0.01$) at $\alpha = 0.05$ mathematically confirms equivalence within practical limits ($p_{\text{TOST}} < 10^{-12}$). Because 9 of the 13 paired differences are exact zeros, we corroborate this parametric test with the non-parametric 95\% BCa bootstrap confidence interval ($[0.000019, 0.001463] \subset [-0.01, +0.01]$), confirming equivalence without distributional assumptions.
 \end{itemize}
 
 \subsubsection{Spectra Coverage Reconciliation and Paired Subset Formation}\label{sec:spectra_reconciliation}
@@ -396,7 +396,7 @@ The paired Wilcoxon test yields $p = 0.2500$ ($W = 1.0$) because 9 of the 13 pai
 Concurrently, the 95\% BCa bootstrap confidence interval across 10,000 resamples is tightly bounded at $[0.000019, 0.001463]$.
 While this interval strictly excludes zero by a microscopic margin ($+0.000019$) due to those 3 subtle AST refinements, it remains entirely contained within our pre-registered $\pm 0.01$ equivalence band.
 Applying the TOST equivalence procedure with a practical $\pm 0.01$ margin yields an overall $p_{\text{TOST}} < 10^{-12}$ ($p_1 = 2.71 \times 10^{-13}, p_2 = 1.25 \times 10^{-18}$).
-This formally confirms that when both representations produce valid tests, their fault diagnosability gains are statistically equivalent within a 1\% margin.
+Corroborated non-parametrically by the 95\% BCa bootstrap confidence interval strictly contained in $[-0.01, +0.01]$, this formally confirms that when both representations produce valid tests, their fault diagnosability gains are statistically equivalent within a 1\% margin without distributional assumptions.
 Robustness evaluation under DStar ($*=2$) exhibits the same parity: mean FDG of 0.5141 for raw diffs versus 0.5145 for AST ($\Delta = +0.0004, \text{Wilcoxon } p = 0.2500, \hat{A}_{12} = 0.518$).
 
 \textbf{Realized localization accuracy.}
@@ -428,12 +428,12 @@ In \texttt{Lang-6}, the developer fix corrected a character loop index in \textt
 Both raw diff and AST edit script cleanly alerted the agent to the modified index argument.
 Both representations produced valid BRTs triggering a \texttt{StringIndexOutOfBoundsException} on pre-fix and passing on post-fix, yielding identical FDG ($0.5328$) and advancing the faulty method's SBFL rank by 2 positions.
 
-\textbf{Case 2: Semantic tree modification (\texttt{Lang-17}).}
-In \texttt{Lang-17}, the bug involved index calculations in \texttt{CharSequenceTranslator.translate}.
-The raw diff condition failed to convey enclosing structural boundaries, leading the model to hallucinate an overconstrained character assertion that failed on both checkouts (\texttt{FAIL\_FAIL}).
-In contrast, the AST edit script isolated the change as an \texttt{UPDATE} on an \texttt{InfixExpression}, allowing the agent to generate a valid test achieving $\text{FDG} = 0.5104$ and advancing the fault rank by 2.
+\textbf{Case 2: Semantic tree modification (\texttt{Lang-17}).}\\
+In \texttt{Lang-17}, the defect involved index calculations during surrogate pair translation in \texttt{CharSequenceTranslator}.
+The raw diff condition produced an overconstrained assertion on the surrogate pair output string that failed on both checkouts (\texttt{FAIL\_FAIL}: \texttt{expected:<A?[?]> but was:<A?[]>}).
+In contrast, the AST edit script isolated the structural refactoring around the translation loop (\texttt{MOVE} of \texttt{MethodInvocation}, \texttt{INSERT} of \texttt{ContinueStatement}, and deleting the \texttt{codePointCount} invocation and \texttt{InfixExpression} guard), allowing the agent to synthesize a valid test achieving $\text{FDG} = 0.5104$ and advancing the fault rank from 4 to 2 (+2 rank improvement, $\Delta\text{AP} = +0.125$).
 
-\textbf{Case 3: Literal parameter synthesis (\texttt{Lang-16}).}
+\textbf{Case 3: Literal parameter synthesis (\texttt{Lang-16}).}\\
 In \texttt{Lang-16} (\texttt{NumberUtils.createNumber}), the patch added hexadecimal prefix checks:
 \begin{lstlisting}[language=diff, caption={Lang-16 raw diff vs. actual normalized GumTree AST edit script.}]
 --- Raw git diff (Control) ---
@@ -475,19 +475,19 @@ In \texttt{Math-45} (\texttt{OpenMapRealMatrix}), the defect involved integer ov
 8. DELETE TYPE_DECLARATION_KIND(class)
 9. DELETE SimpleName(OpenMapRealMatrix)
 \end{lstlisting}
-The raw diff explicitly presented the arithmetic expression \texttt{lRow * lCol >= (long) Integer.MAX\_VALUE} and the specific exception type \texttt{NumberIsTooLargeException}.
+The raw diff explicitly presented the arithmetic expression \texttt{lRow * lCol >=} \texttt{(long) Integer.MAX\_VALUE} and the target exception \texttt{NumberIsTooLargeException}.
 Recognizing the integer overflow guard immediately, the raw diff agent instantiated matrix dimensions exceeding $2^{31}-1$ (\texttt{new OpenMapRealMatrix(50000, 50000)}), correctly catching \texttt{NumberIsTooLargeException} on the fixed version while exposing the unhandled pre-fix overflow (\texttt{VALID\_ASSERTION}).
 In contrast, the normalized AST edit script abstracted away the threshold \texttt{Integer.MAX\_VALUE} and exception type down to bare \texttt{INSERT VariableDeclarationStatement into Block} and \texttt{INSERT IfStatement into Block}.
 Lacking this explicit constant, the AST agent erroneously hypothesized that the check guarded against zero-dimension matrices and proposed \texttt{new OpenMapRealMatrix(0, 0)}.
 This input threw no exception on either version and failed on both checkouts (\texttt{FAIL\_FAIL}), perfectly mirroring the lexical constant omission observed in \texttt{Lang-16} within a complex numerical linear algebra context.
 
-\textbf{Case 5: Mathematical edge-case assertion formulation (\texttt{Math-5}).}
+\textbf{Case 5: Mathematical edge-case assertion formulation (\texttt{Math-5}).}\\
 In \texttt{Math-5} (\texttt{Complex.reciprocal()}), calculating the reciprocal of zero complex numbers ($0.0 + 0.0i$) incorrectly returned \texttt{Complex.NaN} instead of the mathematically correct \texttt{Complex.INF}.
 The normalized AST edit script cleanly isolated this replacement as \texttt{UPDATE SimpleName: NaN -> INF}.
 Both representations recognized the target zero condition and instantiated \texttt{new Complex(0.0, 0.0).reciprocal()} with \texttt{VALID\_ASSERTION} outcomes.
 However, they formulated distinct assertions that produced differing diagnostic refinements:
-the raw diff agent asserted exact value equality (\texttt{assertEquals(Complex.INF, result)}), which preserved the baseline SBFL rank of 5 without improvement ($\text{FDG} = 0.5045, \Delta\text{AP} = 0.0$);
-in contrast, the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}), which partitioned execution ambiguity groups more effectively ($\text{FDG} = 0.5082$), advancing the faulty method's SBFL rank from 5 to 3 (+2 rank improvement, $\Delta\text{AP} = +0.1333$).
+the raw diff agent asserted exact value equality (\texttt{assertEquals(Complex.INF, result)}), which preserved the baseline SBFL rank of 5 without improvement ($\text{FDG} = 0.5045$, $\Delta\text{AP} = 0.0$).
+In contrast, the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}), which partitioned execution ambiguity groups more effectively ($\text{FDG} = 0.5082$), advancing the faulty method's SBFL rank from 5 to 3 (+2 rank improvement, $\Delta\text{AP} = +0.1333$).
 This case demonstrates that when AST normalization retains semantic node identities (e.g., \texttt{NaN -> INF}), it can guide the agent toward sharper diagnostic state assertions.
 
 \subsection{Master Experimental Synthesis}\label{sec:summary_master}
@@ -503,7 +503,7 @@ Table~\ref{tab:summary_master} synthesizes our empirical results across all rese
 \subsection{Internal Validity}\label{sec:internal_validity}
 \begin{itemize}[leftmargin=*]
   \item \textbf{Information leakage:} Post-fix source code and developer triggering tests were programmatically isolated from the agent using root path confinement and physical method stubbing, audited by \texttt{scripts/verify\_isolation.py}.
-  \item \textbf{Stochasticity, tokenizers, and model specificity:} All experiments evaluated the pinned frontier model snapshot \texttt{gpt-4o-2024-08-06} with greedy decoding (\texttt{temperature = 0.0}), guaranteeing strict determinism and comparability across all 130 trials.
+  \item \textbf{Stochasticity, tokenizers, and model specificity:} All experiments evaluated the pinned frontier model snapshot \texttt{gpt-4o} (version \texttt{2024-08-06}) with greedy decoding (\texttt{temperature = 0.0}), guaranteeing strict determinism and comparability across all 130 trials.
     OpenAI's Byte-Pair Encoding (BPE) tokenizers (\texttt{cl100k\_base} and \texttt{o200k\_base}) allocate dedicated single tokens for common unified diff tokens (\texttt{@@}, \texttt{+}, \texttt{-}) due to the abundance of git commits in pre-training corpora.
     Conversely, normalized AST edit scripts present unusual hierarchical token combinations that may increase perplexity for literal constants.
     Future work evaluating code-specialized architectures (e.g., Anthropic Claude 3.5 Sonnet, DeepSeek-Coder-V2, and Qwen 2.5 Coder) will help isolate tokenizer-specific biases from underlying reasoning capabilities.
