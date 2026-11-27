@@ -1,0 +1,670 @@
+{
+  "total_libro_valid_tests": 43,
+  "total_strict_assertion_valid": 33,
+  "total_exception_only_valid": 10,
+  "all_valid_call_target_class": true,
+  "valid_with_enclosing_hit_false": [
+    {
+      "bug_key": "Math-35",
+      "condition": "raw_diff",
+      "notes": [
+        "enclosing_method_hit=False on recorded span (e.g., overloaded constructor in Math-35)"
+      ]
+    },
+    {
+      "bug_key": "Math-35",
+      "condition": "ast_edit",
+      "notes": [
+        "enclosing_method_hit=False on recorded span (e.g., overloaded constructor in Math-35)"
+      ]
+    }
+  ],
+  "degenerate_test_flags_across_all_trials": [
+    {
+      "bug_key": "Lang-6",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "reason": "Reimplements or defines helper with target method name in test class"
+    },
+    {
+      "bug_key": "Lang-6",
+      "condition": "ast_edit",
+      "classification": "VALID_EXCEPTION",
+      "reason": "Reimplements or defines helper with target method name in test class"
+    },
+    {
+      "bug_key": "Lang-10",
+      "condition": "ast_edit",
+      "classification": "FAIL_FAIL",
+      "reason": "Reimplements or defines helper with target method name in test class"
+    }
+  ],
+  "valid_tests": [
+    {
+      "bug_key": "Lang-3",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-6",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.StringIndexOutOfBoundsException",
+      "attempts_to_stop": 2,
+      "notes": [
+        "Exception-only validity (java.lang.StringIndexOutOfBoundsException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-6",
+      "condition": "ast_edit",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.StringIndexOutOfBoundsException",
+      "attempts_to_stop": 3,
+      "notes": [
+        "Exception-only validity (java.lang.StringIndexOutOfBoundsException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-9",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-14",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-14",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-16",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-17",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-19",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.StringIndexOutOfBoundsException",
+      "attempts_to_stop": 1,
+      "notes": [
+        "Exception-only validity (java.lang.StringIndexOutOfBoundsException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-21",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-21",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-24",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-28",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-37",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.ArrayStoreException",
+      "attempts_to_stop": 1,
+      "notes": [
+        "Exception-only validity (java.lang.ArrayStoreException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-38",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-38",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-40",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-45",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.StringIndexOutOfBoundsException",
+      "attempts_to_stop": 2,
+      "notes": [
+        "Exception-only validity (java.lang.StringIndexOutOfBoundsException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-49",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-49",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 4,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-51",
+      "condition": "ast_edit",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.StringIndexOutOfBoundsException",
+      "attempts_to_stop": 3,
+      "notes": [
+        "Exception-only validity (java.lang.StringIndexOutOfBoundsException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-52",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.ComparisonFailure",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-52",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.ComparisonFailure",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-55",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 4,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-57",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.NullPointerException",
+      "attempts_to_stop": 2,
+      "notes": [
+        "Exception-only validity (java.lang.NullPointerException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-57",
+      "condition": "ast_edit",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.NullPointerException",
+      "attempts_to_stop": 2,
+      "notes": [
+        "Exception-only validity (java.lang.NullPointerException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-61",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Lang-64",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-5",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-5",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-8",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-17",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-17",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 4,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-20",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 4,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-34",
+      "condition": "raw_diff",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.IllegalStateException",
+      "attempts_to_stop": 3,
+      "notes": [
+        "Exception-only validity (java.lang.IllegalStateException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-34",
+      "condition": "ast_edit",
+      "classification": "VALID_EXCEPTION",
+      "is_valid_strict_assertion": false,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "java.lang.IllegalStateException",
+      "attempts_to_stop": 3,
+      "notes": [
+        "Exception-only validity (java.lang.IllegalStateException); excluded under strict assertion criterion"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-35",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": false,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [
+        "enclosing_method_hit=False on recorded span (e.g., overloaded constructor in Math-35)"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-35",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": false,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [
+        "enclosing_method_hit=False on recorded span (e.g., overloaded constructor in Math-35)"
+      ],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-43",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-43",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-45",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 1,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-46",
+      "condition": "raw_diff",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 2,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    },
+    {
+      "bug_key": "Math-46",
+      "condition": "ast_edit",
+      "classification": "VALID_ASSERTION",
+      "is_valid_strict_assertion": true,
+      "calls_target_class": true,
+      "enclosing_method_hit": true,
+      "has_assertion_construct": true,
+      "uses_reflection": false,
+      "prefix_exception": "junit.framework.AssertionFailedError",
+      "attempts_to_stop": 3,
+      "notes": [],
+      "manual_status": "VALID_CONFIRMED"
+    }
+  ]
+}

@@ -113,3 +113,21 @@ at 1
     assert actions[0].action == "INSERT"
     assert actions[0].parent_type == "Block"
     assert "Integer.MAX_VALUE" in actions[0].subtree_summary
+
+
+def test_move_action_preserves_subtree_summary_and_method_header_noise_cancelled():
+    payload = {
+        "actions": [
+            {"action": "insert-node", "tree": "Modifier: private [0,7]", "parent": "MethodDeclaration [0,80]"},
+            {"action": "insert-node", "tree": "SimpleName: squareRoot [15,25]", "parent": "MethodDeclaration [0,80]"},
+            {"action": "move-tree", "tree": "InfixExpression [30,44]", "parent": "InfixExpression [28,60]"},
+            {"action": "delete-node", "tree": "Modifier: private [0,7]"},
+            {"action": "delete-node", "tree": "SimpleName: squareRoot [15,25]"},
+        ]
+    }
+    src = "0" * 30 + "hexDigits > 16" + "0" * 50
+    actions = parse_gumtree_json(payload, src_text=src, dst_text=src)
+    assert len(actions) == 1
+    assert actions[0].action == "MOVE"
+    line = actions[0].format_line()
+    assert "`hexDigits > 16`" in line

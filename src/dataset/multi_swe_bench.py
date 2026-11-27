@@ -11,6 +11,7 @@ benchmark (65 curated bugs across Commons-Lang and Commons-Math, 130 trials).
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -21,6 +22,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from src.ast_diff.gumtree_normalizer import run_gumtree_diff
+from src.config import ExperimentConfig
 from src.dataset.defects4j_curate import find_enclosing_methods, parse_diff_changed_lines
 
 
@@ -46,9 +48,68 @@ def issue_lacks_brt(problem_statement: str) -> bool:
 
 
 def extract_modified_java_files(patch_text: str) -> List[str]:
-    """Return relative paths of `.java` non-test source files modified in a git patch."""
-    files = re.findall(r"^\+\+\+ b/(.+\.java)$", patch_text or "", flags=re.MULTILINE)
-    return [f for f in files if "/test/" not in f and not f.endswith("Test.java")]
+    """Return relative paths of `.java` non-test source files iff ALL modified files are non-test Java."""
+    all_files = re.findall(r"^\+\+\+ b/(.+)$", patch_text or "", flags=re.MULTILINE)
+    if not all_files:
+        return []
+    for f in all_files:
+        if not f.endswith(".java") or "/test/" in f or f.endswith("Test.java"):
+            return []
+    return all_files
+
+
+def _extract_problem_text(row: Dict[str, Any]) -> str:
+    """Combine problem_statement/title/body/resolved_issues across Multi-SWE-bench schemas."""
+    parts: List[str] = []
+    for key in ("problem_statement", "title", "body"):
+        val = row.get(key)
+        if val:
+            parts.append(str(val))
+    resolved = row.get("resolved_issues")
+    if isinstance(resolved, str) and resolved.strip().startswith("["):
+        try:
+            resolved = ast.literal_eval(resolved)
+        except Exception:
+            resolved = None
+    if isinstance(resolved, list):
+        for issue in resolved:
+            if isinstance(issue, dict):
+                if issue.get("title"):
+                    parts.append(str(issue["title"]))
+                if issue.get("body"):
+                    parts.append(str(issue["body"]))
+    return "\n".join(parts)
+
+
+def _normalize_row(row: Dict[str, Any]) -> Dict[str, Any]:
+    """Normalize both simplified and ByteDance-Seed/Multi-SWE-bench row schemas."""
+    org = str(row.get("org") or "").strip()
+    repo_val = str(row.get("repo") or "").strip()
+    full_repo = f"{org}/{repo_val}" if org and "/" not in repo_val else repo_val
+    base_val = row.get("base")
+    if isinstance(base_val, dict):
+        base_commit = str(base_val.get("sha") or "")
+    else:
+        base_commit = str(row.get("base_commit") or "")
+    patch_text = str(row.get("fix_patch") or row.get("patch") or "")
+    return {
+        "instance_id": str(row.get("instance_id") or ""),
+        "repo": full_repo,
+        "base_commit": base_commit,
+        "patch": patch_text,
+        "problem_statement": _extract_problem_text(row),
+        "pre_code": row.get("pre_code"),
+        "post_code": row.get("post_code"),
+        "target_rel_file": row.get("target_rel_file", ""),
+    }
+
+
+def _read_jsonl_rows(path: Path) -> List[Dict[str, Any]]:
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
 
 
 def load_multi_swe_java(
@@ -57,17 +118,31 @@ def load_multi_swe_java(
     split: str = "java",
     limit: int = 30,
 ) -> List[Dict[str, Any]]:
-    """Load Java instances from local JSONL, bundled fallback, or Hugging Face `datasets`."""
+    """Load Java instances from a local JSONL file, JSONL directory, or HF `datasets`."""
     fallback_path = Path("data/multi_swe_bench_samples.jsonl")
 
-    # If explicit local_jsonl given or fallback file exists, prefer deterministic offline local
     if local_jsonl and local_jsonl.exists():
-        rows = [
-            json.loads(line)
-            for line in local_jsonl.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-        return rows[:limit]
+        if local_jsonl.is_dir():
+            # Round-robin across per-repo JSONL files to avoid Arrow multi-file schema clashes
+            per_file_rows = [
+                _read_jsonl_rows(fp)
+                for fp in sorted(local_jsonl.glob("*.jsonl"))
+            ]
+            sampled: List[Dict[str, Any]] = []
+            idx = 0
+            while len(sampled) < limit:
+                progressed = False
+                for bucket in per_file_rows:
+                    if idx < len(bucket):
+                        sampled.append(bucket[idx])
+                        progressed = True
+                        if len(sampled) >= limit:
+                            break
+                if not progressed:
+                    break
+                idx += 1
+            return sampled
+        return _read_jsonl_rows(local_jsonl)[:limit]
 
     # Try streaming from Hugging Face datasets first to avoid Arrow schema-cast issues
     try:
@@ -89,12 +164,7 @@ def load_multi_swe_java(
         return [dict(ds[i]) for i in range(min(limit, len(ds)))]
     except Exception as exc:
         if fallback_path.exists():
-            rows = [
-                json.loads(line)
-                for line in fallback_path.read_text(encoding="utf-8").splitlines()
-                if line.strip()
-            ]
-            return rows[:limit]
+            return _read_jsonl_rows(fallback_path)[:limit]
         raise RuntimeError(
             f"Could not load Multi-SWE-bench instances via HF datasets ({exc}) and no local JSONL found."
         ) from exc
@@ -119,12 +189,13 @@ def build_multi_swe_manifest(
     }
     repos_cache_dir.mkdir(parents=True, exist_ok=True)
 
-    for row in rows:
-        instance_id = str(row.get("instance_id", ""))
-        repo = str(row.get("repo", ""))
-        base_commit = str(row.get("base_commit", ""))
-        patch_text = str(row.get("patch", ""))
-        problem_stmt = str(row.get("problem_statement", row.get("body", "")))
+    for raw_row in rows:
+        row = _normalize_row(raw_row)
+        instance_id = row["instance_id"]
+        repo = row["repo"]
+        base_commit = row["base_commit"]
+        patch_text = row["patch"]
+        problem_stmt = row["problem_statement"]
 
         if not issue_lacks_brt(problem_stmt):
             exclusions["issue_leaked_brt"].append(
@@ -132,7 +203,7 @@ def build_multi_swe_manifest(
             )
             continue
 
-        # Check if pre-code and post-code are directly bundled
+        # Check if pre-code and post-code are directly bundled (unit tests)
         pre_code = row.get("pre_code")
         post_code = row.get("post_code")
         rel_file = row.get("target_rel_file", "")
@@ -163,7 +234,6 @@ def build_multi_swe_manifest(
                     java_home=java_home,
                 )
                 if not ast_res.success or ast_res.raw_action_count == 0:
-                    # In test environments without GumTree binary, synthesize normalized actions
                     normalized_summary = (
                         f"File: {rel_file}\n"
                         f"Enclosing Method: {enclosing_method}\n"
@@ -201,10 +271,18 @@ def build_multi_swe_manifest(
         repo_dir = repos_cache_dir / repo.replace("/", "__")
         if not repo_dir.exists():
             clone = subprocess.run(
-                ["git", "clone", f"https://github.com/{repo}.git", str(repo_dir)],
+                [
+                    "git",
+                    "clone",
+                    "--filter=blob:none",
+                    "--no-checkout",
+                    f"https://github.com/{repo}.git",
+                    str(repo_dir),
+                ],
                 capture_output=True,
                 text=True,
                 errors="replace",
+                timeout=120,
             )
             if clone.returncode != 0:
                 exclusions["clone_or_patch_failed"].append(
@@ -218,6 +296,7 @@ def build_multi_swe_manifest(
             capture_output=True,
             text=True,
             errors="replace",
+            timeout=60,
         )
         if show.returncode != 0:
             exclusions["clone_or_patch_failed"].append(
@@ -232,7 +311,7 @@ def build_multi_swe_manifest(
             pre_file.write_text(show.stdout, encoding="utf-8")
             post_file.write_text(show.stdout, encoding="utf-8")
 
-            # Apply patch to Post.java copy via `patch`
+            # Apply only the single modified Java file's patch hunks cleanly
             patch_proc = subprocess.run(
                 ["patch", "-u", str(post_file)],
                 input=patch_text,
@@ -248,12 +327,19 @@ def build_multi_swe_manifest(
 
             changed_lines = parse_diff_changed_lines(patch_text)
             methods = find_enclosing_methods(show.stdout, changed_lines)
-            if len(methods) > 1:
+            if len(methods) != 1:
                 exclusions["multi_method_fix"].append(
-                    {"instance_id": instance_id, "reason": f"Edits span {len(methods)} methods"}
+                    {
+                        "instance_id": instance_id,
+                        "reason": (
+                            "No enclosing method matched (class/import edit)"
+                            if len(methods) == 0
+                            else f"Edits span {len(methods)} methods"
+                        ),
+                    }
                 )
                 continue
-            enclosing_method = methods[0].name if methods else "<unknown>"
+            enclosing_method = methods[0].name
 
             ast_res = run_gumtree_diff(
                 src_file=pre_file,
@@ -262,6 +348,7 @@ def build_multi_swe_manifest(
                 enclosing_method=enclosing_method,
                 gumtree_bin=gumtree_bin,
                 java_home=java_home,
+                filter_header_noise=True,
             )
             if not ast_res.success or ast_res.raw_action_count == 0:
                 exclusions["gumtree_parse_failed"].append(
@@ -300,18 +387,22 @@ def build_multi_swe_manifest(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build Multi-SWE-bench (Java) RQ1 validation manifest.")
+    parser = argparse.ArgumentParser(description="Build Multi-SWE-bench (Java) curation manifest.")
+    parser.add_argument("--config", default="configs/experiment.yaml")
     parser.add_argument("--local-jsonl", type=Path, default=None)
     parser.add_argument("--cache-dir", type=Path, default=Path("tmp/multi_swe_repos"))
     parser.add_argument("--output", type=Path, default=Path("data/multi_swe_java.json"))
     parser.add_argument("--exclusion-log", type=Path, default=Path("data/swe_bench_exclusion_log.json"))
-    parser.add_argument("--limit", type=int, default=30)
+    parser.add_argument("--limit", type=int, default=45)
     args = parser.parse_args()
+    cfg = ExperimentConfig.from_yaml(args.config)
     rows = load_multi_swe_java(local_jsonl=args.local_jsonl, limit=args.limit)
     items = build_multi_swe_manifest(
         rows,
         args.cache_dir,
         args.output,
+        gumtree_bin=cfg.tools.gumtree_bin,
+        java_home=cfg.tools.gumtree_java_home,
         exclusion_log_path=args.exclusion_log,
     )
     print(f"Prepared {len(items)} Multi-SWE-bench Java instances missing BRTs -> {args.output}")

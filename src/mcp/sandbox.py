@@ -24,20 +24,44 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
 
+def _resolve_utf8_locale() -> str:
+    """Return `en_US.UTF-8` if generated in the OS, otherwise fall back to `C.UTF-8`."""
+    try:
+        proc = subprocess.run(["locale", "-a"], capture_output=True, text=True, timeout=5)
+        if proc.returncode == 0:
+            avail = {ln.strip().lower() for ln in proc.stdout.splitlines() if ln.strip()}
+            if "en_us.utf8" in avail or "en_us.utf-8" in avail:
+                return "en_US.UTF-8"
+            if "c.utf8" in avail or "c.utf-8" in avail:
+                return "C.UTF-8"
+    except Exception:
+        pass
+    return "C.UTF-8"
+
+
+_CACHED_UTF8_LOCALE: Optional[str] = None
+
+
 def get_d4j_env() -> Dict[str, str]:
     """Build deterministic execution environment for Defects4J across all 5 projects.
 
     - TZ: America/New_York (fixes Joda-Time timezone & DST transitions)
-    - LC_ALL/LANG: en_US.UTF-8 (fixes locale-dependent parsing)
+    - LC_ALL/LANG: en_US.UTF-8 (or C.UTF-8 when en_US.UTF-8 is not generated, preventing ASCII fallback)
     - ANT_OPTS: -Xmx2048m -Dfile.encoding=UTF-8 (fixes Closure Compiler Ant heap and encodings)
-    - JAVA_TOOL_OPTIONS: -Djava.awt.headless=true (fixes JFreeChart headless AWT primitives)
+    - JAVA_TOOL_OPTIONS: -Djava.awt.headless=true -Dfile.encoding=UTF-8 (fixes AWT & UTF-8 javac on Math-17..35)
     """
+    global _CACHED_UTF8_LOCALE
+    if _CACHED_UTF8_LOCALE is None:
+        _CACHED_UTF8_LOCALE = _resolve_utf8_locale()
     env = dict(os.environ)
     env["TZ"] = "America/New_York"
-    env["LC_ALL"] = "en_US.UTF-8"
-    env["LANG"] = "en_US.UTF-8"
+    env["LC_ALL"] = _CACHED_UTF8_LOCALE
+    env["LANG"] = _CACHED_UTF8_LOCALE
     env.setdefault("ANT_OPTS", "-Xmx2048m -Dfile.encoding=UTF-8")
-    env.setdefault("JAVA_TOOL_OPTIONS", "-Djava.awt.headless=true")
+    java_opts = env.get("JAVA_TOOL_OPTIONS", "-Djava.awt.headless=true")
+    if "-Dfile.encoding=" not in java_opts:
+        java_opts = f"{java_opts} -Dfile.encoding=UTF-8".strip()
+    env["JAVA_TOOL_OPTIONS"] = java_opts
     return env
 
 

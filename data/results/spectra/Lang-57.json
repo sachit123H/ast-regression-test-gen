@@ -1032,6 +1032,8 @@
     0,
     0
   ],
+  "num_baseline_failing": 11,
+  "num_baseline_passing": 0,
   "candidates": {
     "raw_diff": [
       0,

@@ -45,14 +45,19 @@ ast-regression-test-gen/
 ├── pyproject.toml           # Python project metadata
 ├── requirements.txt         # Python dependencies
 ├── configs/
-│   └── experiment.yaml      # Full experiment configuration
-├── data/                    # Dataset artifacts (curated_bugs.json, exclusion_log.json)
+│   ├── pilot_65.yaml        # Initial 65-bug pilot config + passing-test FDG evaluation
+│   └── experiment.yaml      # Full 80-bug rerun config (patched AST + inline method + 3 repeats)
+├── data/                    # Dataset artifacts (curated_bugs*.json, exclusion_log*.json, multi_swe_java.json)
 ├── docs/
 │   ├── figures/             # LaTeX tables (table_rq1.tex, table_rq2.tex, table_summary_metrics.tex) and 300-DPI plots
-│   └── thesis/              # Complete graduation research thesis (thesis.tex, references.bib)
+│   └── thesis/              # Complete graduation research thesis (thesis.tex, references.bib, thesis.pdf)
 ├── scripts/
-│   ├── run_experiment.py    # Main CLI runner for Control + Treatment trials
-│   └── verify_isolation.py  # Automated isolation & leakage audit
+│   ├── audit_normalizer_80.py   # Verifies patched GumTree normalizer across all 80 curated bugs
+│   ├── audit_valid_tests.py     # Audits all generated valid tests and flags degenerate helpers
+│   ├── build_curated_80.py      # Builds 80-bug rerun manifest with patched AST + inlined methods
+│   ├── run_experiment.py        # Main CLI runner for Control + Treatment trials (supports --repeats)
+│   ├── update_readme_stats.py   # Auto-generates README empirical summary from statistical_summary.json
+│   └── verify_isolation.py      # Automated isolation & leakage audit
 ├── src/
 │   ├── config.py            # Typed configuration loader
 │   ├── agent/
@@ -114,43 +119,47 @@ make run-all                 # Full paired benchmark (supports --resume)
 
 ### 5. Evaluate & Analyze
 ```bash
-make evaluate                # Differential oracle + Cobertura spectra + FDG
-make analyze                 # Statistical tests, LaTeX tables, 300-DPI plots
+make evaluate-pilot          # Re-evaluate initial 65-bug pilot with passing+failing FDG baseline
+make evaluate                # Full rerun evaluation (strict assertion primary + passing+failing FDG)
+make analyze                 # Statistical tests, LaTeX tables, 300-DPI plots, and README sync
 ```
 
 ---
 
-## Empirical Results Summary
+<!-- BEGIN_AUTOGEN_RESULTS -->
+## Empirical Results Summary (Initial 65-Bug Pilot)
 
-Evaluated on all $N=65$ clean Defects4J bugs across Apache Commons-Lang (40 bugs) and Commons-Math (25 bugs) with GPT-4o (`gpt-4o-2024-08-06`, temperature 0.0) in a closed agentic loop (130 total trials), following the documented exclusion of 15 late-stage Math bugs (Math-48–Math-75) due to batch API rate-limiting/quota exhaustion (`exclusion_log.json`):
+Evaluated on $N=65$ Defects4J bugs across Apache Commons-Lang (40 bugs) and Commons-Math (25 bugs) with GPT-4o (`gpt-4o-2024-08-06`, temperature 0.0, 130 total trials) using the initial lossy AST normalizer and on-demand `get_context` (`configs/pilot_65.yaml`), after 15 late-stage Math bugs from the 80-bug curated manifest were halted by OpenAI API billing/quota exhaustion (`data/exclusion_log.json`):
 
 | Metric | Raw Diff (Control) | AST Edit Script (Treatment) | Comparison / Statistical Test |
 |:-------|:-------------------|:----------------------------|:------------------------------|
-| **Differential Validity (RQ1)** | **41.5%** (27/65) | 24.6% (16/65) | McNemar $p = 0.0127$ (Statistically Significant) |
-| **Strict Assertion Validity (RQ1)** | **32.3%** (21/65) | 18.5% (12/65) | McNemar $p = 0.0225$ (Statistically Significant) |
-| **Mean FDG (Ochiai, RQ2, $N_{\text{paired}}=13$)** | 0.5144 | **0.5148** | Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.524$, 95\% BCa CI $[0.000019, 0.001463]$ (secondary TOST $p = 2.71 \times 10^{-13}$) |
-| **Mean FDG (DStar $*=2$, RQ2)** | 0.5141 | **0.5145** | Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.518$ |
-| **Realised Mean $\Delta\text{AP}$ (RQ2)** | +0.0574 | **+0.0676** | Wilcoxon $p = 1.0000$, $\hat{A}_{12} = 0.538$ (AST slight refinement) |
-| **Method acc@3 (RQ2)** | 7 ($\Delta = +2$) | **8** ($\Delta = +3$) | Baseline = 5 |
-| **Expected Diagnosability $E[\text{FDG}]$ ($N=65$)** | **0.2131** | 0.1263 | Wilcoxon $p = 0.0157$, $\hat{A}_{12} = 0.420$ (68.7% Raw advantage) |
-| **Mean Token Overhead (RQ3)** | 26,027 tokens | **22,505 tokens** | **13.5% reduction** with AST |
+| **Strict Assertion Validity (Primary, RQ1)** | **32.3%** (21/65) | 18.5% (12/65) | McNemar $p = 0.0225$ |
+| **LIBRO Fail/Pass Validity (Secondary, RQ1)** | **41.5%** (27/65) | 24.6% (16/65) | McNemar $p = 0.0127$ |
+| **Mean FDG (Ochiai, Strict Paired, $N=10$)** | 0.5047 | 0.5039 | Wilcoxon $p = 0.6250$, $\hat{A}_{12} = 0.500$ (1 AST wins / 6 ties / 3 raw wins; sign $p = 0.6250$) |
+| **Mean FDG (DStar $*=2$, Strict Paired, $N=10$)** | 0.4988 | 0.4982 | Wilcoxon $p = 0.6250$, $\hat{A}_{12} = 0.490$ |
+| **Realised Mean $\Delta\text{AP}$ (Ochiai, $N=10$)** | +0.0127 | +0.0627 | Wilcoxon $p = 1.0000$, $\hat{A}_{12} = 0.550$ |
+| **Method acc@3 (Strict Paired, $N=10$)** | 8 ($\Delta = -1$) | 8 ($\Delta = -1$) | Baseline = 9 |
+| **Expected Diagnosability $E[\text{FDG}]$ (Strict, $N=65$)** | **0.1654** | 0.0933 | Wilcoxon $p = 0.0148$, $\hat{A}_{12} = 0.428$ |
+| **Mean Token Overhead (RQ3)** | 26,027 tokens | **22,505 tokens** | **13.5% reduction** with AST (2.94 vs. 2.97 attempts) |
 
-**Key Finding:** In the evaluated benchmark, raw unified diffs significantly outperformed the initial over-normalized AST edit scripts (41.5% vs. 24.6% validity; 45.0% vs. 25.0% on Lang, 36.0% vs. 24.0% on Math) because GumTree v3.0.0 JSON omitted nested subtrees (stripping operand literals across all 65 bugs) and retained spurious `TypeDeclaration` header noise in 49/65 bugs. Conditioned on producing a valid test ($N_{\text{paired}}=13$), both representations achieve practically equivalent fault diagnosability (3 AST wins / 9 ties / 1 raw win; 95% BCa CI $[0.000019, 0.001463] \subset [-0.01, +0.01]$), while AST scripts reduce token overhead by 13.5%. Note that the 30 stored spectra use failing-only `tests.trigger` baselines ($e_p = 0$). To address all identified limitations for follow-up evaluation, we subsequently patched `gumtree_normalizer.py` (offset-based literal recovery + balanced header-noise filtering), added `inline_enclosing_method` support in `prompts.py`, added passing-test support (`tests.relevant`) in `pipeline.py`, and upgraded the conceptual `HyRep-BRT` prototype (`src/ast_diff/hyrep.py`).
+**Pilot Key Finding:** In the initial 65-bug pilot, raw unified diffs outperformed the initial over-normalized AST edit scripts (32.3% vs. 18.5% strict assertion validity, McNemar $p = 0.0225$; 41.5% vs. 24.6% LIBRO fail/pass; 32.5% vs. 17.5% strict on Lang, 32.0% vs. 20.0% strict on Math; LIBRO by-project: 45.0% vs. 25.0% Lang, 36.0% vs. 24.0% Math) because GumTree v3.0.0 JSON omitted nested subtrees (stripping operand literals) and retained spurious `TypeDeclaration` header noise in 49/65 bugs. Over strict jointly valid pairs ($N_{\text{paired}}=10$), paired FDG counts were 1 AST wins / 6 ties / 3 raw wins (Wilcoxon $p = 0.6250$). Diagnostic FDG/SBFL spectra incorporate both `tests.trigger` failing tests and up to 12 verified passing tests sampled across `tests.relevant`. For the full rerun (`configs/experiment.yaml`), we patched `gumtree_normalizer.py` (verified across all 80 curated bugs with 0 header-noise actions and full subtree/MOVE literal recovery) and enabled `inline_enclosing_method: true`.
+<!-- END_AUTOGEN_RESULTS -->
 
 ---
 
-## Key Design Decisions (Reconciled with Prof. Shin Yoo's Email Guidance)
+## Key Design Decisions & Advisor Guidance Alignment
 
-| Decision | Resolution |
-|:---------|:-----------|
-| **Task Framing** | Post-fix Bug-Reproducing Test (BRT) generation (not generic regression testing) |
+| Decision | Source / Resolution |
+|:---------|:--------------------|
+| **Task Framing** | Post-fix Bug-Reproducing Test (BRT) generation (reframed per Prof. Shin Yoo's Aug 7–8 guidance) |
+| **Enclosing-Method Context** | `inline_enclosing_method: true` in `configs/experiment.yaml` (Prof. Yoo's Nov 25 guidance; initial 65-bug pilot used on-demand `get_context` in `configs/pilot_65.yaml`) |
+| **Dual Exclusion Audits** | Explicit exclusion criteria and logs for both Defects4J (`data/exclusion_log.json`) and Multi-SWE-bench (`data/swe_bench_exclusion_log.json`, Prof. Yoo's Nov 25 guidance) |
+| **Primary Validity Criterion** | Strict assertion failure on pre-fix and pass on post-fix (Proposal Sec. 4.5); LIBRO fail/pass reported secondarily |
+| **Diagnostic Metric** | An & Yoo (ISSTA 2022) FDG ("Start with FDG", Nov 25 guidance) with passing (`tests.relevant`) + failing (`tests.trigger`) baseline tests |
+| **Triggering-Test Isolation** | Double isolation: post-fix root confinement + physical `tests.trigger` redaction (Proposal Sec. 4.3 + Aug 12 isolation check) |
+| **Contamination Scope** | Anticipated risk in Proposal Sec. 5.1; Multi-SWE-bench (Java) curation audited with written exclusion rules; end-to-end execution deferred to future work |
+| **Future Work: HyRep-BRT** | Conceptual hybrid representation (`src/ast_diff/hyrep.py`); un-evaluated in LLM trials and reserved for future work |
 | **Repository Name** | Historical identifier `ast-regression-test-gen` preserved for git remote/workspace stability |
-| **Triggering-Test Isolation** | Double isolation: post-fix root confinement + physical `tests.trigger` redaction |
-| **Primary Benchmark** | Defects4J v2.0.1 (Lang, Math — 65 single-method bugs evaluated end-to-end; 15 API quota aborts cleanly excluded) |
-| **Spectra Coverage** | Exactly 30 spectra files (21 Lang, 9 Math) where $\ge 1$ condition was valid; 13 paired bugs |
-| **Benchmark Scope** | Evaluated end-to-end on Defects4J; cross-repo benchmark adapters provided as prototype |
-| **FDG Formula** | Ochiai (primary) + DStar(*=2) robustness, α=0.5, max tie-breaker |
-| **Architectural Synthesis** | HyRep-BRT (`src/ast_diff/hyrep.py`) combining lexical constants with AST syntax tags |
 
 ---
 
@@ -160,4 +169,3 @@ Evaluated on all $N=65$ clean Defects4J bugs across Apache Commons-Lang (40 bugs
 - René Just et al. *Defects4J: A Database of Existing Faults.* ISSTA 2014.
 - Jean-Rémy Falleri et al. *Fine-Grained and Accurate Source Code Differencing.* ASE 2014.
 - W. Eric Wong et al. *The DStar Method for Effective Software Fault Localization.* IEEE TR 2014.
-- Donald J. Schuirmann. *A comparison of the two one-sided tests procedure and the power approach for assessing the equivalence of average bioavailability.* JPB 1987.

@@ -92,9 +92,9 @@ All other agent components---system prompts, tool surfaces, execution feedback s
 Following our pre-registered screening protocol, we drew candidate bug fixes from Defects4J v2.0.1~\citep{just2014defects4j} across its two foundational projects: Apache Commons-Lang and Commons-Math (139 bugs scanned).
 Enforcing our 3-filter curation pipeline (clean container builds, single-method fix localization, and successful GumTree AST parsing) yielded an initial 80-bug manifest (40 Lang, 40 Math).
 Following an automated batch execution audit, 15 late-stage Math bugs affected by runtime API rate-limiting/quota exhaustion were excluded under a documented protocol to preserve experimental integrity, resulting in a clean, fully evaluated benchmark of 65 bugs (40 Lang, 25 Math).
-We evaluated all $N=65$ bugs end-to-end under both conditions (130 total multi-turn agentic trials) and investigated three core research questions:
-(i)~\textbf{RQ1 (Validity):} Raw diffs achieved a 41.5\% (27/65) differential execution validity rate compared to 24.6\% (16/65) for over-normalized AST edit scripts (exact McNemar $p = 0.0127$); under strict assertion-only verification, raw diffs achieved 32.3\% (21/65) versus 18.5\% (12/65) ($p = 0.0225$).
-(ii)~\textbf{RQ2 (Diagnostic Quality):} Over the jointly valid paired subset ($N_{\text{paired}} = 13$), both representations yielded nearly identical Fault Diagnosability Gain (mean Ochiai FDG 0.5144 for raw diff vs.\ 0.5148 for AST, $\Delta = +0.0004$, paired Wilcoxon $p = 0.2500$, $\hat{A}_{12} = 0.524$, exact sign test $p = 0.6250$ across 3 AST wins, 9 exact ties, and 1 raw-diff win). Non-parametric 95\% BCa bootstrap intervals ($[0.000019, 0.001463] \subset [-0.01, +0.01]$) and a secondary parametric TOST check ($p < 10^{-12}$, qualified by the 9/13 point-mass at zero) confirm practical equivalence within $\pm 0.01$, with realized fault ranking gains showing slight refinement under AST ($\Delta\text{AP} = +0.0676$ vs.\ $+0.0574$, $p = 1.0000$). Globally across all $N=65$ bugs, the Intention-To-Treat Expected Diagnosability Gain ($E[\text{FDG}]$) decisively favors raw diffs ($0.2131$ vs.\ $0.1263$, paired Wilcoxon $p = 0.0157$, $\hat{A}_{12} = 0.420$, a 68.7\% advantage).
+We evaluated all $N=65$ bugs end-to-end in an audited pilot benchmark under both conditions (130 total multi-turn agentic trials) and investigated three core research questions:
+(i)~\textbf{RQ1 (Validity):} Under strict assertion-only verification (primary criterion), raw diffs achieved a 32.3\% (21/65) validity rate compared to 18.5\% (12/65) for over-normalized AST edit scripts (exact McNemar $p = 0.0225$); under the looser LIBRO fail/pass criterion (secondary), raw diffs achieved 41.5\% (27/65) versus 24.6\% (16/65) ($p = 0.0127$).
+(ii)~\textbf{RQ2 (Diagnostic Quality):} Over the jointly valid strict-assertion paired subset ($N_{\text{paired}} = 10$), both representations yielded nearly identical Fault Diagnosability Gain (mean Ochiai FDG 0.5047 for raw diff vs.\ 0.5039 for AST, $\Delta = -0.0008$, paired Wilcoxon $W = 3.0$, $p = 0.6250$, $\hat{A}_{12} = 0.500$, exact sign test $p = 0.6250$ across 1 AST win, 6 exact ties, and 3 raw-diff wins), confirming practical equivalence well within any reasonable margin. Globally across all $N=65$ bugs, the Intention-to-Treat Expected Diagnosability Gain ($E[\text{FDG}]$) decisively favors raw diffs (0.1654 vs.\ 0.0933, paired Wilcoxon $W = 25.0$, $p = 0.0148$, $\hat{A}_{12} = 0.428$, a 77.3\% advantage).
 (iii)~\textbf{RQ3 (Efficiency):} Normalized AST edit scripts reduced total token consumption by 13.5\% (mean 22,505 vs.\ 26,027 tokens) with comparable iteration dynamics (2.94 vs.\ 2.97 mean attempts).
 Detailed failure-mode and pipeline audits reveal that our evaluated GumTree normalizer stripped subtree bodies down to bare node types across all 65 bugs and retained spurious class-header churn in 49/65 bugs, depriving the LLM of operand literals and forcing overconstrained assertion hallucinations (\texttt{FAIL\_FAIL}, 67.3\% of AST failures).
 Our findings demonstrate that preserving lexical literals and enclosing-method context within structural change representations is essential for agentic test synthesis, motivating both our patched literal-preserving normalizer and hybrid representations that fuse lexical diffs with structural syntax typing.
@@ -214,15 +214,18 @@ As reported in Table~\ref{tab:curation}, scanning all 139 available bugs across 
 Only 3 bugs failed GumTree AST parsing (all in Lang: Lang-2, Lang-4, and Lang-36, due to legacy Java syntax structures), and 56 bugs were excluded due to multi-method or multi-file modifications, leaving a single-method evaluation corpus.
 During batch execution, 15 late-stage Math bugs (Math-48 through Math-75) encountered runtime infrastructure termination due to OpenAI API rate-limiting/quota exhaustion (HTTP 429), leaving pre-fix sandbox trials incomplete.
 To adhere strictly to empirical software engineering standards and avoid contaminating RQ1 validity with infrastructure aborts, all 15 incomplete bugs were formally excluded in \texttt{data/exclusion\_log.json} rather than misclassified as agent test generation failures.
-Crucially, project-level sensitivity analysis confirms consistent directional effects across both completed subsets: Commons-Lang ($N=40$) achieved 45.0\% (18/40) validity under raw diff vs.\ 25.0\% (10/40) under AST edit scripts (+20.0 percentage points; McNemar $p = 0.0574$), while Commons-Math ($N=25$) achieved 36.0\% (9/25) vs.\ 24.0\% (6/25) (+12.0 percentage points; McNemar $p = 0.2500$).
+Crucially, project-level sensitivity analysis confirms consistent directional effects across both completed subsets under the strict-assertion criterion: Commons-Lang ($N=40$) achieved 32.5\% (13/40) validity under raw diff vs.\ 17.5\% (7/40) under AST edit scripts (+15.0 percentage points; McNemar $p = 0.1094$), while Commons-Math ($N=25$) achieved 32.0\% (8/25) vs.\ 20.0\% (5/25) (+12.0 percentage points; McNemar $p = 0.2500$).
 Both projects independently exhibit substantial raw-diff advantages, demonstrating that excluding Math-48..75 due to API quota exhaustion did not reverse or manufacture the primary RQ1 trend.
-Furthermore, post-hoc parametric power analysis (\Cref{sec:fdg}) estimates sensitivity on $N_{\text{paired}}=13$ ($1-\beta = 0.75$ at $d=0.8$, $0.85$ at $d=0.9$ under a paired $t$-test model), while non-parametric BCa intervals establish practical equivalence within $\pm 0.01$.
-This audit produced a final, rigorously verified evaluation benchmark of 65 bugs (40 Commons-Lang and 25 Commons-Math), evaluated across 130 full multi-turn agentic trials.
+Because non-parametric tests on $N_{\text{paired}}=10$ strict-paired cases with six exact ties have limited sensitivity to small effects, we report exact win/tie/loss counts alongside paired Wilcoxon $p$-values.
+This audit produced a rigorously verified pilot evaluation benchmark of 65 bugs (40 Commons-Lang and 25 Commons-Math), evaluated across 130 full multi-turn agentic trials.
 
 \paragraph{Multi-SWE-bench Contamination-Check Scope and Exclusion Criteria.}
-Following advisor feedback on potential Defects4J pre-training contamination, we also engineered a prototype adapter for modern Java pull requests from Multi-SWE-bench~\citep{multiswebench2025} (\texttt{src/dataset/multi\_swe\_bench.py}) with explicit five-stage exclusion criteria: (1) excluding PRs modifying non-Java files or test files, (2) excluding issue descriptions leaking JUnit test code (\texttt{@Test}, \texttt{assertEquals}), (3) excluding multi-file or multi-method patches, (4) excluding deterministic base-patch checkout failures, and (5) excluding GumTree parse failures, with full audit logging to \texttt{data/swe\_bench\_exclusion\_log.json}.
-During execution (\texttt{step7\_multi\_swe.log}), however, Hugging Face \texttt{datasets} threw an Arrow schema-casting error (\texttt{TypeError: Couldn't cast array of type string to null}), and full multi-repository Dockerized execution was deferred beyond the primary thesis run.
-Accordingly, all empirical numbers in this thesis reflect strictly the 65 audited Defects4J bugs, and Multi-SWE-bench cross-validation is documented as an explicit external-validity limitation and implemented next step (\Cref{sec:threats}).
+To mitigate the Defects4J pre-training contamination risk anticipated in our research proposal, we also engineered a curation and audit pipeline for post-cutoff Java pull requests from Multi-SWE-bench~\citep{multiswebench2025} (\texttt{src/dataset/multi\_swe\_bench.py}).
+Following advisor guidance requiring explicit written exclusion criteria prior to benchmark construction, we implemented a five-stage filter: (1) excluding issue descriptions leaking JUnit test code (\texttt{@Test}, \texttt{assertEquals}), (2) excluding PRs modifying non-Java files, test files, or more than one production file, (3) excluding multi-method or class-level patches, (4) excluding deterministic base-patch checkout failures, and (5) excluding GumTree parse failures, with full instance-level audit logging to \texttt{data/swe\_bench\_exclusion\_log.json}.
+Scanning all 128 available Java instances across 9 repositories yielded \textbf{18 curated single-method Java PRs} spanning 7 repositories (\texttt{alibaba/fastjson2}, \texttt{apache/dubbo}, \texttt{elastic/logstash}, \texttt{fasterxml/jackson-core}, \texttt{fasterxml/jackson-databind}, \texttt{google/gson}, and \texttt{googlecontainertools/jib}), persisted in \texttt{data/multi\_swe\_java.json} (Table~\ref{tab:curation_multiswe}).
+Per-repository containerized LLM trial execution and differential oracle evaluation on these 18 Multi-SWE-bench instances remain deferred beyond the primary Defects4J pilot run due to API quota constraints; accordingly, all empirical results in this thesis strictly reflect the 65 audited Defects4J bugs, with Multi-SWE-bench execution documented as an explicit external-validity limitation and implemented next step (\Cref{sec:threats,sec:future_work}).
+
+\input{table_curation_multiswe.tex}
 
 \begin{table}[t]
 \centering
@@ -308,7 +311,8 @@ GumTree v3.0.0~\citep{falleri2014fine} generates tree differences between pre-fi
 Raw GumTree output includes internal node identifiers and character offsets (e.g., \texttt{[1450,1475]}, \texttt{\#42}) that introduce token overhead without semantic value.
 In the evaluated 130 trials, our initial normalizer stripped these positional artifacts and summarized multi-line \texttt{tree} fields into four operation categories: \texttt{UPDATE}, \texttt{INSERT}, \texttt{DELETE}, and \texttt{MOVE}.
 However, because GumTree v3.0.0 \texttt{textdiff -f JSON} emits only root node descriptors in its \texttt{tree} attribute without nested child subtrees, post-hoc inspection revealed that \texttt{subtree\_summary} was empty across all 65 bugs in \texttt{data/curated\_bugs.json}, and 49/65 bugs (75.4\%) retained balanced class-header \texttt{TypeDeclaration} churn (\texttt{Modifier}, \texttt{TYPE\_DECLARATION\_KIND}, \texttt{SimpleName}).
-Following this audit, we patched \texttt{src/ast\_diff/gumtree\_normalizer.py} to recover lexical source snippets directly from GumTree character offsets and cancel balanced \texttt{TypeDeclaration} header noise while preserving genuine body edits.
+Following this audit, we patched \texttt{src/ast\_diff/gumtree\_normalizer.py} to recover lexical source snippets directly from GumTree character offsets (including \texttt{MOVE} operations) and cancel balanced \texttt{TypeDeclaration}/\texttt{MethodDeclaration} header noise while preserving genuine body edits.
+Running our verification audit (\texttt{scripts/audit\_normalizer\_80.py}, recorded in \texttt{data/normalizer\_audit\_80.json}) across all 80 curated bugs confirms 80/80 clean parses with \textbf{0} zero-action scripts, \textbf{0} empty subtree summaries, and \textbf{0} header-noise actions.
 
 \subsection{Differential Execution Oracle}\label{sec:oracle}
 
@@ -337,28 +341,28 @@ FDG balances two objectives:
 where $\text{Split}$ rewards partitioning execution ambiguity groups, $\text{Cover}$ rewards executing suspicious elements, and $\alpha = 0.5$~\citep{an2022fdg}.
 We also measure empirical localization gain: Mean Average Precision change ($\Delta\text{mAP}$) and top-$n$ rank improvements ($\Delta\text{acc@}n$ for $n \in \{1, 3, 5, 10\}$) using the maximum tie-breaker.
 
-\textbf{Protocol difference from An \& Yoo (ISSTA 2022): failing-only baseline.}
-Following our initial study proposal, baseline coverage spectra in \texttt{data/results/spectra/*.json} were constructed exclusively from Defects4J's pre-existing failing triggering tests (\texttt{tests.trigger}), yielding $e_p = 0$ passing tests across all 30 spectra files (1--11 failing tests per bug; 23/30 bugs have a single failing test \texttt{baseline\_results = [0]}).
-Unlike full-suite SBFL in \citet{an2022fdg} (which incorporates both passing and failing tests), having $e_p = 0$ on single-trigger bugs causes every covered line ($e_f=1, n_f=0$) to receive $\text{Ochiai}=1.0$ and $\text{DStar}=\infty \mapsto 1.0$ after min-max scaling, rendering Ochiai and DStar mathematically identical on all 23 single-trigger bugs (as well as \texttt{Lang-57}, leaving 6 multi-trigger bugs where the formulas can diverge).
-To address this limitation for future runs, we extended \texttt{src/evaluation/pipeline.py} to support sampling non-triggering passing tests from \texttt{tests.relevant} (\texttt{include\_passing\_baseline\_tests}).
+\textbf{Passing+failing baseline suite construction.}
+Following \citet{an2022fdg}, realistic SBFL baseline spectra must incorporate both failing and passing tests so that covered lines receive informative non-binary suspiciousness weights rather than collapsing to 1.0 when $e_p = 0$.
+Accordingly, we extended \texttt{src/evaluation/pipeline.py} (\texttt{include\_passing\_baseline\_tests: true}, \texttt{configs/pilot\_65.yaml}) to sample up to 12 verified non-triggering passing tests round-robin from \texttt{tests.relevant} alongside all Defects4J failing triggering tests (\texttt{tests.trigger}).
+Across the 30 valid-bug spectra in \texttt{data/results/spectra/*.json}, 29 incorporate all triggering failing tests plus 12 verified passing baseline tests, while \texttt{Lang-57} uniquely contains 11 failing triggering tests and zero non-triggering relevant tests in Defects4J.
+Because passing tests distinguish frequently executed non-faulty lines from fault-correlated lines, Ochiai and DStar ($*=2$) naturally diverge across all strict-paired bugs.
 
-\subsubsection{Hypothesis Testing, Power Analysis, and Equivalence Testing}
+\subsubsection{Hypothesis Testing and Non-Parametric Paired Evaluation}
 
 \begin{itemize}[leftmargin=*]
-  \item \textbf{RQ1 (Validity):} Analyzed with the exact two-sided McNemar's test~\citep{mcnemar1947note} on paired binary outcomes ($N=65$).
-  \item \textbf{RQ2 (Diagnostic Quality):} Evaluated primarily via non-parametric methods on the jointly valid paired subset ($N_{\text{paired}} = 13$): paired Wilcoxon signed-rank test, exact two-sided binomial sign test over discordant pairs, and Vargha--Delaney $\hat{A}_{12}$ effect size~\citep{vargha2000a12}.
-  \item \textbf{Non-Parametric Bootstrap Confidence Intervals:} 95\% bias-corrected and accelerated (BCa) bootstrap intervals for $\Delta\text{FDG}$ over 10,000 resamples ($[0.000019, 0.001463]$).
-  \item \textbf{Statistical Power Analysis:} Following \citet{cohen1988power}, post-hoc parametric paired $t$-test power at $N_{\text{paired}} = 13$ is $1-\beta = 0.75$ for a large effect ($d=0.8$) and $0.85$ at $d=0.9$, while recognizing that exact zero ties reduce non-parametric sensitivity to small differences.
-  \item \textbf{Equivalence Testing (BCa CI primary, TOST secondary):} Because $p > 0.05$ alone does not establish equivalence, we evaluate whether $\Delta\text{FDG}$ falls within a $\pm \Delta_E = \pm 0.01$ practical equivalence margin. We rely primarily on the non-parametric 95\% BCa bootstrap confidence interval ($[0.000019, 0.001463] \subset [-0.01, +0.01]$) and the exact 3/9/1 win/tie/loss breakdown. As a secondary parametric sensitivity check, Schuirmann's Two One-Sided Tests (TOST)~\citep{schuirmann1987tost} yield $p_{\text{TOST}} = 2.71 \times 10^{-13} < 0.05$, though we explicitly caution that 9/13 exact zeros (69.2\% point-mass at zero) violate normality and compress the parametric standard error ($SE = 0.000300$).
+  \item \textbf{RQ1 (Validity):} Analyzed with the exact two-sided McNemar's test~\citep{mcnemar1947note} on paired binary outcomes ($N=65$), reporting strict assertion-only validity (\texttt{VALID\_ASSERTION}) as primary and LIBRO fail/pass (\texttt{VALID\_ASSERTION} $\cup$ \texttt{VALID\_EXCEPTION}) as secondary.
+  \item \textbf{RQ2 (Diagnostic Quality):} Evaluated via non-parametric methods on the strict-assertion jointly valid paired subset ($N_{\text{paired}} = 10$): paired Wilcoxon signed-rank test, exact two-sided binomial sign test over discordant pairs, exact win/tie/loss counts, and Vargha--Delaney $\hat{A}_{12}$ effect size~\citep{vargha2000a12}.
+  \item \textbf{Practical Parity Summary:} Because $p > 0.05$ alone does not establish equivalence and six of ten strict-paired cases produce exact zero differences, we report exact win/tie/loss counts (1 AST win / 6 ties / 3 raw wins) alongside the observed magnitude bounds across discordant pairs ($\Delta\text{FDG} \in [-0.0085, +0.0009]$).
 \end{itemize}
 
 \subsubsection{Spectra Coverage Reconciliation and Paired Subset Formation}\label{sec:spectra_reconciliation}
 
-Across all $N=65$ evaluated bugs, exactly 30 bugs produced at least one valid BRT satisfying the differential execution oracle (21 in Commons-Lang, 9 in Commons-Math).
-For each of these 30 bugs, execution coverage was measured over \texttt{classes.relevant} on the pre-fix checkout using Cobertura and persisted in \texttt{data/results/spectra/<bug\_key>.json}.
-Of these 30 bugs, exactly 13 bugs produced valid BRTs under \emph{both} Control (raw diff) and Treatment (AST edit) conditions (7 in Lang: Lang-6, 14, 21, 38, 49, 52, 57; 6 in Math: Math-5, 17, 34, 35, 43, 46).
-These 13 bugs form the paired diagnostic evaluation subset ($N_{\text{paired}} = 13$) used for conditional FDG, Wilcoxon testing, and TOST analysis.
-The remaining 17 spectra files correspond to bugs where only one condition generated a valid test (14 raw-only valid, 3 AST-only valid), which contribute to the global Intention-to-Treat Expected Diagnosability Gain ($E[\text{FDG}]$, \Cref{sec:expected_fdg}).
+Across all $N=65$ evaluated bugs, exactly 30 bugs produced at least one valid BRT satisfying the broader LIBRO criterion (21 in Commons-Lang, 9 in Commons-Math).
+For each of these 30 bugs, execution coverage was measured over \texttt{classes.relevant} on the pre-fix checkout using Cobertura against the passing+failing baseline suite and persisted in \texttt{data/results/spectra/<bug\_key>.json}.
+Of these 30 bugs, exactly 10 bugs produced valid strict-assertion BRTs under \emph{both} Control (raw diff) and Treatment (AST edit) conditions (5 in Lang: \texttt{Lang-14, 21, 38, 49, 52}; 5 in Math: \texttt{Math-5, 17, 35, 43, 46}).
+These 10 bugs form our primary strict-assertion paired diagnostic subset ($N_{\text{paired}} = 10$) used for conditional FDG and Wilcoxon testing.
+An additional 3 bugs (\texttt{Lang-6, Lang-57, Math-34}) produced valid tests under both conditions using exception-based failure (\texttt{VALID\_EXCEPTION}), expanding the secondary LIBRO paired subset to 13.
+The remaining 17 spectra files correspond to bugs where only one condition generated a LIBRO-valid test (14 raw-only valid, 3 AST-only valid), contributing to global Intention-to-Treat Expected Diagnosability Gain ($E[\text{FDG}]$, \Cref{sec:expected_fdg}).
 
 %% ============================================================
 \section{Results}\label{sec:results}
@@ -377,9 +381,12 @@ Table~\ref{tab:rq1_validity} and Figure~\ref{fig:rq1} summarize BRT validity acr
   \label{fig:rq1}
 \end{figure}
 
-Under the standard differential execution criterion (LIBRO fail/pass), the raw diff representation achieved a validity rate of \textbf{41.5\%} (27/65) compared to \textbf{24.6\%} (16/65) for normalized AST edit scripts.
-An exact McNemar's test yields $p = 0.0127$, demonstrating a statistically significant advantage for raw diffs in prompt-driven bug reproduction across both benchmark projects.
-Under the strict assertion-only criterion (requiring an \texttt{AssertionError} rather than a crash), raw diffs maintained a significant lead: 32.3\% (21/65) versus 18.5\% (12/65) ($p = 0.0225$).
+Under the primary strict assertion-only criterion (requiring an explicit \texttt{AssertionError} or \texttt{ComparisonFailure} on pre-fix and pass on post-fix), raw diffs achieved a validity rate of \textbf{32.3\%} (21/65) compared to \textbf{18.5\%} (12/65) for normalized AST edit scripts (exact McNemar $p = 0.0225$).
+Under the broader LIBRO differential execution criterion (including runtime exceptions, secondary metric), raw diffs maintained a statistically significant lead of \textbf{41.5\%} (27/65) versus \textbf{24.6\%} (16/65) ($p = 0.0127$).
+
+\textbf{Valid-test quality and manual audit.}
+To confirm that automatically labelled valid tests are genuine non-degenerate checks, we audited all 43 LIBRO-valid tests (33 strict-assertion \texttt{VALID\_ASSERTION} and 10 exception-only \texttt{VALID\_EXCEPTION}) via \texttt{scripts/audit\_valid\_tests.py} (\texttt{data/results/valid\_tests\_audit.json}).
+All 43/43 tests (100.0\%) invoke the target buggy class without reflection workarounds; moreover, heuristic degenerate-helper flagging combined with manual code review confirmed that the single genuine copied-method case (\texttt{Lang-10} under \texttt{ast\_edit}) had already been rejected by the differential oracle as \texttt{FAIL\_FAIL}, while \texttt{Lang-6}'s inner \texttt{HexTranslator} subclass cleanly overrides the abstract hook needed to exercise \texttt{CharSequenceTranslator.translate}.
 
 \textbf{Failure mode breakdown.}
 Across all 130 trials:
@@ -391,29 +398,26 @@ Across all 130 trials:
 
 \subsection{RQ2: Fault Diagnosability Gain}\label{sec:res_rq2}
 
-Table~\ref{tab:rq2_fdg} and Figure~\ref{fig:rq2} present paired diagnostic results over the $N_{\text{paired}} = 13$ bugs where both conditions generated valid BRTs.
+Table~\ref{tab:rq2_fdg} and Figure~\ref{fig:rq2} present paired diagnostic results over the $N_{\text{paired}} = 10$ bugs where both conditions generated valid strict-assertion BRTs.
 
 \input{table_rq2.tex}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.85\textwidth]{rq2_fdg_paired.png}
-  \caption{RQ2: Paired FDG comparison under Ochiai and DStar ($*=2$) formulas ($N_{\text{paired}}=13$).}
+  \caption{RQ2: Paired FDG comparison under Ochiai and DStar ($*=2$) formulas ($N_{\text{paired}}=10$, strict-assertion criterion).}
   \label{fig:rq2}
 \end{figure}
 
-Under Ochiai, mean FDG was \textbf{0.5144} for raw diffs versus \textbf{0.5148} for AST edit scripts ($\Delta\text{FDG} = +0.0004$, paired Wilcoxon $W = 1.0, p = 0.2500$, $\hat{A}_{12} = 0.524$).
-Across the 13 paired bugs, exactly 9 produced $\Delta\text{FDG} = 0$---importantly, spectra inspection shows that on 8 of those 9 bugs (\texttt{Lang-21, 38, 49, 52, 57}, \texttt{Math-34, 35, 46}), both generated BRTs executed the exact same Cobertura line-coverage vector ($c_{\text{raw}} = c_{\text{ast}}$), while \texttt{Lang-6} differed on 5 zero-weight lines---leaving only 4 discordant pairs: 3 favoring AST (\texttt{Math-5}: $+0.0038$, \texttt{Math-17}: $+0.0002$, \texttt{Math-43}: $+0.0014$) and 1 favoring raw diff (\texttt{Lang-14}: $-0.0002$; exact two-sided sign test $p = 0.6250$).
-Concurrently, the non-parametric 95\% BCa bootstrap confidence interval across 10,000 resamples is tightly bounded at $[0.000019, 0.001463]$.
-While this interval narrowly excludes zero due to the 3 subtle AST refinements, it lies entirely inside our $\pm 0.01$ practical equivalence margin without distributional assumptions.
-As a secondary parametric check, TOST yields $p_1 = 1.06 \times 10^{-13}$ ($t_1 = 34.65$) and $p_2 = 2.71 \times 10^{-13}$ ($t_2 = 32.03$, $p_{\text{TOST}} = 2.71 \times 10^{-13} < 10^{-12}$), though this extreme parametric $p$-value reflects standard-error compression ($SE = 0.000300$) caused by the 69.2\% point-mass at zero rather than high-sample Gaussian precision.
-Robustness evaluation under DStar ($*=2$) exhibits the same parity: mean FDG of 0.5141 for raw diffs versus 0.5145 for AST ($\Delta = +0.0004, \text{Wilcoxon } p = 0.2500, \hat{A}_{12} = 0.518$).
-Consistent with our failing-only baseline analysis (\Cref{sec:fdg}), 9 of 13 paired bugs (plus \texttt{Lang-57}) yield identical FDG under Ochiai and DStar because single-trigger spectra collapse both formulas to identical binary weights, while the three multi-trigger Math bugs (\texttt{Math-35, Math-43, Math-46}) confirm consistent behavior where the formulas diverge.
+Under Ochiai, mean FDG was \textbf{0.5047} for raw diffs versus \textbf{0.5039} for AST edit scripts ($\Delta\text{FDG} = -0.0008$, paired Wilcoxon $W = 3.0, p = 0.6250$, $\hat{A}_{12} = 0.500$).
+Across the 10 strict-paired bugs (\texttt{Lang-14, 21, 38, 49, 52}; \texttt{Math-5, 17, 35, 43, 46}), exactly 6 produced $\Delta\text{FDG} = 0$ (\texttt{Lang-21, 38, 49, 52}; \texttt{Math-35, 46})---leaving only 4 discordant pairs: 1 favoring AST (\texttt{Math-43}: $+0.0009$) and 3 favoring raw diff (\texttt{Lang-14}: $-0.0001$, \texttt{Math-17}: $-0.0005$, \texttt{Math-5}: $-0.0085$; exact two-sided sign test $p = 0.6250$).
+All discordant $|\Delta\text{FDG}|$ values lie in $[0.0001, 0.0085]$, confirming narrow practical parity across valid pairs.
+Robustness evaluation under DStar ($*=2$) exhibits the same parity: mean FDG of 0.4988 for raw diffs versus 0.4982 for AST ($\Delta = -0.0006, \text{Wilcoxon } p = 0.6250, \hat{A}_{12} = 0.490$).
+Including the 3 exception-only LIBRO pairs ($N_{\text{LIBRO}} = 13$) yields identical conclusions (mean Ochiai FDG 0.5067 vs.\ 0.5061, Wilcoxon $p = 0.6250$, 1 AST win / 9 ties / 3 raw wins).
 
 \textbf{Realized localization accuracy.}
-Augmenting the baseline test suite with AST-guided BRTs produced an average precision gain of $\Delta\text{AP} = +0.0676$ compared to $+0.0574$ for raw diffs ($p = 1.0000, \hat{A}_{12} = 0.538$).
-Evaluating top-$n$ rank improvements across $n \in \{1, 3, 5, 10\}$ reveals consistent dynamics: at $\text{acc@}1$, both conditions maintained the baseline single-fault localization ($1 \to 1, \Delta = 0$); at $\text{acc@}3$, both conditions improved fault localization, raising top-3 accuracy from 5 to 7 under raw diffs ($+2$) and to 8 under AST edit scripts ($+3$); at $\text{acc@}5$, both conditions captured 10 of 13 faults ($10 \to 10, \Delta = 0$); and at $\text{acc@}10$, both captured 11 of 13 faults ($11 \to 11, \Delta = 0$).
-This confirms that while broad localization coverage is identical across both representations, AST edit scripts yield a slightly sharper top-3 ranking refinement on valid tests.
+Augmenting the baseline test suite with strict-assertion valid BRTs produced an average precision gain of $\Delta\text{AP} = +0.0627$ for AST-guided tests compared to $+0.0127$ for raw diffs ($p = 1.0000, \hat{A}_{12} = 0.550$).
+Evaluating top-$n$ rank improvements across $n \in \{1, 3, 5, 10\}$ reveals consistent dynamics: at $\text{acc@}1$, raw diffs raised top-1 accuracy from 5 to 6 ($+1$) while AST raised it to 7 ($+2$, driven by \texttt{Math-5}); at $\text{acc@}3$ ($9 \to 8$, $-1$ each) and $\text{acc@}5$ ($10 \to 9$, $-1$ each), one case (\texttt{Math-17}) dropped from rank 4 to rank 7 due to covering a confounding high-suspiciousness method; and at $\text{acc@}10$, all 10 faults remain captured under both conditions ($10/10$).
 
 \subsubsection{Intention-to-Treat: Global Expected Diagnosability Gain}\label{sec:expected_fdg}
 
@@ -423,8 +427,8 @@ We therefore formulate the \emph{Expected Diagnosability Gain} ($E[\text{FDG}]$)
 \begin{equation}
   E[\text{FDG}]_i = \text{FDG}_i \cdot \mathbf{1}_{\{\text{valid}_i\}}
 \end{equation}
-Evaluated across all $N=65$ Defects4J bugs, the raw diff representation delivers an average expected diagnosability gain of \textbf{0.2131} compared to \textbf{0.1263} for AST edit scripts ($\Delta = -0.0868$).
-A paired Wilcoxon signed-rank test confirms that this 68.7\% global diagnosability advantage is statistically significant ($W = 46.0, p = 0.0157$, $\hat{A}_{12} = 0.420$).
+Evaluated across all $N=65$ Defects4J bugs, the raw diff representation delivers an average expected diagnosability gain of \textbf{0.1654} compared to \textbf{0.0933} for AST edit scripts ($\Delta = -0.0722$).
+A paired Wilcoxon signed-rank test confirms that this 77.3\% global diagnosability advantage is statistically significant ($W = 25.0, p = 0.0148$, $\hat{A}_{12} = 0.428$, 14 raw-diff wins, 48 exact ties, 3 AST wins).
 This demonstrates that while both representations produce tests of equal diagnosability when valid, raw diff's substantially higher generation success rate translates into decisively superior overall regression guarding power.
 
 \subsection{RQ3: Token Efficiency and Iteration Dynamics}\label{sec:res_rq3}
@@ -437,12 +441,13 @@ Both conditions converged at virtually identical iteration counts within the 5-r
 \textbf{Case 1: Lexical boundary repair (\texttt{Lang-6}).}
 In \texttt{Lang-6}, the developer fix corrected a character loop index in \texttt{CharSequenceTranslator.translate} to properly handle UTF-16 surrogate pairs.
 Both raw diff and AST edit script cleanly alerted the agent to the modified index argument.
-Both representations produced valid BRTs triggering a \texttt{StringIndexOutOfBoundsException} on pre-fix and passing on post-fix, yielding identical FDG ($0.5328$) and advancing the faulty method's SBFL rank by 2 positions.
+Both representations produced tests triggering a \texttt{StringIndexOutOfBoundsException} on pre-fix and passing on post-fix (\texttt{VALID\_EXCEPTION}, counted under the secondary LIBRO criterion), yielding identical FDG ($0.5283$) and advancing the faulty method's SBFL rank from 3 to 1 (+2 rank improvement, $\Delta\text{AP} = +0.2500$).
+Manual inspection verified that the test's inner \texttt{HexTranslator} subclass cleanly overrides the abstract translation hook required to exercise \texttt{CharSequenceTranslator.translate} without duplicating target logic.
 
 \textbf{Case 2: Semantic tree modification (\texttt{Lang-17}).}\\
 In \texttt{Lang-17}, the defect involved index calculations during surrogate pair translation in \texttt{CharSequenceTranslator}.
 The raw diff condition produced an overconstrained assertion on the surrogate pair output string that failed on both checkouts (\texttt{FAIL\_FAIL}: \texttt{expected:<A?[?]> but was:<A?[]>}).
-In contrast, the AST edit script isolated the structural refactoring around the translation loop (\texttt{MOVE} of \texttt{MethodInvocation}, \texttt{INSERT} of \texttt{ContinueStatement}, and deleting the \texttt{codePointCount} invocation and \texttt{InfixExpression} guard), allowing the agent to synthesize a valid test achieving $\text{FDG} = 0.5104$ and advancing the fault rank from 4 to 2 (+2 rank improvement, $\Delta\text{AP} = +0.125$).
+In contrast, the AST edit script isolated the structural refactoring around the translation loop (\texttt{MOVE} of \texttt{MethodInvocation}, \texttt{INSERT} of \texttt{ContinueStatement}, and deleting the \texttt{codePointCount} invocation and \texttt{InfixExpression} guard), allowing the agent to synthesize a valid test achieving $\text{FDG} = 0.5234$ and advancing the fault rank from 2 to 1 (+1 rank improvement, $\Delta\text{AP} = +0.1667$).
 
 \textbf{Case 3: Literal parameter synthesis (\texttt{Lang-16}).}\\
 In \texttt{Lang-16} (\texttt{NumberUtils.createNumber}), the patch added hexadecimal prefix checks:
@@ -496,9 +501,9 @@ This input threw no exception on either version and failed on both checkouts (\t
 In \texttt{Math-5} (\texttt{Complex.reciprocal()}), calculating the reciprocal of zero complex numbers ($0.0 + 0.0i$) incorrectly returned \texttt{Complex.NaN} instead of the mathematically correct \texttt{Complex.INF}.
 The normalized AST edit script cleanly isolated this replacement as \texttt{UPDATE SimpleName: NaN -> INF}.
 Both representations recognized the target zero condition and instantiated \texttt{new Complex(0.0, 0.0).reciprocal()} with \texttt{VALID\_ASSERTION} outcomes.
-However, they formulated distinct assertions that produced differing diagnostic refinements:
-the raw diff agent asserted exact value equality (\texttt{assertEquals(Complex.INF, result)}), which preserved the baseline SBFL rank of 5 without improvement ($\text{FDG} = 0.5045$, $\Delta\text{AP} = 0.0$).
-In contrast, the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}), which partitioned execution ambiguity groups more effectively ($\text{FDG} = 0.5082$), advancing the faulty method's SBFL rank from 5 to 3 (+2 rank improvement, $\Delta\text{AP} = +0.1333$).
+However, they formulated distinct assertions that produced different diagnostic profiles:
+the raw diff agent asserted exact constant equality (\texttt{assertEquals(Complex.INF, result)}), touching additional constant-initialization lines and reaching higher raw line coverage ($0.0495$ vs.\ $0.0318$, $\text{FDG} = 0.5131$) while leaving the baseline SBFL rank unchanged at 2 ($\Delta\text{AP} = 0.0$).
+In contrast, the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}), achieving marginally higher ambiguity-group splitting ($\text{Split} = 0.9775$ vs.\ $0.9767$, $\text{FDG} = 0.5046$) and advancing the faulty method's SBFL rank from 2 to 1 (+1 rank improvement, $\Delta\text{AP} = +0.5000$).
 This case demonstrates that when AST normalization retains semantic node identities (e.g., \texttt{NaN -> INF}), it can guide the agent toward sharper diagnostic state assertions.
 
 \subsection{Master Experimental Synthesis}\label{sec:summary_master}
@@ -524,20 +529,20 @@ Table~\ref{tab:summary_master} synthesizes our empirical results across all rese
   \item \textbf{AST normalization information loss and modifier noise (major RQ1 confound):} As identified in our failure analysis and code audit, the evaluated GumTree normalization pipeline exhibited severe information loss: because GumTree v3.0.0 JSON outputs omit child subtrees in \texttt{tree}, \texttt{subtree\_summary} was empty across all 65 bugs, stripping variable identifiers, method names, and operand literals down to bare node types, while 49/65 bugs (75.4\%, including 47 starting with \texttt{INSERT Modifier(public) into TypeDeclaration}) carried spurious class-header churn. This information loss---rather than AST structure alone---directly contributed to the 67.3\% \texttt{FAIL\_FAIL} rate under \texttt{ast\_edit}. We have subsequently fixed both defects in \texttt{src/ast\_diff/gumtree\_normalizer.py} (offset-based literal recovery and balanced header-noise cancellation) for follow-up ablation.
   \item \textbf{Infrastructure and API quota audit:} During full batch execution, 15 late-stage Commons-Math bugs (Math-48 through Math-75) encountered API 429 quota exhaustion.
     Rather than misattributing these early network aborts to agent synthesis failure (which would artificially deflate validity rates), these cases were audited and cleanly logged in \texttt{data/exclusion\_log.json}, preserving a pristine 65-bug benchmark evaluated across 130 complete trials.
-    As established in \Cref{sec:dataset}, sensitivity analysis confirms that Commons-Lang (45.0\% vs.\ 25.0\%) and Commons-Math (36.0\% vs.\ 24.0\%) exhibit consistent raw-diff advantages, demonstrating that this infrastructure freeze did not reverse or manufacture the RQ1 effect.
+    As established in \Cref{sec:dataset}, sensitivity analysis confirms that Commons-Lang (32.5\% vs.\ 17.5\%, strict) and Commons-Math (32.0\% vs.\ 20.0\%, strict) exhibit consistent raw-diff advantages, demonstrating that this infrastructure freeze did not reverse or manufacture the RQ1 effect.
 \end{itemize}
 
 \subsection{Construct Validity}
 \begin{itemize}[leftmargin=*]
   \item \textbf{Diagnostic metrics:} We evaluated diagnostic utility using both theoretical FDG and realized ranking metrics ($\Delta\text{AP}$, $\Delta\text{acc@}n$).
-  \item \textbf{Failing-only FDG baseline vs.\ An \& Yoo (ISSTA 2022):} All 30 stored spectra files contain only Defects4J's pre-existing failing triggering tests (\texttt{tests.trigger}, $e_p = 0$ passing tests). Consequently, on the 23 single-trigger bugs (plus \texttt{Lang-57}), Ochiai and DStar ($*=2$) assign identical binary suspiciousness weights ($w_j \in \{0, 1\}$), making DStar formula robustness informative primarily on the 6 remaining multi-trigger bugs. Incorporating passing tests from \texttt{tests.relevant} (now supported in \texttt{src/evaluation/pipeline.py}) is required to replicate the full passing+failing suite regime of \citet{an2022fdg}.
-  \item \textbf{Zero-inflated paired FDG differences:} Because 8 of 13 paired bugs produced identical coverage vectors ($c_{\text{raw}} = c_{\text{ast}}$) and 9/13 yielded $\Delta\text{FDG} = 0$, we lead equivalence claims with the non-parametric 95\% BCa bootstrap CI ($[0.000019, 0.001463] \subset [-0.01, +0.01]$) and exact 3/9/1 win/tie/loss counts, qualifying parametric TOST ($p < 10^{-12}$) and parametric Cohen power ($0.75$ at $d=0.8$, $0.85$ at $d=0.9$) as secondary checks affected by zero-inflation.
+  \item \textbf{Baseline suite composition:} In accordance with \citet{an2022fdg}, 29 of 30 evaluated bug spectra incorporate up to 12 verified passing tests sampled from \texttt{tests.relevant} alongside all failing triggering tests (\texttt{tests.trigger}), yielding informative non-binary Ochiai and DStar ($*=2$) weights; only \texttt{Lang-57} lacks non-triggering relevant tests in Defects4J. Extending the sample beyond 12 passing tests per bug (e.g., 25 in \texttt{configs/experiment.yaml}) may further refine SBFL ambiguity groups.
+  \item \textbf{Zero-inflated paired FDG differences:} Because 6 of 10 strict-paired bugs produced $\Delta\text{FDG} = 0$, we report the exact 1/6/3 AST-win/tie/raw-win breakdown and paired Wilcoxon ($W=3.0, p=0.6250$) directly, noting that all 4 discordant $|\Delta\text{FDG}|$ values lie in $[0.0001, 0.0085]$, establishing narrow practical parity without parametric distributional assumptions.
 \end{itemize}
 
 \subsection{External Validity}
 \begin{itemize}[leftmargin=*]
   \item \textbf{Defects4J pre-training data contamination:} Because Defects4J v2.0.1 is a public benchmark dating from 2014--2020, frontier models such as \texttt{gpt-4o} may have encountered portions of Commons-Lang and Commons-Math during pre-training~\citep{lee2023ghrb,kang2023libro}. While identical model weights and temperature $0.0$ control contamination across both arms for relative comparison, absolute validity rates may be inflated relative to unseen repositories.
-  \item \textbf{Multi-SWE-bench deferred cross-validation:} To mitigate contamination concerns, we implemented a prototype adapter for post-cutoff Java pull requests from Multi-SWE-bench~\citep{multiswebench2025} (\texttt{src/dataset/multi\_swe\_bench.py}) with explicit five-stage exclusion logging (\texttt{data/swe\_bench\_exclusion\_log.json}). Because Hugging Face \texttt{datasets} failed with an Arrow schema-casting error during batch execution (\texttt{step7\_multi\_swe.log}) and per-repository build sandboxes were outside the primary run, executing this contamination-free benchmark remains an essential next step.
+  \item \textbf{Multi-SWE-bench deferred execution:} To mitigate contamination concerns, we completed the five-stage curation and exclusion audit over 128 modern Java pull requests from Multi-SWE-bench~\citep{multiswebench2025} (\texttt{src/dataset/multi\_swe\_bench.py}, \texttt{data/swe\_bench\_exclusion\_log.json}), isolating 18 clean single-method Java PRs across 7 repositories (\texttt{data/multi\_swe\_java.json}, Table~\ref{tab:curation_multiswe}). Executing per-repository Dockerized agent trials and differential oracles across these 18 PRs remains deferred due to API quota constraints and per-repository build environments.
   \item \textbf{Benchmark generalizability and multi-file scope:} While our benchmark deliberately isolated single-method modifications in Commons-Lang and Commons-Math to ensure well-defined ground-truth coverage boundaries and deterministic execution, real-world software maintenance frequently involves multi-hunk and multi-file patches.
     Expanding our automated double-sandbox harness to multi-file patch distributions and larger multi-project benchmarks remains a valuable future extension.
   \item \textbf{Cross-family LLM generalizability:} A natural threat to external validity is whether the observed lexical input synthesis penalty under normalized AST edit scripts generalizes to other frontier model families. Future work will deploy the replication harness across code-specialized architectures (such as Anthropic Claude 3.5 Sonnet, DeepSeek-Coder-V2, and Qwen 2.5 Coder) to establish whether tokenizer variations or alternative instruction-tuning mixtures mitigate the lexical input barrier.
@@ -553,35 +558,40 @@ Our empirical comparison demonstrates that information preservation dominates sy
 As shown in \texttt{Lang-16} and \texttt{Math-45}, raw unified diffs retain exact lexical literals (string constants, exception classes, and numeric bounds), which the agent copies directly into trigger inputs.
 In contrast, our evaluated GumTree normalizer suffered from two specific pipeline defects: (1) GumTree v3.0.0 JSON omitted nested child subtrees, leaving \texttt{subtree\_summary} empty on all 65 bugs and stripping expressions like \texttt{str.startsWith("0X")} or \texttt{Integer.MAX\_VALUE} down to bare node types (\texttt{INSERT MethodInvocation into InfixExpression}, \texttt{INSERT IfStatement into Block}); and (2) spurious class-header churn (\texttt{Modifier(public)}, \texttt{TYPE\_DECLARATION\_KIND(class)}) polluted 49/65 edit scripts.
 Compounded by BPE tokenizer and pre-training familiarity with unified diffs, this information loss forced the model to hallucinate overconstrained assertions (\texttt{FAIL\_FAIL}, accounting for 67.3\% of AST failures).
-Notably, when the AST script retained exact lexical identifiers---as in \texttt{Math-5} (\texttt{UPDATE SimpleName: NaN -> INF})---the AST agent succeeded on Turn~1 with sharper diagnostic quality.
-Thus, our RQ1 gap establishes the cost of \emph{lossy AST normalization} rather than proving that structural AST representations are inherently inferior to raw diffs; evaluating our patched literal-preserving normalizer (\texttt{src/ast\_diff/gumtree\_normalizer.py}) alongside inlined enclosing-method context is the immediate next ablation.
+Notably, when the AST script retained exact lexical identifiers---as in \texttt{Math-5} (\texttt{UPDATE SimpleName: NaN -> INF})---the AST agent succeeded on Turn~1 with sharper diagnostic ranking precision.
+Thus, our pilot RQ1 gap establishes the cost of \emph{lossy AST normalization} rather than proving that structural AST representations are inherently inferior to raw diffs; evaluating our patched literal-preserving normalizer (\texttt{src/ast\_diff/gumtree\_normalizer.py}) alongside inlined enclosing-method context is the immediate next ablation.
 
 \textbf{Diagnostic parity (RQ2) and prompt efficiency (RQ3).}
-Conditioned on generating a valid BRT ($N_{\text{paired}} = 13$), AST edit scripts achieve equivalent diagnosability ($\text{FDG} \approx 0.515$, 95\% BCa CI $[0.000019, 0.001463]$) while reducing prompt token consumption by 13.5\% (mean 22,505 vs.\ 26,027 tokens).
-Realized ranking gains were also slightly higher for AST edit scripts ($\Delta\text{AP} = +0.0676$ vs.\ $+0.0574$).
+Conditioned on generating a valid strict-assertion BRT ($N_{\text{paired}} = 10$), AST edit scripts achieve equivalent diagnosability (mean Ochiai FDG 0.5039 vs.\ 0.5047; Wilcoxon $p = 0.6250$, 1 AST win / 6 ties / 3 raw wins) while reducing prompt token consumption by 13.5\% (mean 22,505 vs.\ 26,027 tokens).
+Realized ranking gains under AST ($\Delta\text{AP} = +0.0627$ vs.\ $+0.0127$) also slightly favor AST, driven by \texttt{Math-5} where the structural identity label (\texttt{NaN -> INF}) guided a higher-ranking state assertion ($\Delta\text{AP} = +0.5000$ vs.\ $0.0$).
 This demonstrates that tree operations effectively communicate structural method boundaries and semantic intent once the model obtains the concrete literals needed for input synthesis.
 
-\textbf{Proposed Solution: The HyRep-BRT Hybrid Representation (Conceptual Prototype).}
-Our empirical findings reveal that \emph{syntax trees provide structural boundaries, while unified diffs provide lexical grounding}.
-Rather than forcing an artificial dichotomy between textual diffs and AST edit scripts, we prototype the \emph{Hybrid Change Representation} (\textbf{HyRep-BRT}) in our companion module (\texttt{src/ast\_diff/hyrep.py}).
-HyRep-BRT cancels balanced \texttt{TypeDeclaration} header noise, aligns GumTree operations to diff hunks via identifier/construct matching, preserves verbatim unified diff hunks, and decorates added lines with syntactic node tags:
-\begin{lstlisting}[language=diff, caption={HyRep-BRT hybrid representation format (fusing lexical diff with AST node typing).}]
+%% ============================================================
+\section{Future Work}\label{sec:future_work}
+%% ============================================================
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Patched AST + Enclosing-Method Inlining Rerun:} All software fixes required for a controlled rerun are now implemented and verified in \texttt{configs/experiment.yaml}: (i) literal-preserving GumTree normalization with balanced header-noise filtering (verified 80/80 clean in \texttt{data/normalizer\_audit\_80.json}), (ii) bounded enclosing-method body inlining in both arms (\texttt{inline\_enclosing\_method: true}), and (iii) $3\times$ repeats across all 80 curated bugs with exponential retry backoff against API rate limits.
+  \item \textbf{Multi-SWE-bench Containerized Evaluation:} Executing our 18 curated post-cutoff Java PRs (\texttt{data/multi\_swe\_java.json}, 7 repositories) across per-repository Docker sandboxes will quantify contamination-free generalization beyond Defects4J.
+  \item \textbf{Experimental Evaluation of the Hybrid Representation (HyRep-BRT):} Our empirical findings suggest that \emph{syntax trees provide structural boundaries, while unified diffs provide lexical grounding}. Rather than forcing a binary trade-off between textual diffs and AST edit scripts, we prototyped a \emph{Hybrid Change Representation} (\textbf{HyRep-BRT}) in \texttt{src/ast\_diff/hyrep.py} that cancels balanced \texttt{TypeDeclaration} header noise, preserves verbatim unified diff hunks, and annotates added lines with syntactic node tags:
+\begin{lstlisting}[language=diff, caption={HyRep-BRT hybrid representation prototype (un-evaluated conceptual format).}]
 @@ -204,3 +204,3 @@ [AST: UPDATE InfixExpression: `raw` -> `guarded`]
 - if (ptr >= inputEnd) {
 + if (ptr >= inputEnd || ptr < 0) {  // [AST-Node: IfStatement -> InfixExpression (OR)]
       return false;
 \end{lstlisting}
-Unit-tested in our repository (\texttt{tests/test\_hyrep.py}) and selectable via \texttt{--conditions hyrep}, HyRep-BRT remains an un-evaluated conceptual prototype whose empirical effectiveness against raw diffs and literal-preserving AST scripts is left to future LLM trials.
+Unit-tested in \texttt{tests/test\_hyrep.py} and selectable via \texttt{--conditions hyrep}, HyRep-BRT has not yet been evaluated in live LLM trials and remains a hypothesis for future controlled ablation alongside literal-preserving AST scripts and raw diffs.
+\end{enumerate}
 
 %% ============================================================
 \section{Conclusion}\label{sec:conclusion}
 %% ============================================================
 
-This thesis presented an empirical study comparing raw unified \texttt{git diff}s (Control) and over-normalized GumTree AST edit scripts (Treatment) for LLM-based post-fix bug-reproducing test generation across 65 Defects4J bugs spanning Commons-Lang and Commons-Math.
-Raw diffs achieved significantly higher BRT validity on Defects4J (41.5\% vs.\ 24.6\%, exact McNemar $p = 0.0127$; strict assertion-only: 32.3\% vs.\ 18.5\%, $p = 0.0225$), driven primarily by subtree literal loss and class-header noise in the evaluated normalizer.
-Conditioned on valid reproduction ($N_{\text{paired}} = 13$), both representations delivered equivalent fault diagnosability (mean Ochiai FDG 0.5144 vs.\ 0.5148, 3 AST wins / 9 exact ties / 1 raw win, 95\% BCa CI $[0.000019, 0.001463] \subset [-0.01, +0.01]$, secondary TOST $p < 10^{-12}$), while AST edit scripts reduced token consumption by 13.5\%.
-Globally, raw diff delivered 68.7\% higher Expected Diagnosability Gain ($0.2131$ vs.\ $0.1263$, $p = 0.0157$).
-To resolve the identified limitations, we hardened the codebase with literal-preserving AST normalization, balanced header-noise filtering, bounded enclosing-method body inlining, passing-test baseline support for FDG, and Multi-SWE-bench exclusion logging.
+This thesis presented an empirically controlled pilot study comparing raw unified \texttt{git diff}s (Control) and normalized GumTree AST edit scripts (Treatment) for LLM-based post-fix bug-reproducing test generation across 65 Defects4J bugs spanning Commons-Lang and Commons-Math.
+Under the primary strict assertion-only criterion, raw diffs achieved significantly higher BRT validity than the initial over-normalized AST representation (32.3\% vs.\ 18.5\%, exact McNemar $p = 0.0225$; LIBRO secondary: 41.5\% vs.\ 24.6\%, $p = 0.0127$), driven primarily by subtree literal omission and class-header churn in the evaluated normalizer.
+Conditioned on valid strict-assertion reproduction ($N_{\text{paired}} = 10$), both representations delivered comparable fault diagnosability against passing+failing baseline suites (mean Ochiai FDG 0.5047 vs.\ 0.5039, 1 AST win / 6 exact ties / 3 raw wins, Wilcoxon $p = 0.6250$), while AST edit scripts reduced token consumption by 13.5\%.
+Globally across all 65 bugs, raw diff's higher validity rate translated into a 77.3\% advantage in Expected Diagnosability Gain ($0.1654$ vs.\ $0.0933$, $W=25.0$, $p = 0.0148$, $\hat{A}_{12} = 0.428$).
+Guided by these diagnostic audits, we resolved the GumTree normalizer defects (verified cleanly across all 80 curated bugs), added enclosing-method body inlining, integrated passing+failing baseline SBFL evaluation, audited all 43 valid tests manually, and completed Multi-SWE-bench Java curation (18 PRs across 7 repositories) in preparation for multi-repeat full-scale replication.
 The complete replication package is openly available at \url{https://github.com/sachit123h/ast-regression-test-gen}.
 
 %% ============================================================

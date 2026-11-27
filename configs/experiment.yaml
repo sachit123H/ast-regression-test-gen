@@ -1,53 +1,50 @@
-# CS.91000 Graduation Research — Experiment Configuration
-# Prioritizes Prof. Shin Yoo's email guidance (BRT framing, triggering-test isolation, Multi-SWE-bench support)
+# CS.91000 Graduation Research — Full Rerun Experiment Configuration
+# Incorporates all post-pilot fixes:
+# - Literal-preserving GumTree normalizer + balanced header-noise cancellation
+# - Enclosing-method body inlining in both Control and Treatment prompts (Nov 25 email)
+# - Strict assertion validity primary + passing/failing baseline FDG
+# - 3 repeats per (bug, condition) with transient 429 retry-backoff
 
 paths:
   data_dir: "data"
-  curated_manifest: "data/curated_bugs.json"
-  exclusion_log: "data/exclusion_log.json"
+  curated_manifest: "data/curated_bugs_80.json"
+  exclusion_log: "data/exclusion_log_80.json"
   prefix_root: "tmp/prefix_workspaces"       # Agent MCP server operates ONLY here
   postfix_root: "tmp/postfix_workspaces"     # Evaluation harness ONLY (unreachable by agent)
-  results_dir: "data/results"
-  figures_dir: "docs/figures"
+  results_dir: "data/results_rerun"
+  figures_dir: "docs/figures_rerun"
 
 tools:
   defects4j_bin: "defects4j"
   gumtree_bin: "gumtree"
-  gumtree_java_home: "/usr/lib/jvm/java-17-openjdk-amd64"                      # Point GumTree to Java 17 while Defects4J runs on Java 8
+  gumtree_java_home: "/usr/lib/jvm/java-17-openjdk-amd64"
   compile_timeout_sec: 180
   test_timeout_sec: 180
   coverage_timeout_sec: 240
 
 dataset:
-  # Primary Defects4J projects evaluated end-to-end (Lang and Math, N=80 curated -> 65 completed)
   projects: ["Lang", "Math"]
-  # Set to true to enforce single-method localized fix filter (Proposal Sec. 4.1)
   require_single_method_fix: true
-  # Minimum viable bug set size before relaxing localized-fix filter (Proposal Sec. 5.1)
   min_viable_bugs: 50
-  # Set to null or 150 to evaluate full 5-project Defects4J benchmark
   max_bugs: null
-  # Strip pre-existing Defects4J triggering tests from agent's pre-fix sandbox (Aug 12 email)
   strip_triggering_tests: true
-  # Strip balanced GumTree TypeDeclaration header churn (Modifier/TYPE_DECLARATION_KIND/SimpleName)
   filter_ast_header_noise: true
 
 agent:
-  provider: "openai"                         # "openai" | "anthropic" | "openai_compatible"
-  model: "gpt-4o-2024-08-06"                 # Pin exact snapshot for reproducibility
-  temperature: 0.0                           # Deterministic decoding for fair A/B comparison
+  provider: "openai"
+  model: "gpt-4o-2024-08-06"
+  temperature: 0.2                           # Non-zero temperature for 3-repeat variance estimation
   max_tokens: 4096
-  max_retries: 5                             # Proposal Sec. 4.2: retry limit of 5
-  max_tool_calls_per_retry: 6                # Prevent runaway get_context loops
-  api_base_url: null                         # Optional custom endpoint (e.g., Gemini OpenAI-compat / vLLM)
+  max_retries: 5
+  max_tool_calls_per_retry: 6
+  api_base_url: null
   inline_enclosing_method: true              # Prof. Yoo Nov 25 Q3: inline enclosing pre-fix method context
+  repeats: 3
 
 evaluation:
-  fdg_alpha: 0.5                             # An & Yoo (ISSTA 2022) default alpha = 0.5
-  dstar_star: 2                              # Wong et al. (2014) DStar (* = 2)
-  acc_n_values: [1, 3, 5, 10]                # Top-n accuracy cutoffs
-  # Proposal Sec. 4.5 strict mode: require AssertionError on pre-fix (also logs LIBRO-style fail/pass)
-  strict_assertion_only: false
-  # Include passing tests from tests.relevant alongside tests.trigger for full SBFL/FDG spectra
+  fdg_alpha: 0.5
+  dstar_star: 2
+  acc_n_values: [1, 3, 5, 10]
+  strict_assertion_only: true                # Proposal Sec. 4.5 strict assertion validity primary
   include_passing_baseline_tests: true
   max_baseline_passing_tests: 25

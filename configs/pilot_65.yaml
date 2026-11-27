@@ -1,0 +1,47 @@
+# CS.91000 Graduation Research — Initial Pilot Configuration (N=65 Completed)
+# Matches the exact trial settings used for the Nov 22 GPT-4o pilot run,
+# with full-suite passing+failing baseline FDG evaluation enabled (`include_passing_baseline_tests: true`).
+
+paths:
+  data_dir: "data"
+  curated_manifest: "data/curated_bugs.json"
+  exclusion_log: "data/exclusion_log.json"
+  prefix_root: "tmp/prefix_workspaces"
+  postfix_root: "tmp/postfix_workspaces"
+  results_dir: "data/results"
+  figures_dir: "docs/figures"
+
+tools:
+  defects4j_bin: "defects4j"
+  gumtree_bin: "gumtree"
+  gumtree_java_home: "/usr/lib/jvm/java-17-openjdk-amd64"
+  compile_timeout_sec: 180
+  test_timeout_sec: 180
+  coverage_timeout_sec: 240
+
+dataset:
+  projects: ["Lang", "Math"]
+  require_single_method_fix: true
+  min_viable_bugs: 50
+  max_bugs: null
+  strip_triggering_tests: true
+  filter_ast_header_noise: false               # Pilot used initial normalizer prior to header/literal patch
+
+agent:
+  provider: "openai"
+  model: "gpt-4o-2024-08-06"
+  temperature: 0.0
+  max_tokens: 4096
+  max_retries: 5
+  max_tool_calls_per_retry: 6
+  api_base_url: null
+  inline_enclosing_method: false               # Pilot used enclosing-method metadata + on-demand get_context
+  repeats: 1
+
+evaluation:
+  fdg_alpha: 0.5
+  dstar_star: 2
+  acc_n_values: [1, 3, 5, 10]
+  strict_assertion_only: false                 # Collect spectra for all LIBRO-valid tests; stats lead with strict
+  include_passing_baseline_tests: true         # Re-evaluated with tests.relevant passing tests + tests.trigger
+  max_baseline_passing_tests: 12

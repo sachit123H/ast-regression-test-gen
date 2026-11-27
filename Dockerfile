@@ -8,7 +8,7 @@ ENV TZ=America/New_York
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV ANT_OPTS="-Xmx2048m -Dfile.encoding=UTF-8"
-ENV JAVA_TOOL_OPTIONS="-Djava.awt.headless=true"
+ENV JAVA_TOOL_OPTIONS="-Djava.awt.headless=true -Dfile.encoding=UTF-8"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl wget unzip zip build-essential \
@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     subversion patch diffutils \
     xvfb xauth x11-utils libxi6 libxrender1 libxtst6 \
     locales tzdata \
+    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 

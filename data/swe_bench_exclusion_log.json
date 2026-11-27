@@ -1,0 +1,461 @@
+{
+  "total_scanned": 128,
+  "total_curated": 18,
+  "exclusion_counts": {
+    "issue_leaked_brt": 25,
+    "non_single_java_file": 62,
+    "multi_method_fix": 23,
+    "clone_or_patch_failed": 0,
+    "gumtree_parse_failed": 0
+  },
+  "exclusions": {
+    "issue_leaked_brt": [
+      {
+        "instance_id": "elastic__logstash-17021",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4641",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "google__gson-1787",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "mockito__mockito-3424",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "alibaba__fastjson2-2559",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "apache__dubbo-10638",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "elastic__logstash-17020",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "elastic__logstash-17019",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-dataformat-xml-590",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "mockito__mockito-3173",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "elastic__logstash-16968",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "mockito__mockito-3167",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "alibaba__fastjson2-1245",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "mockito__mockito-3133",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4360",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4320",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "elastic__logstash-15964",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4311",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4230",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4228",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4048",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4015",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3509",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-1923",
+        "reason": "Problem statement contains JUnit test hints"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3851",
+        "reason": "Problem statement contains JUnit test hints"
+      }
+    ],
+    "non_single_java_file": [
+      {
+        "instance_id": "fasterxml__jackson-core-1309",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-dataformat-xml-644",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "googlecontainertools__jib-4144",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1263",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4615",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-dataformat-xml-638",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "mockito__mockito-3220",
+        "reason": "Modified 11 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1208",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4487",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "google__gson-1555",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1204",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4486",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "googlecontainertools__jib-2536",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1182",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4469",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-dataformat-xml-531",
+        "reason": "Modified 8 non-test Java files"
+      },
+      {
+        "instance_id": "googlecontainertools__jib-2688",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1172",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4468",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "mockito__mockito-3129",
+        "reason": "Modified 3 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1142",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4426",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4365",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-16195",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1016",
+        "reason": "Modified 3 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-16094",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-964",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4338",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-922",
+        "reason": "Modified 3 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4325",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-15969",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-729",
+        "reason": "Modified 3 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-15928",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4304",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-15925",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-370",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-980",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4219",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-15008",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4186",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-15000",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4132",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4131",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4087",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-14571",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-14058",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-14045",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4013",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-14027",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-14000",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3716",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13997",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13931",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3666",
+        "reason": "Modified 2 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13930",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13914",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13902",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3621",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13880",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3560",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "elastic__logstash-13825",
+        "reason": "Modified 0 non-test Java files"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-2036",
+        "reason": "Modified 2 non-test Java files"
+      }
+    ],
+    "multi_method_fix": [
+      {
+        "instance_id": "alibaba__fastjson2-2775",
+        "reason": "No enclosing method matched (class/import edit)"
+      },
+      {
+        "instance_id": "google__gson-1703",
+        "reason": "No enclosing method matched (class/import edit)"
+      },
+      {
+        "instance_id": "fasterxml__jackson-dataformat-xml-544",
+        "reason": "Edits span 3 methods"
+      },
+      {
+        "instance_id": "google__gson-1391",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "alibaba__fastjson2-82",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-16579",
+        "reason": "Edits span 3 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-16569",
+        "reason": "Edits span 3 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-16482",
+        "reason": "Edits span 3 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-1053",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-891",
+        "reason": "Edits span 3 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-566",
+        "reason": "No enclosing method matched (class/import edit)"
+      },
+      {
+        "instance_id": "elastic__logstash-15697",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-15680",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-core-174",
+        "reason": "No enclosing method matched (class/import edit)"
+      },
+      {
+        "instance_id": "elastic__logstash-15241",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-15233",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-4189",
+        "reason": "Edits span 5 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-14981",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-14970",
+        "reason": "Edits span 2 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-14898",
+        "reason": "Edits span 5 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-14897",
+        "reason": "Edits span 5 methods"
+      },
+      {
+        "instance_id": "elastic__logstash-14878",
+        "reason": "Edits span 5 methods"
+      },
+      {
+        "instance_id": "fasterxml__jackson-databind-3860",
+        "reason": "No enclosing method matched (class/import edit)"
+      }
+    ],
+    "clone_or_patch_failed": [],
+    "gumtree_parse_failed": []
+  }
+}

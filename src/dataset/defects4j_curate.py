@@ -85,7 +85,10 @@ def _export_prop(d4j_bin: str, work_dir: Path, prop: str, project: str = "") -> 
 
 
 def parse_java_method_spans(source_text: str) -> List[MethodSpan]:
-    """Lightweight brace-balanced Java method span finder (1-indexed line numbers)."""
+    """Lightweight brace-balanced Java method span finder (1-indexed line numbers).
+
+    Supports both single-line and multi-line method/constructor signatures.
+    """
     lines = source_text.splitlines()
     # Match method/constructor declarations (excluding control keywords)
     method_re = re.compile(
@@ -101,28 +104,47 @@ def parse_java_method_spans(source_text: str) -> List[MethodSpan]:
     n = len(lines)
     while i < n:
         line = lines[i]
-        m = method_re.match(line)
+        sig_end = i
+        sig_candidate = line
+        stripped_line = line.strip()
+        # Handle multi-line method signatures spanning up to 8 lines before `{`
+        if (
+            "(" in stripped_line
+            and "{" not in stripped_line
+            and ";" not in stripped_line
+            and not stripped_line.startswith(("//", "*", "/*"))
+        ):
+            parts = [line]
+            for k in range(i + 1, min(n, i + 8)):
+                parts.append(lines[k])
+                if "{" in lines[k] or ";" in lines[k]:
+                    sig_end = k
+                    break
+            sig_candidate = " ".join(p.strip() for p in parts)
+
+        m = method_re.match(sig_candidate)
         if m and m.group(1) not in control_keywords:
             name = m.group(1)
             start_line = i + 1
-            line_brace = line.find("{")
+            brace_line = lines[sig_end]
+            line_brace = brace_line.find("{")
             if line_brace != -1:
-                brace_pos = sum(len(lines[k]) + 1 for k in range(i)) + line_brace
+                brace_pos = sum(len(lines[k]) + 1 for k in range(sig_end)) + line_brace
                 end_brace_idx = find_matching_brace(source_text, brace_pos)
                 if end_brace_idx != -1:
                     end_line = source_text[:end_brace_idx].count("\n") + 1
                     spans.append(
                         MethodSpan(
                             name=name,
-                            signature=line.strip(),
+                            signature=sig_candidate.strip(),
                             start_line=start_line,
                             end_line=end_line,
                         )
                     )
                     i = end_line
                     continue
-            brace_depth = line.count("{") - line.count("}")
-            j = i + 1
+            brace_depth = brace_line.count("{") - brace_line.count("}")
+            j = sig_end + 1
             while j < n and brace_depth > 0:
                 stripped = re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', "", lines[j])
                 stripped = re.sub(r"//.*$", "", stripped)
@@ -132,7 +154,7 @@ def parse_java_method_spans(source_text: str) -> List[MethodSpan]:
             spans.append(
                 MethodSpan(
                     name=name,
-                    signature=line.strip(),
+                    signature=sig_candidate.strip(),
                     start_line=start_line,
                     end_line=end_line,
                 )

@@ -27,8 +27,9 @@ _POS_AT_RE = re.compile(r"\s*@\((\d+)\s*,\s*(\d+)\)")
 _NODE_ID_RE = re.compile(r"#\d+\b")
 _MULTI_SPACE_RE = re.compile(r"[ \t]{2,}")
 
-# GumTree JDT frequently emits balanced phantom TypeDeclaration header churn
-_HEADER_NOISE_TYPES = {"Modifier", "TYPE_DECLARATION_KIND", "SimpleName"}
+# GumTree JDT frequently emits balanced phantom TypeDeclaration / MethodDeclaration header churn
+_HEADER_NOISE_TYPES = {"Modifier", "TYPE_DECLARATION_KIND", "SimpleName", "PrimitiveType"}
+_HEADER_NOISE_PARENTS = {"TypeDeclaration", "MethodDeclaration"}
 
 
 @dataclass
@@ -63,7 +64,8 @@ class NormalizedASTAction:
             return f"DELETE {node_desc}{target}{body}"
         if self.action == "MOVE":
             target = f" into {parent_desc}" if parent_desc else ""
-            return f"MOVE {node_desc}{target}"
+            body = f" :: {self.subtree_summary}" if self.subtree_summary else ""
+            return f"MOVE {node_desc}{target}{body}"
         return f"{self.action} {node_desc}"
 
 
@@ -173,18 +175,18 @@ def filter_phantom_header_noise(
     for act in actions:
         if (
             act.action == "INSERT"
-            and act.parent_type == "TypeDeclaration"
+            and act.parent_type in _HEADER_NOISE_PARENTS
             and act.node_type in _HEADER_NOISE_TYPES
         ):
             ins_counts[(act.node_type, act.label)] += 1
         elif (
             act.action == "DELETE"
-            and act.parent_type in ("", "TypeDeclaration")
+            and act.parent_type in ("", *_HEADER_NOISE_PARENTS)
             and act.node_type in _HEADER_NOISE_TYPES
         ):
             del_counts[(act.node_type, act.label)] += 1
 
-    # Only cancel pairs that appear in both INSERT (into TypeDeclaration) and DELETE
+    # Only cancel pairs that appear in both INSERT (into Type/MethodDeclaration) and DELETE
     to_drop_ins: Counter[Tuple[str, str]] = Counter()
     to_drop_del: Counter[Tuple[str, str]] = Counter()
     for key, cnt in ins_counts.items():
@@ -201,14 +203,14 @@ def filter_phantom_header_noise(
         key = (act.node_type, act.label)
         if (
             act.action == "INSERT"
-            and act.parent_type == "TypeDeclaration"
+            and act.parent_type in _HEADER_NOISE_PARENTS
             and to_drop_ins[key] > 0
         ):
             to_drop_ins[key] -= 1
             continue
         if (
             act.action == "DELETE"
-            and act.parent_type in ("", "TypeDeclaration")
+            and act.parent_type in ("", *_HEADER_NOISE_PARENTS)
             and to_drop_del[key] > 0
         ):
             to_drop_del[key] -= 1
@@ -428,16 +430,16 @@ def run_gumtree_diff(
                 normalized_text=format_normalized_script(rel_path, enclosing_method, actions),
                 raw_action_count=len(actions),
             )
-    except (subprocess.TimeoutExpired, FileNotFoundError, json.JSONDecodeError) as exc:
-        # Fall through to plain-text mode unless binary is missing
-        if isinstance(exc, FileNotFoundError):
+    except (subprocess.TimeoutExpired, OSError, json.JSONDecodeError) as exc:
+        # Fall through to plain-text mode only on timeout or non-JSON output
+        if isinstance(exc, OSError):
             return ASTDiffResult(
                 success=False,
                 file_path=rel_path,
                 enclosing_method=enclosing_method,
                 actions=[],
                 normalized_text="",
-                error=f"GumTree binary not found: {gumtree_bin}",
+                error=f"Failed to invoke GumTree binary ({gumtree_bin}): {exc}",
             )
 
     # Fallback: plain-text textdiff
@@ -474,14 +476,15 @@ def run_gumtree_diff(
             normalized_text=format_normalized_script(rel_path, enclosing_method, actions),
             raw_action_count=len(actions),
         )
-    except subprocess.TimeoutExpired:
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        msg = f"GumTree timed out after {timeout_sec}s" if isinstance(exc, subprocess.TimeoutExpired) else f"Failed to invoke GumTree binary ({gumtree_bin}): {exc}"
         return ASTDiffResult(
             success=False,
             file_path=rel_path,
             enclosing_method=enclosing_method,
             actions=[],
             normalized_text="",
-            error=f"GumTree timed out after {timeout_sec}s",
+            error=msg,
         )
 
 

@@ -1,0 +1,809 @@
+{
+  "total_audited": 80,
+  "all_succeeded": true,
+  "bugs_with_zero_actions": [],
+  "bugs_with_empty_subtree_summary": [],
+  "bugs_with_header_noise": [],
+  "per_bug": [
+    {
+      "bug_key": "Lang-1",
+      "success": true,
+      "error": null,
+      "action_count": 10,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (10):\n  1. INSERT VariableDeclarationStatement into Block :: `char firstSigDigit = 0;`\n  2. INSERT ForStatement into Block :: `for(int i = pfxLen; i < str.length(); i++) { firstSigDigit = str.charAt(i); if (firstSigDigit == '0') { // count leading zeroes pfxLen++; } else { break; } }`\n  3. INSERT InfixExpression into IfStatement :: `hexDigits > 16 || (hexDigits == 16 && firstSigDigit > '7')`\n  4. INSERT InfixExpression into IfStatement :: `hexDigits > 8 || (hexDigits == 8 && firstSigDigit > '7')`\n  5. MOVE InfixExpression into InfixExpression :: `hexDigits > 16`\n  6. INSERT INFIX_EXPRESSION_OPERATOR(||) into InfixExpression\n  7. INSERT ParenthesizedExpression into InfixExpression :: `(hexDigits == 16 && firstSigDigit > '7')`\n  8. MOVE InfixExpression into InfixExpression :: `hexDigits > 8`\n  9. INSERT INFIX_EXPRESSION_OPERATOR(||) into InfixExpression\n  10. INSERT ParenthesizedExpression into InfixExpression :: `(hexDigits == 8 && firstSigDigit > '7')`"
+    },
+    {
+      "bug_key": "Lang-3",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (8):\n  1. INSERT Block into TryStatement :: `{ if(numDecimals <= 7){// If number has 7 or fewer digits past the decimal point then make it a float final Float f = createFloat(str); if (!(f.isInfinite()...`\n  2. INSERT Block into TryStatement :: `{ if(numDecimals <= 16){// If number has between 8 and 16 digits past the decimal point then make it a double final Double d = createDouble(str); if (!(d.isI...`\n  3. INSERT IfStatement into Block :: `if(numDecimals <= 7){// If number has 7 or fewer digits past the decimal point then make it a float final Float f = createFloat(str); if (!(f.isInfinite() ||...`\n  4. INSERT IfStatement into Block :: `if(numDecimals <= 16){// If number has between 8 and 16 digits past the decimal point then make it a double final Double d = createDouble(str); if (!(d.isInf...`\n  5. INSERT InfixExpression into IfStatement :: `numDecimals <= 7`\n  6. MOVE Block into IfStatement :: `{ final Float f = createFloat(str); if (!(f.isInfinite() || (f.floatValue() == 0.0F && !allZeros))) { return f; } }`\n  7. INSERT InfixExpression into IfStatement :: `numDecimals <= 16`\n  8. MOVE Block into IfStatement :: `{ final Double d = createDouble(str); if (!(d.isInfinite() || (d.doubleValue() == 0.0D && !allZeros))) { return d; } }`"
+    },
+    {
+      "bug_key": "Lang-5",
+      "success": true,
+      "error": null,
+      "action_count": 9,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/LocaleUtils.java\nEnclosing Method: toLocale\nAST Edit Operations (9):\n  1. INSERT Block into MethodDeclaration :: `{ if (str == null) { return null; } final int len = str.length(); if (len < 2) { throw new IllegalArgumentException(\"Invalid locale format: \" + str); } final...`\n  2. MOVE IfStatement into Block :: `if (str == null) { return null; }`\n  3. MOVE VariableDeclarationStatement into Block :: `final int len = str.length();`\n  4. MOVE IfStatement into Block :: `if (len < 2) { throw new IllegalArgumentException(\"Invalid locale format: \" + str); }`\n  5. MOVE VariableDeclarationStatement into Block :: `final char ch0 = str.charAt(0);`\n  6. INSERT IfStatement into Block :: `if (ch0 == '_') { if (len < 3) { throw new IllegalArgumentException(\"Invalid locale format: \" + str); } final char ch1 = str.charAt(1); final char ch2 = str....`\n  7. INSERT InfixExpression into IfStatement :: `ch0 == '_'`\n  8. INSERT Block into IfStatement :: `{ if (len < 3) { throw new IllegalArgumentException(\"Invalid locale format: \" + str); } final char ch1 = str.charAt(1); final char ch2 = str.charAt(2); if (!...`\n  9. MOVE Block into IfStatement :: `{ if (str == null) { return null; } final int len = str.length(); if (len < 2) { throw new IllegalArgumentException(\"Invalid locale format: \" + str); } final...`"
+    },
+    {
+      "bug_key": "Lang-6",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java\nEnclosing Method: translate\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `pos` -> `pt`"
+    },
+    {
+      "bug_key": "Lang-9",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/time/FastDateParser.java\nEnclosing Method: init\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (patternMatcher.regionStart() != patternMatcher.regionEnd()) { throw new IllegalArgumentException(\"Failed to parse \\\"\"+pattern+\"\\\" ; gave up at index \"+pa...`"
+    },
+    {
+      "bug_key": "Lang-10",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/time/FastDateParser.java\nEnclosing Method: escapeRegex\nAST Edit Operations (3):\n  1. DELETE VariableDeclarationStatement :: `boolean wasWhite= false;`\n  2. DELETE IfStatement :: `if(Character.isWhitespace(c)) { if(!wasWhite) { wasWhite= true; regex.append(\"\\\\s*+\"); } continue; }`\n  3. DELETE ExpressionStatement :: `wasWhite= false;`"
+    },
+    {
+      "bug_key": "Lang-13",
+      "success": true,
+      "error": null,
+      "action_count": 14,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/SerializationUtils.java\nEnclosing Method: ClassLoaderAwareObjectInputStream\nAST Edit Operations (14):\n  1. INSERT FieldDeclaration into TypeDeclaration :: `private static final Map<String, Class<?>> primitiveTypes = new HashMap<String, Class<?>>();`\n  2. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"byte\", byte.class);`\n  3. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"short\", short.class);`\n  4. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"int\", int.class);`\n  5. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"long\", long.class);`\n  6. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"float\", float.class);`\n  7. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"double\", double.class);`\n  8. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"boolean\", boolean.class);`\n  9. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"char\", char.class);`\n  10. INSERT ExpressionStatement into Block :: `primitiveTypes.put(\"void\", void.class);`\n  11. INSERT Block into CatchClause :: `{ try { return Class.forName(name, false, Thread.currentThread().getContextClassLoader()); } catch (ClassNotFoundException cnfe) { Class<?> cls = primitiveTy...`\n  12. INSERT TryStatement into Block :: `try { return Class.forName(name, false, Thread.currentThread().getContextClassLoader()); } catch (ClassNotFoundException cnfe) { Class<?> cls = primitiveType...`\n  13. MOVE Block into TryStatement :: `{ return Class.forName(name, false, Thread.currentThread().getContextClassLoader()); }`\n  14. INSERT CatchClause into TryStatement :: `catch (ClassNotFoundException cnfe) { Class<?> cls = primitiveTypes.get(name); if (cls != null) return cls; else throw cnfe; }`"
+    },
+    {
+      "bug_key": "Lang-14",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/StringUtils.java\nEnclosing Method: equals\nAST Edit Operations (5):\n  1. INSERT IfStatement into Block :: `if (cs1 instanceof String && cs2 instanceof String) { return cs1.equals(cs2); }`\n  2. INSERT ReturnStatement into Block :: `return CharSequenceUtils.regionMatches(cs1, false, 0, cs2, 0, Math.max(cs1.length(), cs2.length()));`\n  3. INSERT InfixExpression into IfStatement :: `cs1 instanceof String && cs2 instanceof String`\n  4. INSERT Block into IfStatement :: `{ return cs1.equals(cs2); }`\n  5. MOVE ReturnStatement into Block :: `return cs1.equals(cs2);`"
+    },
+    {
+      "bug_key": "Lang-16",
+      "success": true,
+      "error": null,
+      "action_count": 2,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (2):\n  1. INSERT MethodInvocation into InfixExpression :: `str.startsWith(\"0X\")`\n  2. INSERT MethodInvocation into InfixExpression :: `str.startsWith(\"-0X\")`"
+    },
+    {
+      "bug_key": "Lang-17",
+      "success": true,
+      "error": null,
+      "action_count": 18,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java\nEnclosing Method: translate\nAST Edit Operations (18):\n  1. MOVE MethodInvocation into VariableDeclarationFragment :: `input.length()`\n  2. MOVE ForStatement into Block :: `for (int pt = 0; pt < consumed; pt++) { if (pos < len - 2) { pos += Character.charCount(Character.codePointAt(input, pos)); } else { pos++; } }`\n  3. MOVE Block into ForStatement :: `{ pos += Character.charCount(Character.codePointAt(input, pos)); }`\n  4. INSERT ExpressionStatement into Block :: `pos+= c.length;`\n  5. INSERT ContinueStatement into Block :: `continue;`\n  6. DELETE METHOD_INVOCATION_RECEIVER :: `Character`\n  7. DELETE SimpleName(codePointCount)\n  8. DELETE SimpleName(input)\n  9. DELETE NumberLiteral(0)\n  10. DELETE METHOD_INVOCATION_ARGUMENTS :: `input, 0, input.length()`\n  11. DELETE MethodInvocation :: `Character.codePointCount(input, 0, input.length())`\n  12. DELETE ExpressionStatement :: `pos--;`\n  13. DELETE Block :: `{ // // contract with translators is that they have to understand codepoints // // and they just took care of a surrogate pair for (int pt = 0; pt < consumed...`\n  14. DELETE InfixExpression :: `pos < len - 2`\n  15. DELETE Block :: `{ pos++; }`\n  16. DELETE IfStatement :: `if (pos < len - 2) { pos += Character.charCount(Character.codePointAt(input, pos)); } else { pos++; }`\n  17. DELETE Block :: `{ if (pos < len - 2) { pos += Character.charCount(Character.codePointAt(input, pos)); } else { pos++; } }`\n  18. DELETE ExpressionStatement :: `pos++;`"
+    },
+    {
+      "bug_key": "Lang-18",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/time/FastDateFormat.java\nEnclosing Method: parsePattern\nAST Edit Operations (4):\n  1. INSERT Block into IfStatement :: `{ rule = selectNumberRule(Calendar.YEAR, tokenLen < 4 ? 4 : tokenLen); }`\n  2. UPDATE INFIX_EXPRESSION_OPERATOR: `>=` -> `==`\n  3. UPDATE NumberLiteral: `4` -> `2`\n  4. DELETE Block :: `{ rule = selectNumberRule(Calendar.YEAR, tokenLen); }`"
+    },
+    {
+      "bug_key": "Lang-19",
+      "success": true,
+      "error": null,
+      "action_count": 23,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java\nEnclosing Method: translate\nAST Edit Operations (23):\n  1. INSERT VariableDeclarationStatement into Block :: `boolean semiNext = (end != seqEnd) && (input.charAt(end) == ';');`\n  2. INSERT InfixExpression into WhileStatement :: `end < seqEnd && ( (input.charAt(end) >= '0' && input.charAt(end) <= '9') || (input.charAt(end) >= 'a' && input.charAt(end) <= 'f') || (input.charAt(end) >= '...`\n  3. INSERT IfStatement into Block :: `if(start == seqEnd) { return 0; }`\n  4. INSERT InfixExpression into InfixExpression :: `end < seqEnd`\n  5. INSERT INFIX_EXPRESSION_OPERATOR(&&) into InfixExpression\n  6. INSERT ParenthesizedExpression into InfixExpression :: `( (input.charAt(end) >= '0' && input.charAt(end) <= '9') || (input.charAt(end) >= 'a' && input.charAt(end) <= 'f') || (input.charAt(end) >= 'A' && input.char...`\n  7. INSERT ParenthesizedExpression into InfixExpression :: `(semiNext ? 1 : 0)`\n  8. UPDATE NumberLiteral: `1` -> `2`\n  9. INSERT InfixExpression into ParenthesizedExpression :: `(input.charAt(end) >= '0' && input.charAt(end) <= '9') || (input.charAt(end) >= 'a' && input.charAt(end) <= 'f') || (input.charAt(end) >= 'A' && input.charAt...`\n  10. INSERT ConditionalExpression into ParenthesizedExpression :: `semiNext ? 1 : 0`\n  11. INSERT ParenthesizedExpression into InfixExpression :: `(input.charAt(end) >= '0' && input.charAt(end) <= '9')`\n  12. INSERT INFIX_EXPRESSION_OPERATOR(||) into InfixExpression\n  13. INSERT ParenthesizedExpression into InfixExpression :: `(input.charAt(end) >= 'a' && input.charAt(end) <= 'f')`\n  14. INSERT ParenthesizedExpression into InfixExpression :: `(input.charAt(end) >= 'A' && input.charAt(end) <= 'F')`\n  15. INSERT SimpleName(semiNext) into ConditionalExpression\n  16. MOVE NumberLiteral(1) into ConditionalExpression\n  17. INSERT NumberLiteral(0) into ConditionalExpression\n  18. INSERT InfixExpression into ParenthesizedExpression :: `input.charAt(end) >= 'a' && input.charAt(end) <= 'f'`\n  19. MOVE InfixExpression into InfixExpression :: `input.charAt(end) != ';'`\n  20. INSERT INFIX_EXPRESSION_OPERATOR(&&) into InfixExpression\n  21. INSERT InfixExpression into InfixExpression :: `input.charAt(end) <= 'f'`\n  22. UPDATE INFIX_EXPRESSION_OPERATOR: `!=` -> `>=`\n  23. UPDATE CharacterLiteral: `';'` -> `'a'`"
+    },
+    {
+      "bug_key": "Lang-21",
+      "success": true,
+      "error": null,
+      "action_count": 2,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/time/DateUtils.java\nEnclosing Method: isSameLocalTime\nAST Edit Operations (2):\n  1. UPDATE QualifiedName: `Calendar.HOUR` -> `Calendar.HOUR_OF_DAY`\n  2. UPDATE QualifiedName: `Calendar.HOUR` -> `Calendar.HOUR_OF_DAY`"
+    },
+    {
+      "bug_key": "Lang-22",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/Fraction.java\nEnclosing Method: greatestCommonDivisor\nAST Edit Operations (3):\n  1. INSERT IfStatement into Block :: `if ((u == 0) || (v == 0)) { if ((u == Integer.MIN_VALUE) || (v == Integer.MIN_VALUE)) { throw new ArithmeticException(\"overflow: gcd is 2^31\"); } return Math...`\n  2. UPDATE INFIX_EXPRESSION_OPERATOR: `<=` -> `==`\n  3. UPDATE INFIX_EXPRESSION_OPERATOR: `<=` -> `==`"
+    },
+    {
+      "bug_key": "Lang-24",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/NumberUtils.java\nEnclosing Method: isNumber\nAST Edit Operations (1):\n  1. INSERT PrefixExpression into InfixExpression :: `!hasDecPoint`"
+    },
+    {
+      "bug_key": "Lang-26",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/time/FastDateFormat.java\nEnclosing Method: format\nAST Edit Operations (1):\n  1. INSERT SimpleName(mLocale) into ClassInstanceCreation"
+    },
+    {
+      "bug_key": "Lang-27",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/math/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (5):\n  1. INSERT IfStatement into Block :: `if (expPos > str.length()) { throw new NumberFormatException(str + \" is not a valid number.\"); }`\n  2. INSERT InfixExpression into IfStatement :: `expPos < decPos || expPos > str.length()`\n  3. MOVE InfixExpression into InfixExpression :: `expPos < decPos`\n  4. INSERT INFIX_EXPRESSION_OPERATOR(||) into InfixExpression\n  5. INSERT InfixExpression into InfixExpression :: `expPos > str.length()`"
+    },
+    {
+      "bug_key": "Lang-28",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java\nEnclosing Method: translate\nAST Edit Operations (5):\n  1. INSERT IfStatement into Block :: `if(entityValue > 0xFFFF) { char[] chrs = Character.toChars(entityValue); out.write(chrs[0]); out.write(chrs[1]); } else { out.write(entityValue); }`\n  2. INSERT InfixExpression into IfStatement :: `entityValue > 0xFFFF`\n  3. INSERT Block into IfStatement :: `{ char[] chrs = Character.toChars(entityValue); out.write(chrs[0]); out.write(chrs[1]); }`\n  4. INSERT Block into IfStatement :: `{ out.write(entityValue); }`\n  5. MOVE ExpressionStatement into Block :: `out.write(entityValue);`"
+    },
+    {
+      "bug_key": "Lang-29",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/SystemUtils.java\nEnclosing Method: toJavaVersionInt\nAST Edit Operations (1):\n  1. UPDATE PrimitiveType: `float` -> `int`"
+    },
+    {
+      "bug_key": "Lang-31",
+      "success": true,
+      "error": null,
+      "action_count": 7,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/lang3/StringUtils.java\nEnclosing Method: containsAny\nAST Edit Operations (7):\n  1. INSERT VariableDeclarationStatement into Block :: `int csLastIndex = csLength - 1;`\n  2. INSERT VariableDeclarationStatement into Block :: `int searchLastIndex = searchLength - 1;`\n  3. INSERT Block into IfStatement :: `{ if (i < csLastIndex && j < searchLastIndex && ch >= Character.MIN_HIGH_SURROGATE && ch <= Character.MAX_HIGH_SURROGATE) { // ch is a supplementary characte...`\n  4. INSERT IfStatement into Block :: `if (i < csLastIndex && j < searchLastIndex && ch >= Character.MIN_HIGH_SURROGATE && ch <= Character.MAX_HIGH_SURROGATE) { // ch is a supplementary character...`\n  5. INSERT InfixExpression into IfStatement :: `i < csLastIndex && j < searchLastIndex && ch >= Character.MIN_HIGH_SURROGATE && ch <= Character.MAX_HIGH_SURROGATE`\n  6. INSERT Block into IfStatement :: `{ // ch is a supplementary character if (searchChars[j + 1] == cs.charAt(i + 1)) { return true; } }`\n  7. MOVE Block into IfStatement :: `{ // ch is a supplementary character // ch is in the Basic Multilingual Plane return true; }`"
+    },
+    {
+      "bug_key": "Lang-37",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang3/ArrayUtils.java\nEnclosing Method: addAll\nAST Edit Operations (4):\n  1. INSERT TryStatement into Block :: `try { System.arraycopy(array2, 0, joinedArray, array1.length, array2.length); } catch (ArrayStoreException ase) { // Check if problem is incompatible types f...`\n  2. INSERT Block into TryStatement :: `{ System.arraycopy(array2, 0, joinedArray, array1.length, array2.length); }`\n  3. INSERT CatchClause into TryStatement :: `catch (ArrayStoreException ase) { // Check if problem is incompatible types final Class<?> type2 = array2.getClass().getComponentType(); if (!type1.isAssigna...`\n  4. MOVE ExpressionStatement into Block :: `System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);`"
+    },
+    {
+      "bug_key": "Lang-38",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang3/time/FastDateFormat.java\nEnclosing Method: format\nAST Edit Operations (1):\n  1. INSERT ExpressionStatement into Block :: `calendar.getTime();`"
+    },
+    {
+      "bug_key": "Lang-40",
+      "success": true,
+      "error": null,
+      "action_count": 21,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/StringUtils.java\nEnclosing Method: containsIgnoreCase\nAST Edit Operations (21):\n  1. INSERT VariableDeclarationStatement into Block :: `int len = searchStr.length();`\n  2. INSERT VariableDeclarationStatement into Block :: `int max = str.length() - len;`\n  3. INSERT ForStatement into Block :: `for (int i = 0; i <= max; i++) { if (str.regionMatches(true, i, searchStr, 0, len)) { return true; } }`\n  4. INSERT ReturnStatement into Block :: `return false;`\n  5. INSERT PrimitiveType(int) into VariableDeclarationStatement\n  6. INSERT VariableDeclarationFragment into VariableDeclarationStatement :: `len = searchStr.length()`\n  7. INSERT PrimitiveType(int) into VariableDeclarationStatement\n  8. INSERT VariableDeclarationFragment into VariableDeclarationStatement :: `max = str.length() - len`\n  9. UPDATE SimpleName: `contains` -> `len`\n  10. MOVE SimpleName(contains) into VariableDeclarationFragment\n  11. MOVE MethodInvocation into VariableDeclarationFragment :: `searchStr.toUpperCase()`\n  12. INSERT SimpleName(max) into VariableDeclarationFragment\n  13. INSERT InfixExpression into VariableDeclarationFragment :: `str.length() - len`\n  14. UPDATE SimpleName: `toUpperCase` -> `length`\n  15. MOVE MethodInvocation into InfixExpression :: `str.toUpperCase()`\n  16. INSERT INFIX_EXPRESSION_OPERATOR(-) into InfixExpression\n  17. INSERT SimpleName(len) into InfixExpression\n  18. UPDATE SimpleName: `toUpperCase` -> `length`\n  19. DELETE METHOD_INVOCATION_ARGUMENTS :: `str.toUpperCase(), searchStr.toUpperCase()`\n  20. DELETE MethodInvocation :: `contains(str.toUpperCase(), searchStr.toUpperCase())`\n  21. DELETE ReturnStatement :: `return contains(str.toUpperCase(), searchStr.toUpperCase());`"
+    },
+    {
+      "bug_key": "Lang-44",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (val.length() == 1 && !Character.isDigit(val.charAt(0))) { throw new NumberFormatException(val + \" is not a valid number.\"); }`"
+    },
+    {
+      "bug_key": "Lang-45",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/WordUtils.java\nEnclosing Method: abbreviate\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (lower > str.length()) { lower = str.length(); }`"
+    },
+    {
+      "bug_key": "Lang-48",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/builder/EqualsBuilder.java\nEnclosing Method: append\nAST Edit Operations (5):\n  1. INSERT Block into IfStatement :: `{ if (lhs instanceof java.math.BigDecimal) { isEquals = (((java.math.BigDecimal)lhs).compareTo(rhs) == 0); } else { // The simple case, not an array, just te...`\n  2. INSERT IfStatement into Block :: `if (lhs instanceof java.math.BigDecimal) { isEquals = (((java.math.BigDecimal)lhs).compareTo(rhs) == 0); } else { // The simple case, not an array, just test...`\n  3. INSERT InstanceofExpression into IfStatement :: `lhs instanceof java.math.BigDecimal`\n  4. INSERT Block into IfStatement :: `{ isEquals = (((java.math.BigDecimal)lhs).compareTo(rhs) == 0); }`\n  5. MOVE Block into IfStatement :: `{ // The simple case, not an array, just test the element isEquals = lhs.equals(rhs); }`"
+    },
+    {
+      "bug_key": "Lang-49",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/math/Fraction.java\nEnclosing Method: reduce\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (numerator == 0) { return equals(ZERO) ? this : ZERO; }`"
+    },
+    {
+      "bug_key": "Lang-50",
+      "success": true,
+      "error": null,
+      "action_count": 10,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/time/FastDateFormat.java\nEnclosing Method: getDateInstance\nAST Edit Operations (10):\n  1. MOVE IfStatement into Block :: `if (locale == null) { locale = Locale.getDefault(); }`\n  2. MOVE ExpressionStatement into Block :: `key = new Pair(key, locale);`\n  3. MOVE IfStatement into Block :: `if (locale == null) { locale = Locale.getDefault(); }`\n  4. MOVE ExpressionStatement into Block :: `key = new Pair(key, locale);`\n  5. DELETE InfixExpression :: `locale != null`\n  6. DELETE Block :: `{ key = new Pair(key, locale); }`\n  7. DELETE IfStatement :: `if (locale != null) { key = new Pair(key, locale); }`\n  8. DELETE InfixExpression :: `locale != null`\n  9. DELETE Block :: `{ key = new Pair(key, locale); }`\n  10. DELETE IfStatement :: `if (locale != null) { key = new Pair(key, locale); }`"
+    },
+    {
+      "bug_key": "Lang-51",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/BooleanUtils.java\nEnclosing Method: toBoolean\nAST Edit Operations (1):\n  1. INSERT ReturnStatement into Block :: `return false;`"
+    },
+    {
+      "bug_key": "Lang-52",
+      "success": true,
+      "error": null,
+      "action_count": 6,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/StringEscapeUtils.java\nEnclosing Method: escapeJavaStyleString\nAST Edit Operations (6):\n  1. MOVE ExpressionStatement into SwitchStatement :: `out.write('\\\\');`\n  2. INSERT ExpressionStatement into SwitchStatement :: `out.write('\\\\');`\n  3. INSERT ExpressionStatement into SwitchStatement :: `out.write('/');`\n  4. INSERT BreakStatement into SwitchStatement :: `break;`\n  5. INSERT SwitchCase into SwitchStatement :: `default :`\n  6. INSERT CharacterLiteral('/') into SwitchCase"
+    },
+    {
+      "bug_key": "Lang-53",
+      "success": true,
+      "error": null,
+      "action_count": 2,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/time/DateUtils.java\nEnclosing Method: modify\nAST Edit Operations (2):\n  1. MOVE IfStatement into Block :: `if (field == Calendar.SECOND) { done = true; }`\n  2. MOVE IfStatement into Block :: `if (field == Calendar.MINUTE) { done = true; }`"
+    },
+    {
+      "bug_key": "Lang-54",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/LocaleUtils.java\nEnclosing Method: toLocale\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (ch3 == '_') { return new Locale(str.substring(0, 2), \"\", str.substring(4)); }`"
+    },
+    {
+      "bug_key": "Lang-55",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/time/StopWatch.java\nEnclosing Method: stop\nAST Edit Operations (4):\n  1. INSERT IfStatement into Block :: `if(this.runningState == STATE_RUNNING) { stopTime = System.currentTimeMillis(); }`\n  2. INSERT InfixExpression into IfStatement :: `this.runningState == STATE_RUNNING`\n  3. INSERT Block into IfStatement :: `{ stopTime = System.currentTimeMillis(); }`\n  4. MOVE ExpressionStatement into Block :: `stopTime = System.currentTimeMillis();`"
+    },
+    {
+      "bug_key": "Lang-57",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/LocaleUtils.java\nEnclosing Method: isAvailableLocale\nAST Edit Operations (3):\n  1. INSERT MethodInvocation into METHOD_INVOCATION_RECEIVER :: `availableLocaleList()`\n  2. UPDATE SimpleName: `cAvailableLocaleSet` -> `availableLocaleList`\n  3. MOVE SimpleName(cAvailableLocaleSet) into MethodInvocation"
+    },
+    {
+      "bug_key": "Lang-58",
+      "success": true,
+      "error": null,
+      "action_count": 10,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/math/NumberUtils.java\nEnclosing Method: createNumber\nAST Edit Operations (10):\n  1. MOVE InfixExpression into IfStatement :: `dec == null && exp == null && isDigits(numeric.substring(1))`\n  2. MOVE ParenthesizedExpression into InfixExpression :: `(numeric.charAt(0) == '-' || Character.isDigit(numeric.charAt(0)))`\n  3. INSERT InfixExpression into ParenthesizedExpression :: `numeric.charAt(0) == '-' && isDigits(numeric.substring(1)) || isDigits(numeric)`\n  4. MOVE InfixExpression into InfixExpression :: `numeric.charAt(0) == '-' || Character.isDigit(numeric.charAt(0))`\n  5. INSERT INFIX_EXPRESSION_OPERATOR(||) into InfixExpression\n  6. INSERT MethodInvocation into InfixExpression :: `isDigits(numeric)`\n  7. UPDATE INFIX_EXPRESSION_OPERATOR: `||` -> `&&`\n  8. MOVE MethodInvocation into InfixExpression :: `isDigits(numeric.substring(1))`\n  9. DELETE MethodInvocation :: `Character.isDigit(numeric.charAt(0))`\n  10. DELETE INFIX_EXPRESSION_OPERATOR(&&)"
+    },
+    {
+      "bug_key": "Lang-59",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/text/StrBuilder.java\nEnclosing Method: appendFixedWidthPadRight\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `strLen` -> `width`"
+    },
+    {
+      "bug_key": "Lang-61",
+      "success": true,
+      "error": null,
+      "action_count": 6,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/text/StrBuilder.java\nEnclosing Method: indexOf\nAST Edit Operations (6):\n  1. INSERT InfixExpression into VariableDeclarationFragment :: `size - strLen + 1`\n  2. MOVE InfixExpression into InfixExpression :: `thisBuf.length - strLen`\n  3. INSERT INFIX_EXPRESSION_OPERATOR(+) into InfixExpression\n  4. INSERT NumberLiteral(1) into InfixExpression\n  5. INSERT SimpleName(size) into InfixExpression\n  6. DELETE QualifiedName(thisBuf.length)"
+    },
+    {
+      "bug_key": "Lang-63",
+      "success": true,
+      "error": null,
+      "action_count": 51,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/time/DurationFormatUtils.java\nEnclosing Method: formatPeriod\nAST Edit Operations (51):\n  1. MOVE ExpressionStatement into Block :: `end.add( field, -1 * difference );`\n  2. INSERT ExpressionStatement into Block :: `end.add(Calendar.MONTH, 1);`\n  3. INSERT MethodInvocation into ExpressionStatement :: `end.add(Calendar.MONTH, 1)`\n  4. INSERT MethodInvocation into Assignment :: `end.getActualMaximum(Calendar.DAY_OF_MONTH)`\n  5. MOVE METHOD_INVOCATION_RECEIVER into MethodInvocation :: `end`\n  6. INSERT SimpleName(add) into MethodInvocation\n  7. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `Calendar.MONTH, 1`\n  8. INSERT QualifiedName(Calendar.MONTH) into METHOD_INVOCATION_ARGUMENTS\n  9. MOVE PrefixExpression into METHOD_INVOCATION_ARGUMENTS :: `-1`\n  10. MOVE METHOD_INVOCATION_RECEIVER into MethodInvocation :: `end`\n  11. INSERT SimpleName(getActualMaximum) into MethodInvocation\n  12. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `Calendar.DAY_OF_MONTH`\n  13. DELETE SimpleName(field)\n  14. DELETE INFIX_EXPRESSION_OPERATOR(*)\n  15. DELETE SimpleName(difference)\n  16. DELETE InfixExpression :: `-1 * difference`\n  17. DELETE NumberLiteral(31)\n  18. DELETE ExpressionStatement :: `milliseconds -= reduceAndCorrect(start, end, Calendar.MILLISECOND, milliseconds);`\n  19. DELETE ExpressionStatement :: `seconds -= reduceAndCorrect(start, end, Calendar.SECOND, seconds);`\n  20. DELETE ExpressionStatement :: `minutes -= reduceAndCorrect(start, end, Calendar.MINUTE, minutes);`\n  21. DELETE ExpressionStatement :: `hours -= reduceAndCorrect(start, end, Calendar.HOUR_OF_DAY, hours);`\n  22. DELETE ExpressionStatement :: `days -= reduceAndCorrect(start, end, Calendar.DAY_OF_MONTH, days);`\n  23. DELETE ExpressionStatement :: `months -= reduceAndCorrect(start, end, Calendar.MONTH, months);`\n  24. DELETE ExpressionStatement :: `years -= reduceAndCorrect(start, end, Calendar.YEAR, years);`\n  25. DELETE Modifier(static)\n  26. DELETE PrimitiveType(int)\n  27. DELETE SimpleName(reduceAndCorrect)\n  28. DELETE SingleVariableDeclaration :: `Calendar start`\n  29. DELETE SingleVariableDeclaration :: `Calendar end`\n  30. DELETE SingleVariableDeclaration :: `int field`\n  31. DELETE SingleVariableDeclaration :: `int difference`\n  32. DELETE PrimitiveType(int)\n  33. DELETE SimpleName(endValue)\n  34. DELETE SimpleName(get)\n  35. DELETE METHOD_INVOCATION_ARGUMENTS :: `field`\n  36. DELETE MethodInvocation :: `end.get(field)`\n  37. DELETE VariableDeclarationFragment :: `endValue = end.get(field)`\n  38. DELETE VariableDeclarationStatement :: `int endValue = end.get(field);`\n  39. DELETE VariableDeclarationStatement :: `int startValue = start.get(field);`\n  40. DELETE InfixExpression :: `endValue < startValue`\n  41. DELETE VariableDeclarationStatement :: `int newdiff = startValue - endValue;`\n  42. DELETE SimpleName(add)\n  43. DELETE METHOD_INVOCATION_ARGUMENTS :: `field, newdiff`\n  44. DELETE MethodInvocation :: `end.add( field, newdiff )`\n  45. DELETE ExpressionStatement :: `end.add( field, newdiff );`\n  46. DELETE ReturnStatement :: `return newdiff;`\n  47. DELETE Block :: `{ int newdiff = startValue - endValue; end.add( field, newdiff ); return newdiff; }`\n  48. DELETE Block :: `{ return 0; }`\n  49. DELETE IfStatement :: `if (endValue < startValue) { int newdiff = startValue - endValue; end.add( field, newdiff ); return newdiff; } else { return 0; }`\n  50. DELETE Block :: `{ end.add( field, -1 * difference ); int endValue = end.get(field); int startValue = start.get(field); if (endValue < startValue) { int newdiff = startValue...`\n  51. DELETE MethodDeclaration :: `static int reduceAndCorrect(Calendar start, Calendar end, int field, int difference) { end.add( field, -1 * difference ); int endValue = end.get(field); int...`"
+    },
+    {
+      "bug_key": "Lang-64",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/enums/ValuedEnum.java\nEnclosing Method: compareTo\nAST Edit Operations (3):\n  1. INSERT MethodDeclaration into TypeDeclaration :: `/** * <p>Use reflection to return an objects value.</p> * * @param other the object to determine the value for * @return the value */ private int getValueInO...`\n  2. INSERT IfStatement into Block :: `if (other == this) { return 0; }`\n  3. INSERT IfStatement into Block :: `if (other.getClass() != this.getClass()) { if (other.getClass().getName().equals(this.getClass().getName())) { return iValue - getValueInOtherClassLoader(oth...`"
+    },
+    {
+      "bug_key": "Lang-65",
+      "success": true,
+      "error": null,
+      "action_count": 15,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/java/org/apache/commons/lang/time/DateUtils.java\nEnclosing Method: modify\nAST Edit Operations (15):\n  1. INSERT IfStatement into Block :: `if (field == Calendar.MILLISECOND) { return; }`\n  2. INSERT VariableDeclarationStatement into Block :: `Date date = val.getTime();`\n  3. INSERT VariableDeclarationStatement into Block :: `long time = date.getTime();`\n  4. INSERT VariableDeclarationStatement into Block :: `boolean done = false;`\n  5. INSERT VariableDeclarationStatement into Block :: `int millisecs = val.get(Calendar.MILLISECOND);`\n  6. INSERT IfStatement into Block :: `if (!round || millisecs < 500) { time = time - millisecs; if (field == Calendar.SECOND) { done = true; } }`\n  7. INSERT VariableDeclarationStatement into Block :: `int seconds = val.get(Calendar.SECOND);`\n  8. INSERT IfStatement into Block :: `if (!done && (!round || seconds < 30)) { time = time - (seconds * 1000L); if (field == Calendar.MINUTE) { done = true; } }`\n  9. INSERT VariableDeclarationStatement into Block :: `int minutes = val.get(Calendar.MINUTE);`\n  10. INSERT IfStatement into Block :: `if (!done && (!round || minutes < 30)) { time = time - (minutes * 60000L); }`\n  11. INSERT IfStatement into Block :: `if (date.getTime() != time) { date.setTime(time); val.setTime(date); }`\n  12. INSERT IfStatement into Block :: `if (offset != 0) { val.set(fields[i][0], val.get(fields[i][0]) - offset); }`\n  13. INSERT InfixExpression into IfStatement :: `offset != 0`\n  14. INSERT Block into IfStatement :: `{ val.set(fields[i][0], val.get(fields[i][0]) - offset); }`\n  15. MOVE ExpressionStatement into Block :: `val.set(fields[i][0], val.get(fields[i][0]) - offset);`"
+    },
+    {
+      "bug_key": "Math-2",
+      "success": true,
+      "error": null,
+      "action_count": 11,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/distribution/HypergeometricDistribution.java\nEnclosing Method: getNumericalMean\nAST Edit Operations (11):\n  1. MOVE MethodInvocation into InfixExpression :: `getSampleSize()`\n  2. MOVE INFIX_EXPRESSION_OPERATOR(*) into InfixExpression\n  3. INSERT ParenthesizedExpression into InfixExpression :: `(getNumberOfSuccesses() / (double) getPopulationSize())`\n  4. INSERT InfixExpression into ParenthesizedExpression :: `getNumberOfSuccesses() / (double) getPopulationSize()`\n  5. MOVE MethodInvocation into InfixExpression :: `getNumberOfSuccesses()`\n  6. MOVE INFIX_EXPRESSION_OPERATOR(/) into InfixExpression\n  7. MOVE CastExpression into InfixExpression :: `(double) getPopulationSize()`\n  8. DELETE PrimitiveType(double)\n  9. DELETE InfixExpression :: `getSampleSize() * getNumberOfSuccesses()`\n  10. DELETE ParenthesizedExpression :: `(getSampleSize() * getNumberOfSuccesses())`\n  11. DELETE CastExpression :: `(double) (getSampleSize() * getNumberOfSuccesses())`"
+    },
+    {
+      "bug_key": "Math-5",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/complex/Complex.java\nEnclosing Method: reciprocal\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `NaN` -> `INF`"
+    },
+    {
+      "bug_key": "Math-8",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/distribution/DiscreteDistribution.java\nEnclosing Method: sample\nAST Edit Operations (8):\n  1. UPDATE SimpleName: `T` -> `Object`\n  2. INSERT ArrayCreation into VariableDeclarationFragment :: `new Object[sampleSize]`\n  3. UPDATE SimpleName: `T` -> `Object`\n  4. MOVE ArrayType into ArrayCreation :: `T[]`\n  5. UPDATE SimpleName: `T` -> `Object`\n  6. INSERT SimpleName(sampleSize) into Dimension\n  7. DELETE MethodInvocation :: `java.lang.reflect.Array.newInstance(singletons.get(0).getClass(), sampleSize)`\n  8. DELETE CastExpression :: `(T[]) java.lang.reflect.Array.newInstance(singletons.get(0).getClass(), sampleSize)`"
+    },
+    {
+      "bug_key": "Math-9",
+      "success": true,
+      "error": null,
+      "action_count": 21,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/geometry/euclidean/threed/Line.java\nEnclosing Method: revert\nAST Edit Operations (21):\n  1. INSERT VariableDeclarationStatement into Block :: `final Line reverted = new Line(this);`\n  2. INSERT ExpressionStatement into Block :: `reverted.direction = reverted.direction.negate();`\n  3. MOVE Modifier(final) into VariableDeclarationStatement\n  4. MOVE SimpleType into VariableDeclarationStatement :: `Line`\n  5. INSERT VariableDeclarationFragment into VariableDeclarationStatement :: `reverted = new Line(this)`\n  6. INSERT Assignment into ExpressionStatement :: `reverted.direction = reverted.direction.negate()`\n  7. MOVE SimpleName(reverted) into VariableDeclarationFragment\n  8. INSERT ClassInstanceCreation into VariableDeclarationFragment :: `new Line(this)`\n  9. INSERT QualifiedName(reverted.direction) into Assignment\n  10. INSERT ASSIGNMENT_OPERATOR(=) into Assignment\n  11. MOVE MethodInvocation into Assignment :: `zero.subtract(direction)`\n  12. MOVE SimpleType into ClassInstanceCreation :: `Line`\n  13. INSERT ThisExpression into ClassInstanceCreation :: `this`\n  14. UPDATE SimpleName: `subtract` -> `negate`\n  15. INSERT QualifiedName(reverted.direction) into METHOD_INVOCATION_RECEIVER\n  16. DELETE SimpleName(zero)\n  17. DELETE METHOD_INVOCATION_ARGUMENTS :: `direction`\n  18. DELETE SimpleName(zero)\n  19. DELETE ClassInstanceCreation :: `new Line(zero, zero.subtract(direction))`\n  20. DELETE VariableDeclarationFragment :: `reverted = new Line(zero, zero.subtract(direction))`\n  21. DELETE VariableDeclarationStatement :: `final Line reverted = new Line(zero, zero.subtract(direction));`"
+    },
+    {
+      "bug_key": "Math-11",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/distribution/MultivariateNormalDistribution.java\nEnclosing Method: density\nAST Edit Operations (8):\n  1. INSERT PrefixExpression into InfixExpression :: `-0.5`\n  2. INSERT INFIX_EXPRESSION_OPERATOR(*) into InfixExpression\n  3. MOVE SimpleName(dim) into InfixExpression\n  4. MOVE PREFIX_EXPRESSION_OPERATOR(-) into PrefixExpression\n  5. INSERT NumberLiteral(0.5) into PrefixExpression\n  6. DELETE PrefixExpression :: `-dim`\n  7. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  8. DELETE NumberLiteral(2)"
+    },
+    {
+      "bug_key": "Math-13",
+      "success": true,
+      "error": null,
+      "action_count": 10,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/general/AbstractLeastSquaresOptimizer.java\nEnclosing Method: squareRoot\nAST Edit Operations (10):\n  1. INSERT MethodDeclaration into TypeDeclaration :: `/** * Computes the square-root of the weight matrix. * * @param m Symmetric, positive-definite (weight) matrix. * @return the square-root of the weight matri...`\n  2. MOVE Javadoc into MethodDeclaration :: `/** * Computes the square-root of the weight matrix. * * @param m Symmetric, positive-definite (weight) matrix. * @return the square-root of the weight matri...`\n  3. MOVE SimpleType into MethodDeclaration :: `RealMatrix`\n  4. MOVE SingleVariableDeclaration into MethodDeclaration :: `RealMatrix m`\n  5. INSERT Block into MethodDeclaration :: `{ if (m instanceof DiagonalMatrix) { final int dim = m.getRowDimension(); final RealMatrix sqrtM = new DiagonalMatrix(dim); for (int i = 0; i < dim; i++) { s...`\n  6. INSERT IfStatement into Block :: `if (m instanceof DiagonalMatrix) { final int dim = m.getRowDimension(); final RealMatrix sqrtM = new DiagonalMatrix(dim); for (int i = 0; i < dim; i++) { sqr...`\n  7. INSERT InstanceofExpression into IfStatement :: `m instanceof DiagonalMatrix`\n  8. INSERT Block into IfStatement :: `{ final int dim = m.getRowDimension(); final RealMatrix sqrtM = new DiagonalMatrix(dim); for (int i = 0; i < dim; i++) { sqrtM.setEntry(i, i, FastMath.sqrt(m...`\n  9. MOVE Block into IfStatement :: `{ final EigenDecomposition dec = new EigenDecomposition(m); return dec.getSquareRoot(); }`\n  10. DELETE MethodDeclaration :: `/** * Computes the square-root of the weight matrix. * * @param m Symmetric, positive-definite (weight) matrix. * @return the square-root of the weight matri...`"
+    },
+    {
+      "bug_key": "Math-15",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/util/FastMath.java\nEnclosing Method: pow\nAST Edit Operations (3):\n  1. INSERT FieldDeclaration into TypeDeclaration :: `/** 2^53 - double numbers this large must be even. */ private static final double TWO_POWER_53 = 2 * TWO_POWER_52;`\n  2. UPDATE SimpleName: `TWO_POWER_52` -> `TWO_POWER_53`\n  3. UPDATE SimpleName: `TWO_POWER_52` -> `TWO_POWER_53`"
+    },
+    {
+      "bug_key": "Math-17",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/dfp/Dfp.java\nEnclosing Method: multiply\nAST Edit Operations (5):\n  1. INSERT Block into MethodDeclaration :: `{ if (x >= 0 && x < RADIX) { return multiplyFast(x); } else { return multiply(newInstance(x)); } }`\n  2. INSERT IfStatement into Block :: `if (x >= 0 && x < RADIX) { return multiplyFast(x); } else { return multiply(newInstance(x)); }`\n  3. INSERT InfixExpression into IfStatement :: `x >= 0 && x < RADIX`\n  4. MOVE Block into IfStatement :: `{ return multiplyFast(x); }`\n  5. INSERT Block into IfStatement :: `{ return multiply(newInstance(x)); }`"
+    },
+    {
+      "bug_key": "Math-19",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/direct/CMAESOptimizer.java\nEnclosing Method: checkParameters\nAST Edit Operations (1):\n  1. INSERT ForStatement into Block :: `for (int i = 0; i < lB.length; i++) { if (Double.isInfinite(boundaries[1][i] - boundaries[0][i])) { final double max = Double.MAX_VALUE + boundaries[0][i]; f...`"
+    },
+    {
+      "bug_key": "Math-20",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/direct/CMAESOptimizer.java\nEnclosing Method: repairAndDecode\nAST Edit Operations (4):\n  1. INSERT ConditionalExpression into ReturnStatement :: `boundaries != null && isRepairMode ? decode(repair(x)) : decode(x)`\n  2. INSERT InfixExpression into ConditionalExpression :: `boundaries != null && isRepairMode`\n  3. INSERT MethodInvocation into ConditionalExpression :: `decode(repair(x))`\n  4. MOVE MethodInvocation into ConditionalExpression :: `decode(x)`"
+    },
+    {
+      "bug_key": "Math-23",
+      "success": true,
+      "error": null,
+      "action_count": 18,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/univariate/BrentOptimizer.java\nEnclosing Method: doOptimize\nAST Edit Operations (18):\n  1. INSERT VariableDeclarationStatement into Block :: `UnivariatePointValuePair best = current;`\n  2. INSERT ExpressionStatement into Block :: `best = best(best, best(current, previous, isMinim), isMinim);`\n  3. INSERT Assignment into ExpressionStatement :: `best = best(best, best(current, previous, isMinim), isMinim)`\n  4. INSERT MethodInvocation into ReturnStatement :: `best(best, best(current, previous, isMinim), isMinim)`\n  5. INSERT SimpleName(best) into Assignment\n  6. INSERT ASSIGNMENT_OPERATOR(=) into Assignment\n  7. INSERT MethodInvocation into Assignment :: `best(best, best(current, previous, isMinim), isMinim)`\n  8. INSERT SimpleName(best) into MethodInvocation\n  9. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `best, best(current, previous, isMinim), isMinim`\n  10. INSERT SimpleName(best) into MethodInvocation\n  11. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `best, best(current, previous, isMinim), isMinim`\n  12. INSERT SimpleName(best) into METHOD_INVOCATION_ARGUMENTS\n  13. MOVE MethodInvocation into METHOD_INVOCATION_ARGUMENTS :: `best(current, previous, isMinim)`\n  14. INSERT SimpleName(isMinim) into METHOD_INVOCATION_ARGUMENTS\n  15. INSERT SimpleName(best) into METHOD_INVOCATION_ARGUMENTS\n  16. MOVE MethodInvocation into METHOD_INVOCATION_ARGUMENTS :: `best(current, previous, isMinim)`\n  17. INSERT SimpleName(isMinim) into METHOD_INVOCATION_ARGUMENTS\n  18. INSERT SimpleName(best) into ReturnStatement"
+    },
+    {
+      "bug_key": "Math-24",
+      "success": true,
+      "error": null,
+      "action_count": 12,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/univariate/BrentOptimizer.java\nEnclosing Method: doOptimize\nAST Edit Operations (12):\n  1. INSERT MethodInvocation into ReturnStatement :: `best(current, previous, isMinim)`\n  2. INSERT SimpleName(best) into MethodInvocation\n  3. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `current, previous, isMinim`\n  4. MOVE SimpleName(current) into METHOD_INVOCATION_ARGUMENTS\n  5. INSERT SimpleName(previous) into METHOD_INVOCATION_ARGUMENTS\n  6. INSERT SimpleName(isMinim) into METHOD_INVOCATION_ARGUMENTS\n  7. INSERT MethodInvocation into ReturnStatement :: `best(current, previous, isMinim)`\n  8. INSERT SimpleName(best) into MethodInvocation\n  9. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `current, previous, isMinim`\n  10. MOVE SimpleName(current) into METHOD_INVOCATION_ARGUMENTS\n  11. INSERT SimpleName(previous) into METHOD_INVOCATION_ARGUMENTS\n  12. INSERT SimpleName(isMinim) into METHOD_INVOCATION_ARGUMENTS"
+    },
+    {
+      "bug_key": "Math-25",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/fitting/HarmonicFitter.java\nEnclosing Method: guessAOmega\nAST Edit Operations (1):\n  1. INSERT IfStatement into Block :: `if (c2 == 0) { // In some ill-conditioned cases (cf. MATH-844), the guesser // procedure cannot produce sensible results. throw new MathIllegalStateException...`"
+    },
+    {
+      "bug_key": "Math-27",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/fraction/Fraction.java\nEnclosing Method: percentageValue\nAST Edit Operations (5):\n  1. INSERT MethodDeclaration into TypeDeclaration :: `/** * <p> * Gets the fraction percentage as a <tt>double</tt>. This calculates the * fraction as the numerator divided by denominator multiplied by 100. * </...`\n  2. MOVE Javadoc into MethodDeclaration :: `/** * <p> * Gets the fraction percentage as a <tt>double</tt>. This calculates the * fraction as the numerator divided by denominator multiplied by 100. * </...`\n  3. INSERT Block into MethodDeclaration :: `{ return 100 * doubleValue(); }`\n  4. DELETE Block :: `{ return multiply(100).doubleValue(); }`\n  5. DELETE MethodDeclaration :: `/** * <p> * Gets the fraction percentage as a <tt>double</tt>. This calculates the * fraction as the numerator divided by denominator multiplied by 100. * </...`"
+    },
+    {
+      "bug_key": "Math-28",
+      "success": true,
+      "error": null,
+      "action_count": 11,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/linear/SimplexSolver.java\nEnclosing Method: getPivotRow\nAST Edit Operations (11):\n  1. INSERT IfStatement into Block :: `if (tableau.getNumArtificialVariables() > 0) { for (Integer row : minRatioPositions) { for (int i = 0; i < tableau.getNumArtificialVariables(); i++) { int co...`\n  2. INSERT IfStatement into Block :: `if (getIterations() < getMaxIterations() / 2) { Integer minRow = null; int minIndex = tableau.getWidth(); for (Integer row : minRatioPositions) { int i = tab...`\n  3. INSERT InfixExpression into IfStatement :: `tableau.getNumArtificialVariables() > 0`\n  4. INSERT Block into IfStatement :: `{ for (Integer row : minRatioPositions) { for (int i = 0; i < tableau.getNumArtificialVariables(); i++) { int column = i + tableau.getArtificialVariableOffse...`\n  5. INSERT InfixExpression into IfStatement :: `getIterations() < getMaxIterations() / 2`\n  6. INSERT Block into IfStatement :: `{ Integer minRow = null; int minIndex = tableau.getWidth(); for (Integer row : minRatioPositions) { int i = tableau.getNumObjectiveFunctions(); for (; i < ta...`\n  7. MOVE EnhancedForStatement into Block :: `for (Integer row : minRatioPositions) { for (int i = 0; i < tableau.getNumArtificialVariables(); i++) { int column = i + tableau.getArtificialVariableOffset(...`\n  8. MOVE VariableDeclarationStatement into Block :: `Integer minRow = null;`\n  9. MOVE VariableDeclarationStatement into Block :: `int minIndex = tableau.getWidth();`\n  10. MOVE EnhancedForStatement into Block :: `for (Integer row : minRatioPositions) { int i = tableau.getNumObjectiveFunctions(); for (; i < tableau.getWidth() - 1 && minRow != row; i++) { if (row == tab...`\n  11. MOVE ReturnStatement into Block :: `return minRow;`"
+    },
+    {
+      "bug_key": "Math-31",
+      "success": true,
+      "error": null,
+      "action_count": 129,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/util/ContinuedFraction.java\nEnclosing Method: evaluate\nAST Edit Operations (129):\n  1. INSERT IfStatement into Block :: `if (Precision.equals(dN, 0.0, small)) { dN = small; }`\n  2. INSERT VariableDeclarationStatement into Block :: `double cN = a + b / cPrev;`\n  3. INSERT IfStatement into Block :: `if (Precision.equals(cN, 0.0, small)) { cN = small; }`\n  4. MOVE ExpressionStatement into Block :: `q2 = (a / scaleFactor * q1) + dPrev / lastScaleFactor;`\n  5. MOVE MethodInvocation into IfStatement :: `FastMath.max(a,b)`\n  6. INSERT Block into IfStatement :: `{ dN = small; }`\n  7. INSERT PrimitiveType(double) into VariableDeclarationStatement\n  8. INSERT VariableDeclarationFragment into VariableDeclarationStatement :: `cN = a + b / cPrev`\n  9. INSERT MethodInvocation into IfStatement :: `Precision.equals(cN, 0.0, small)`\n  10. INSERT Block into IfStatement :: `{ cN = small; }`\n  11. UPDATE SimpleName: `q2` -> `dN`\n  12. UPDATE SimpleName: `max` -> `equals`\n  13. MOVE ExpressionStatement into Block :: `lastScaleFactor = scaleFactor;`\n  14. MOVE SimpleName(cN) into VariableDeclarationFragment\n  15. MOVE InfixExpression into VariableDeclarationFragment :: `hPrev / lastScaleFactor + (b / scaleFactor * p0)`\n  16. INSERT METHOD_INVOCATION_RECEIVER into MethodInvocation :: `Precision`\n  17. UPDATE SimpleName: `q1` -> `equals`\n  18. MOVE SimpleName(q1) into MethodInvocation\n  19. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `cN, 0.0, small`\n  20. MOVE ExpressionStatement into Block :: `cN = (a / scaleFactor * hPrev) + p0 / lastScaleFactor;`\n  21. UPDATE SimpleName: `q2` -> `dN`\n  22. UPDATE SimpleName: `q1` -> `dN`\n  23. MOVE SimpleName(cN) into Assignment\n  24. UPDATE SimpleName: `cN` -> `hN`\n  25. MOVE SimpleName(a) into InfixExpression\n  26. UPDATE SimpleName: `FastMath` -> `Precision`\n  27. UPDATE SimpleName: `a` -> `dN`\n  28. INSERT NumberLiteral(0.0) into METHOD_INVOCATION_ARGUMENTS\n  29. UPDATE SimpleName: `b` -> `small`\n  30. UPDATE SimpleName: `hPrev` -> `a`\n  31. MOVE SimpleName(hPrev) into InfixExpression\n  32. MOVE InfixExpression into InfixExpression :: `b / scaleFactor`\n  33. UPDATE SimpleName: `q2` -> `Precision`\n  34. MOVE SimpleName(q2) into METHOD_INVOCATION_RECEIVER\n  35. UPDATE SimpleName: `lastScaleFactor` -> `cN`\n  36. MOVE SimpleName(lastScaleFactor) into METHOD_INVOCATION_ARGUMENTS\n  37. UPDATE NumberLiteral: `0` -> `0.0`\n  38. MOVE NumberLiteral(0) into METHOD_INVOCATION_ARGUMENTS\n  39. INSERT SimpleName(small) into METHOD_INVOCATION_ARGUMENTS\n  40. INSERT NumberLiteral(1) into InfixExpression\n  41. MOVE INFIX_EXPRESSION_OPERATOR(/) into InfixExpression\n  42. UPDATE SimpleName: `dPrev` -> `dN`\n  43. MOVE SimpleName(dPrev) into InfixExpression\n  44. UPDATE INFIX_EXPRESSION_OPERATOR: `/` -> `*`\n  45. UPDATE SimpleName: `q2` -> `dN`\n  46. UPDATE SimpleName: `cPrev` -> `hPrev`\n  47. UPDATE SimpleName: `lastScaleFactor` -> `dN`\n  48. UPDATE SimpleName: `scaleFactor` -> `small`\n  49. UPDATE SimpleName: `scaleFactor` -> `cPrev`\n  50. UPDATE SimpleName: `scaleFactor` -> `small`\n  51. MOVE SimpleName(scaleFactor) into Assignment\n  52. DELETE VariableDeclarationStatement :: `double p0 = 1.0;`\n  53. DELETE VariableDeclarationStatement :: `double q1 = 1.0;`\n  54. DELETE VariableDeclarationStatement :: `double cN = a * hPrev + b * p0;`\n  55. DELETE INFIX_EXPRESSION_OPERATOR(*)\n  56. DELETE SimpleName(q1)\n  57. DELETE InfixExpression :: `a * q1`\n  58. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  59. DELETE SimpleName(lastScaleFactor)\n  60. DELETE InfixExpression :: `hPrev / lastScaleFactor`\n  61. DELETE INFIX_EXPRESSION_OPERATOR(*)\n  62. DELETE SimpleName(p0)\n  63. DELETE InfixExpression :: `b / scaleFactor * p0`\n  64. DELETE ParenthesizedExpression :: `(b / scaleFactor * p0)`\n  65. DELETE SimpleName(a)\n  66. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  67. DELETE InfixExpression :: `a / scaleFactor`\n  68. DELETE INFIX_EXPRESSION_OPERATOR(*)\n  69. DELETE SimpleName(hPrev)\n  70. DELETE InfixExpression :: `a / scaleFactor * hPrev`\n  71. DELETE ParenthesizedExpression :: `(a / scaleFactor * hPrev)`\n  72. DELETE INFIX_EXPRESSION_OPERATOR(+)\n  73. DELETE InfixExpression :: `p0 / lastScaleFactor`\n  74. DELETE InfixExpression :: `(a / scaleFactor * hPrev) + p0 / lastScaleFactor`\n  75. DELETE SimpleName(a)\n  76. DELETE SimpleName(scaleFactor)\n  77. DELETE InfixExpression :: `a / scaleFactor`\n  78. DELETE INFIX_EXPRESSION_OPERATOR(*)\n  79. DELETE SimpleName(q1)\n  80. DELETE InfixExpression :: `a / scaleFactor * q1`\n  81. DELETE ParenthesizedExpression :: `(a / scaleFactor * q1)`\n  82. DELETE INFIX_EXPRESSION_OPERATOR(+)\n  83. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  84. DELETE SimpleName(lastScaleFactor)\n  85. DELETE InfixExpression :: `dPrev / lastScaleFactor`\n  86. DELETE InfixExpression :: `Double.isInfinite(cN) || Double.isInfinite(q2)`\n  87. DELETE VariableDeclarationStatement :: `double scaleFactor = 1d;`\n  88. DELETE VariableDeclarationStatement :: `double lastScaleFactor = 1d;`\n  89. DELETE VariableDeclarationStatement :: `final int maxPower = 5;`\n  90. DELETE Modifier(final)\n  91. DELETE PrimitiveType(double)\n  92. DELETE SimpleName(scale)\n  93. DELETE VariableDeclarationFragment :: `scale = FastMath.max(a,b)`\n  94. DELETE VariableDeclarationStatement :: `final double scale = FastMath.max(a,b);`\n  95. DELETE IfStatement :: `if (scale <= 0) { // Can't scale throw new ConvergenceException(LocalizedFormats.CONTINUED_FRACTION_INFINITY_DIVERGENCE, x); }`\n  96. DELETE VariableDeclarationExpression :: `int i = 0`\n  97. DELETE InfixExpression :: `i < maxPower`\n  98. DELETE PostfixExpression :: `i++`\n  99. DELETE ExpressionStatement :: `scaleFactor *= scale;`\n  100. DELETE InfixExpression :: `a != 0.0 && a > b`\n  101. DELETE ASSIGNMENT_OPERATOR(=)\n  102. DELETE Assignment :: `cN = hPrev / lastScaleFactor + (b / scaleFactor * p0)`\n  103. DELETE ExpressionStatement :: `cN = hPrev / lastScaleFactor + (b / scaleFactor * p0);`\n  104. DELETE ASSIGNMENT_OPERATOR(=)\n  105. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  106. DELETE InfixExpression :: `q1 / lastScaleFactor`\n  107. DELETE INFIX_EXPRESSION_OPERATOR(+)\n  108. DELETE ParenthesizedExpression :: `(b / scaleFactor * dPrev)`\n  109. DELETE InfixExpression :: `q1 / lastScaleFactor + (b / scaleFactor * dPrev)`\n  110. DELETE Assignment :: `q2 = q1 / lastScaleFactor + (b / scaleFactor * dPrev)`\n  111. DELETE ExpressionStatement :: `q2 = q1 / lastScaleFactor + (b / scaleFactor * dPrev);`\n  112. DELETE Block :: `{ cN = hPrev / lastScaleFactor + (b / scaleFactor * p0); q2 = q1 / lastScaleFactor + (b / scaleFactor * dPrev); }`\n  113. DELETE SimpleName(b)\n  114. DELETE INFIX_EXPRESSION_OPERATOR(!=)\n  115. DELETE InfixExpression :: `b != 0`\n  116. DELETE Block :: `{ cN = (a / scaleFactor * hPrev) + p0 / lastScaleFactor; q2 = (a / scaleFactor * q1) + dPrev / lastScaleFactor; }`\n  117. DELETE IfStatement :: `if (b != 0) { cN = (a / scaleFactor * hPrev) + p0 / lastScaleFactor; q2 = (a / scaleFactor * q1) + dPrev / lastScaleFactor; }`\n  118. DELETE IfStatement :: `if (a != 0.0 && a > b) { cN = hPrev / lastScaleFactor + (b / scaleFactor * p0); q2 = q1 / lastScaleFactor + (b / scaleFactor * dPrev); } else if (b != 0) { c...`\n  119. DELETE IfStatement :: `if (!(Double.isInfinite(cN) || Double.isInfinite(q2))) { break; }`\n  120. DELETE Block :: `{ lastScaleFactor = scaleFactor; scaleFactor *= scale; if (a != 0.0 && a > b) { cN = hPrev / lastScaleFactor + (b / scaleFactor * p0); q2 = q1 / lastScaleFac...`\n  121. DELETE ForStatement :: `for (int i = 0; i < maxPower; i++) { lastScaleFactor = scaleFactor; scaleFactor *= scale; if (a != 0.0 && a > b) { cN = hPrev / lastScaleFactor + (b / scaleF...`\n  122. DELETE Block :: `{ double scaleFactor = 1d; double lastScaleFactor = 1d; final int maxPower = 5; final double scale = FastMath.max(a,b); if (scale <= 0) { // Can't scale thro...`\n  123. DELETE IfStatement :: `if (Double.isInfinite(cN) || Double.isInfinite(q2)) { double scaleFactor = 1d; double lastScaleFactor = 1d; final int maxPower = 5; final double scale = Fast...`\n  124. DELETE SimpleName(cPrev)\n  125. DELETE INFIX_EXPRESSION_OPERATOR(/)\n  126. DELETE SimpleName(q2)\n  127. DELETE InfixExpression :: `cN / q2`\n  128. DELETE ExpressionStatement :: `p0 = hPrev;`\n  129. DELETE ExpressionStatement :: `q1 = q2;`"
+    },
+    {
+      "bug_key": "Math-32",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/geometry/euclidean/twod/PolygonsSet.java\nEnclosing Method: computeGeometricalProperties\nAST Edit Operations (4):\n  1. INSERT InfixExpression into IfStatement :: `tree.getCut() == null && (Boolean) tree.getAttribute()`\n  2. INSERT InfixExpression into InfixExpression :: `tree.getCut() == null`\n  3. INSERT INFIX_EXPRESSION_OPERATOR(&&) into InfixExpression\n  4. MOVE CastExpression into InfixExpression :: `(Boolean) tree.getAttribute()`"
+    },
+    {
+      "bug_key": "Math-33",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/optimization/linear/SimplexTableau.java\nEnclosing Method: dropPhase1Objective\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `maxUlps` -> `epsilon`"
+    },
+    {
+      "bug_key": "Math-34",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/genetics/ListPopulation.java\nEnclosing Method: iterator\nAST Edit Operations (3):\n  1. INSERT MethodInvocation into METHOD_INVOCATION_RECEIVER :: `getChromosomes()`\n  2. UPDATE SimpleName: `chromosomes` -> `getChromosomes`\n  3. MOVE SimpleName(chromosomes) into MethodInvocation"
+    },
+    {
+      "bug_key": "Math-35",
+      "success": true,
+      "error": null,
+      "action_count": 18,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math3/genetics/ElitisticListPopulation.java\nEnclosing Method: ElitisticListPopulation\nAST Edit Operations (18):\n  1. INSERT MethodInvocation into ExpressionStatement :: `setElitismRate(elitismRate)`\n  2. INSERT MethodInvocation into ExpressionStatement :: `setElitismRate(elitismRate)`\n  3. UPDATE SimpleName: `elitismRate` -> `setElitismRate`\n  4. MOVE SimpleName(elitismRate) into MethodInvocation\n  5. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `elitismRate`\n  6. UPDATE SimpleName: `elitismRate` -> `setElitismRate`\n  7. MOVE SimpleName(elitismRate) into MethodInvocation\n  8. INSERT METHOD_INVOCATION_ARGUMENTS into MethodInvocation :: `elitismRate`\n  9. MOVE SimpleName(elitismRate) into METHOD_INVOCATION_ARGUMENTS\n  10. MOVE SimpleName(elitismRate) into METHOD_INVOCATION_ARGUMENTS\n  11. DELETE ThisExpression :: `this`\n  12. DELETE FieldAccess :: `this.elitismRate`\n  13. DELETE ASSIGNMENT_OPERATOR(=)\n  14. DELETE Assignment :: `this.elitismRate = elitismRate`\n  15. DELETE ThisExpression :: `this`\n  16. DELETE FieldAccess :: `this.elitismRate`\n  17. DELETE ASSIGNMENT_OPERATOR(=)\n  18. DELETE Assignment :: `this.elitismRate = elitismRate`"
+    },
+    {
+      "bug_key": "Math-40",
+      "success": true,
+      "error": null,
+      "action_count": 32,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/analysis/solvers/BracketingNthOrderBrentSolver.java\nEnclosing Method: doSolve\nAST Edit Operations (32):\n  1. INSERT VariableDeclarationStatement into Block :: `final int p = agingA - MAXIMAL_AGING;`\n  2. INSERT VariableDeclarationStatement into Block :: `final double weightA = (1 << p) - 1;`\n  3. INSERT VariableDeclarationStatement into Block :: `final double weightB = p + 1;`\n  4. INSERT VariableDeclarationStatement into Block :: `final int p = agingB - MAXIMAL_AGING;`\n  5. INSERT VariableDeclarationStatement into Block :: `final double weightA = p + 1;`\n  6. INSERT VariableDeclarationStatement into Block :: `final double weightB = (1 << p) - 1;`\n  7. INSERT InfixExpression into Assignment :: `(weightA * yA - weightB * REDUCTION_FACTOR * yB) / (weightA + weightB)`\n  8. INSERT ParenthesizedExpression into InfixExpression :: `(weightA * yA - weightB * REDUCTION_FACTOR * yB)`\n  9. INSERT INFIX_EXPRESSION_OPERATOR(/) into InfixExpression\n  10. INSERT ParenthesizedExpression into InfixExpression :: `(weightA + weightB)`\n  11. INSERT InfixExpression into Assignment :: `(weightB * yB - weightA * REDUCTION_FACTOR * yA) / (weightA + weightB)`\n  12. INSERT InfixExpression into ParenthesizedExpression :: `weightA * yA - weightB * REDUCTION_FACTOR * yB`\n  13. INSERT ParenthesizedExpression into InfixExpression :: `(weightB * yB - weightA * REDUCTION_FACTOR * yA)`\n  14. INSERT INFIX_EXPRESSION_OPERATOR(/) into InfixExpression\n  15. INSERT ParenthesizedExpression into InfixExpression :: `(weightA + weightB)`\n  16. INSERT InfixExpression into InfixExpression :: `weightA * yA`\n  17. INSERT INFIX_EXPRESSION_OPERATOR(-) into InfixExpression\n  18. MOVE InfixExpression into InfixExpression :: `-REDUCTION_FACTOR * yB`\n  19. INSERT InfixExpression into ParenthesizedExpression :: `weightB * yB - weightA * REDUCTION_FACTOR * yA`\n  20. UPDATE SimpleName: `REDUCTION_FACTOR` -> `weightB`\n  21. MOVE SimpleName(REDUCTION_FACTOR) into InfixExpression\n  22. INSERT SimpleName(REDUCTION_FACTOR) into InfixExpression\n  23. INSERT InfixExpression into InfixExpression :: `weightB * yB`\n  24. INSERT INFIX_EXPRESSION_OPERATOR(-) into InfixExpression\n  25. MOVE InfixExpression into InfixExpression :: `-REDUCTION_FACTOR * yA`\n  26. UPDATE SimpleName: `REDUCTION_FACTOR` -> `weightA`\n  27. MOVE SimpleName(REDUCTION_FACTOR) into InfixExpression\n  28. INSERT SimpleName(REDUCTION_FACTOR) into InfixExpression\n  29. DELETE PREFIX_EXPRESSION_OPERATOR(-)\n  30. DELETE PrefixExpression :: `-REDUCTION_FACTOR`\n  31. DELETE PREFIX_EXPRESSION_OPERATOR(-)\n  32. DELETE PrefixExpression :: `-REDUCTION_FACTOR`"
+    },
+    {
+      "bug_key": "Math-42",
+      "success": true,
+      "error": null,
+      "action_count": 4,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/optimization/linear/SimplexTableau.java\nEnclosing Method: getSolution\nAST Edit Operations (4):\n  1. INSERT IfStatement into Block :: `if (basicRow != null && basicRow == 0) { // if the basic row is found to be the objective function row // set the coefficient to 0 -> this case handles uncon...`\n  2. INSERT InfixExpression into IfStatement :: `basicRow != null && basicRow == 0`\n  3. INSERT Block into IfStatement :: `{ // if the basic row is found to be the objective function row // set the coefficient to 0 -> this case handles unconstrained // variables that are still pa...`\n  4. MOVE IfStatement into IfStatement :: `if (basicRows.contains(basicRow)) { // if multiple variables can take a given value // then we choose the first and set the rest equal to 0 coefficients[i] =...`"
+    },
+    {
+      "bug_key": "Math-43",
+      "success": true,
+      "error": null,
+      "action_count": 30,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/stat/descriptive/SummaryStatistics.java\nEnclosing Method: addValue\nAST Edit Operations (30):\n  1. INSERT InfixExpression into IfStatement :: `meanImpl != mean`\n  2. INSERT InfixExpression into IfStatement :: `varianceImpl != variance`\n  3. INSERT InfixExpression into IfStatement :: `geoMeanImpl != geoMean`\n  4. MOVE SimpleName(meanImpl) into InfixExpression\n  5. INSERT INFIX_EXPRESSION_OPERATOR(!=) into InfixExpression\n  6. UPDATE SimpleName: `Mean` -> `mean`\n  7. MOVE SimpleName(Mean) into InfixExpression\n  8. MOVE SimpleName(varianceImpl) into InfixExpression\n  9. INSERT INFIX_EXPRESSION_OPERATOR(!=) into InfixExpression\n  10. UPDATE SimpleName: `Variance` -> `variance`\n  11. MOVE SimpleName(Variance) into InfixExpression\n  12. MOVE SimpleName(geoMeanImpl) into InfixExpression\n  13. INSERT INFIX_EXPRESSION_OPERATOR(!=) into InfixExpression\n  14. UPDATE SimpleName: `GeometricMean` -> `geoMean`\n  15. MOVE SimpleName(GeometricMean) into InfixExpression\n  16. DELETE PREFIX_EXPRESSION_OPERATOR(!)\n  17. DELETE SimpleType :: `Mean`\n  18. DELETE InstanceofExpression :: `meanImpl instanceof Mean`\n  19. DELETE ParenthesizedExpression :: `(meanImpl instanceof Mean)`\n  20. DELETE PrefixExpression :: `!(meanImpl instanceof Mean)`\n  21. DELETE PREFIX_EXPRESSION_OPERATOR(!)\n  22. DELETE SimpleType :: `Variance`\n  23. DELETE InstanceofExpression :: `varianceImpl instanceof Variance`\n  24. DELETE ParenthesizedExpression :: `(varianceImpl instanceof Variance)`\n  25. DELETE PrefixExpression :: `!(varianceImpl instanceof Variance)`\n  26. DELETE PREFIX_EXPRESSION_OPERATOR(!)\n  27. DELETE SimpleType :: `GeometricMean`\n  28. DELETE InstanceofExpression :: `geoMeanImpl instanceof GeometricMean`\n  29. DELETE ParenthesizedExpression :: `(geoMeanImpl instanceof GeometricMean)`\n  30. DELETE PrefixExpression :: `!(geoMeanImpl instanceof GeometricMean)`"
+    },
+    {
+      "bug_key": "Math-45",
+      "success": true,
+      "error": null,
+      "action_count": 3,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/linear/OpenMapRealMatrix.java\nEnclosing Method: OpenMapRealMatrix\nAST Edit Operations (3):\n  1. INSERT VariableDeclarationStatement into Block :: `long lRow = (long) rowDimension;`\n  2. INSERT VariableDeclarationStatement into Block :: `long lCol = (long) columnDimension;`\n  3. INSERT IfStatement into Block :: `if (lRow * lCol >= (long) Integer.MAX_VALUE) { throw new NumberIsTooLargeException(lRow * lCol, Integer.MAX_VALUE, false); }`"
+    },
+    {
+      "bug_key": "Math-46",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/complex/Complex.java\nEnclosing Method: divide\nAST Edit Operations (8):\n  1. MOVE SimpleName(NaN) into ReturnStatement\n  2. MOVE SimpleName(NaN) into ReturnStatement\n  3. DELETE SimpleName(isZero)\n  4. DELETE SimpleName(INF)\n  5. DELETE ConditionalExpression :: `isZero ? NaN : INF`\n  6. DELETE SimpleName(isZero)\n  7. DELETE SimpleName(INF)\n  8. DELETE ConditionalExpression :: `isZero ? NaN : INF`"
+    },
+    {
+      "bug_key": "Math-48",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/analysis/solvers/BaseSecantSolver.java\nEnclosing Method: doSolve\nAST Edit Operations (1):\n  1. INSERT IfStatement into SwitchStatement :: `if (x == x1) { throw new ConvergenceException(); }`"
+    },
+    {
+      "bug_key": "Math-50",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/analysis/solvers/BaseSecantSolver.java\nEnclosing Method: doSolve\nAST Edit Operations (1):\n  1. DELETE IfStatement :: `if (x == x1) { x0 = 0.5 * (x0 + x1 - FastMath.max(rtol * FastMath.abs(x1), atol)); f0 = computeObjectiveValue(x0); }`"
+    },
+    {
+      "bug_key": "Math-51",
+      "success": true,
+      "error": null,
+      "action_count": 5,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/analysis/solvers/BaseSecantSolver.java\nEnclosing Method: doSolve\nAST Edit Operations (5):\n  1. INSERT IfStatement into SwitchStatement :: `if (x == x1) { final double delta = FastMath.max(rtol * FastMath.abs(x1), atol); // Update formula cannot make any progress: Update the // search interval. x...`\n  2. INSERT BreakStatement into SwitchStatement :: `break;`\n  3. INSERT SwitchCase into SwitchStatement :: `default:`\n  4. INSERT ThrowStatement into SwitchStatement :: `throw new MathInternalError();`\n  5. INSERT SimpleName(REGULA_FALSI) into SwitchCase"
+    },
+    {
+      "bug_key": "Math-52",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/geometry/euclidean/threed/Rotation.java\nEnclosing Method: Rotation\nAST Edit Operations (8):\n  1. INSERT VariableDeclarationStatement into Block :: `final double inPlaneThreshold = 0.001;`\n  2. UPDATE INFIX_EXPRESSION_OPERATOR: `==` -> `<=`\n  3. INSERT InfixExpression into InfixExpression :: `inPlaneThreshold * k.getNorm() * u3.getNorm()`\n  4. UPDATE INFIX_EXPRESSION_OPERATOR: `==` -> `<=`\n  5. INSERT InfixExpression into InfixExpression :: `inPlaneThreshold * k.getNorm() * u2Prime.getNorm()`\n  6. UPDATE INFIX_EXPRESSION_OPERATOR: `==` -> `<=`\n  7. DELETE NumberLiteral(0)\n  8. DELETE NumberLiteral(0)"
+    },
+    {
+      "bug_key": "Math-55",
+      "success": true,
+      "error": null,
+      "action_count": 34,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/geometry/Vector3D.java\nEnclosing Method: crossProduct\nAST Edit Operations (34):\n  1. INSERT MethodDeclaration into TypeDeclaration :: `/** Compute the cross-product of two vectors. * @param v1 first vector * @param v2 second vector * @return the cross product v1 ^ v2 as a new Vector */ publi...`\n  2. MOVE Javadoc into MethodDeclaration :: `/** Compute the cross-product of two vectors. * @param v1 first vector * @param v2 second vector * @return the cross product v1 ^ v2 as a new Vector */`\n  3. MOVE SimpleType into MethodDeclaration :: `Vector3D`\n  4. MOVE SingleVariableDeclaration into MethodDeclaration :: `final Vector3D v1`\n  5. MOVE SingleVariableDeclaration into MethodDeclaration :: `final Vector3D v2`\n  6. INSERT Block into MethodDeclaration :: `{ final double n1 = v1.getNormSq(); final double n2 = v2.getNormSq(); if ((n1 * n2) < MathUtils.SAFE_MIN) { return ZERO; } // rescale both vectors without lo...`\n  7. INSERT VariableDeclarationStatement into Block :: `final double n1 = v1.getNormSq();`\n  8. INSERT VariableDeclarationStatement into Block :: `final double n2 = v2.getNormSq();`\n  9. INSERT IfStatement into Block :: `if ((n1 * n2) < MathUtils.SAFE_MIN) { return ZERO; }`\n  10. INSERT VariableDeclarationStatement into Block :: `final int deltaExp = (FastMath.getExponent(n1) - FastMath.getExponent(n2)) / 4;`\n  11. INSERT VariableDeclarationStatement into Block :: `final double x1 = FastMath.scalb(v1.x, -deltaExp);`\n  12. INSERT VariableDeclarationStatement into Block :: `final double y1 = FastMath.scalb(v1.y, -deltaExp);`\n  13. INSERT VariableDeclarationStatement into Block :: `final double z1 = FastMath.scalb(v1.z, -deltaExp);`\n  14. INSERT VariableDeclarationStatement into Block :: `final double x2 = FastMath.scalb(v2.x, deltaExp);`\n  15. INSERT VariableDeclarationStatement into Block :: `final double y2 = FastMath.scalb(v2.y, deltaExp);`\n  16. INSERT VariableDeclarationStatement into Block :: `final double z2 = FastMath.scalb(v2.z, deltaExp);`\n  17. INSERT VariableDeclarationStatement into Block :: `final double ratio = (x1 * x2 + y1 * y2 + z1 * z2) / FastMath.scalb(n2, 2 * deltaExp);`\n  18. INSERT VariableDeclarationStatement into Block :: `final double rho = FastMath.rint(256 * ratio) / 256;`\n  19. INSERT VariableDeclarationStatement into Block :: `final double x3 = x1 - rho * x2;`\n  20. INSERT VariableDeclarationStatement into Block :: `final double y3 = y1 - rho * y2;`\n  21. INSERT VariableDeclarationStatement into Block :: `final double z3 = z1 - rho * z2;`\n  22. INSERT ReturnStatement into Block :: `return new Vector3D(y3 * z2 - z3 * y2, z3 * x2 - x3 * z2, x3 * y2 - y3 * x2);`\n  23. INSERT ClassInstanceCreation into ReturnStatement :: `new Vector3D(y3 * z2 - z3 * y2, z3 * x2 - x3 * z2, x3 * y2 - y3 * x2)`\n  24. MOVE SimpleType into ClassInstanceCreation :: `Vector3D`\n  25. INSERT InfixExpression into ClassInstanceCreation :: `y3 * z2 - z3 * y2`\n  26. INSERT InfixExpression into ClassInstanceCreation :: `z3 * x2 - x3 * z2`\n  27. INSERT InfixExpression into ClassInstanceCreation :: `x3 * y2 - y3 * x2`\n  28. DELETE InfixExpression :: `v1.y * v2.z - v1.z * v2.y`\n  29. DELETE InfixExpression :: `v1.z * v2.x - v1.x * v2.z`\n  30. DELETE InfixExpression :: `v1.x * v2.y - v1.y * v2.x`\n  31. DELETE ClassInstanceCreation :: `new Vector3D(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x)`\n  32. DELETE ReturnStatement :: `return new Vector3D(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);`\n  33. DELETE Block :: `{ // rescale both vectors without losing precision, // to ensure their norm are the same order of magnitude // we reduce cancellation errors by preconditioni...`\n  34. DELETE MethodDeclaration :: `/** Compute the cross-product of two vectors. * @param v1 first vector * @param v2 second vector * @return the cross product v1 ^ v2 as a new Vector */ publi...`"
+    },
+    {
+      "bug_key": "Math-56",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/util/MultidimensionalCounter.java\nEnclosing Method: getCounts\nAST Edit Operations (8):\n  1. INSERT InfixExpression into Assignment :: `index - count`\n  2. UPDATE SimpleName: `idx` -> `index`\n  3. MOVE SimpleName(idx) into InfixExpression\n  4. INSERT INFIX_EXPRESSION_OPERATOR(-) into InfixExpression\n  5. INSERT SimpleName(count) into InfixExpression\n  6. DELETE VariableDeclarationStatement :: `int idx = 1;`\n  7. DELETE WhileStatement :: `while (count < index) { count += idx; ++idx; }`\n  8. DELETE ExpressionStatement :: `--idx;`"
+    },
+    {
+      "bug_key": "Math-57",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/stat/clustering/KMeansPlusPlusClusterer.java\nEnclosing Method: chooseInitialCenters\nAST Edit Operations (1):\n  1. UPDATE PrimitiveType: `int` -> `double`"
+    },
+    {
+      "bug_key": "Math-58",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/optimization/fitting/GaussianFitter.java\nEnclosing Method: fit\nAST Edit Operations (1):\n  1. DELETE ClassInstanceCreation :: `new Gaussian.Parametric()`"
+    },
+    {
+      "bug_key": "Math-59",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/util/FastMath.java\nEnclosing Method: max\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `b` -> `a`"
+    },
+    {
+      "bug_key": "Math-60",
+      "success": true,
+      "error": null,
+      "action_count": 6,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/distribution/NormalDistributionImpl.java\nEnclosing Method: cumulativeProbability\nAST Edit Operations (6):\n  1. MOVE Block into MethodDeclaration :: `{ return 0.5 * (1.0 + Erf.erf((dev) / (standardDeviation * FastMath.sqrt(2.0)))); }`\n  2. MOVE VariableDeclarationStatement into Block :: `final double dev = x - mean;`\n  3. INSERT IfStatement into Block :: `if (FastMath.abs(dev) > 40 * standardDeviation) { return dev < 0 ? 0.0d : 1.0d; }`\n  4. DELETE CatchClause :: `catch (MaxIterationsExceededException ex) { if (x < (mean - 20 * standardDeviation)) { // JDK 1.5 blows at 38 return 0; } else if (x > (mean + 20 * standardD...`\n  5. DELETE TryStatement :: `try { return 0.5 * (1.0 + Erf.erf((dev) / (standardDeviation * FastMath.sqrt(2.0)))); } catch (MaxIterationsExceededException ex) { if (x < (mean - 20 * stan...`\n  6. DELETE Block :: `{ final double dev = x - mean; try { return 0.5 * (1.0 + Erf.erf((dev) / (standardDeviation * FastMath.sqrt(2.0)))); } catch (MaxIterationsExceededException...`"
+    },
+    {
+      "bug_key": "Math-61",
+      "success": true,
+      "error": null,
+      "action_count": 12,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/distribution/PoissonDistributionImpl.java\nEnclosing Method: PoissonDistributionImpl\nAST Edit Operations (12):\n  1. UPDATE QualifiedName: `org.apache.commons.math.MathRuntimeException` -> `org.apache.commons.math.exception.NotStrictlyPositiveException`\n  2. INSERT ClassInstanceCreation into ThrowStatement :: `new NotStrictlyPositiveException(LocalizedFormats.MEAN, p)`\n  3. INSERT SimpleType into ClassInstanceCreation :: `NotStrictlyPositiveException`\n  4. UPDATE QualifiedName: `LocalizedFormats.NOT_POSITIVE_POISSON_MEAN` -> `LocalizedFormats.MEAN`\n  5. MOVE QualifiedName(LocalizedFormats.NOT_POSITIVE_POISSON_MEAN) into ClassInstanceCreation\n  6. MOVE SimpleName(p) into ClassInstanceCreation\n  7. UPDATE SimpleName: `MathRuntimeException` -> `NotStrictlyPositiveException`\n  8. MOVE SimpleName(MathRuntimeException) into SimpleType\n  9. DELETE METHOD_INVOCATION_RECEIVER :: `MathRuntimeException`\n  10. DELETE SimpleName(createIllegalArgumentException)\n  11. DELETE METHOD_INVOCATION_ARGUMENTS :: `LocalizedFormats.NOT_POSITIVE_POISSON_MEAN, p`\n  12. DELETE MethodInvocation :: `MathRuntimeException.createIllegalArgumentException(LocalizedFormats.NOT_POSITIVE_POISSON_MEAN, p)`"
+    },
+    {
+      "bug_key": "Math-63",
+      "success": true,
+      "error": null,
+      "action_count": 14,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/util/MathUtils.java\nEnclosing Method: equals\nAST Edit Operations (14):\n  1. MOVE MethodInvocation into ReturnStatement :: `Double.isNaN(x)`\n  2. UPDATE SimpleName: `Double` -> `equals`\n  3. MOVE SimpleName(Double) into MethodInvocation\n  4. INSERT SimpleName(y) into METHOD_INVOCATION_ARGUMENTS\n  5. INSERT NumberLiteral(1) into METHOD_INVOCATION_ARGUMENTS\n  6. DELETE METHOD_INVOCATION_RECEIVER :: `Double`\n  7. DELETE SimpleName(isNaN)\n  8. DELETE INFIX_EXPRESSION_OPERATOR(&&)\n  9. DELETE MethodInvocation :: `Double.isNaN(y)`\n  10. DELETE InfixExpression :: `Double.isNaN(x) && Double.isNaN(y)`\n  11. DELETE ParenthesizedExpression :: `(Double.isNaN(x) && Double.isNaN(y))`\n  12. DELETE INFIX_EXPRESSION_OPERATOR(||)\n  13. DELETE InfixExpression :: `x == y`\n  14. DELETE InfixExpression :: `(Double.isNaN(x) && Double.isNaN(y)) || x == y`"
+    },
+    {
+      "bug_key": "Math-68",
+      "success": true,
+      "error": null,
+      "action_count": 19,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizer.java\nEnclosing Method: LevenbergMarquardtOptimizer\nAST Edit Operations (19):\n  1. INSERT ExpressionStatement into Block :: `setConvergenceChecker(null);`\n  2. INSERT VariableDeclarationStatement into Block :: `VectorialPointValuePair current = new VectorialPointValuePair(point, objective);`\n  3. INSERT SimpleType into VariableDeclarationStatement :: `VectorialPointValuePair`\n  4. INSERT VariableDeclarationFragment into VariableDeclarationStatement :: `current = new VectorialPointValuePair(point, objective)`\n  5. INSERT SimpleName(current) into VariableDeclarationFragment\n  6. MOVE ClassInstanceCreation into VariableDeclarationFragment :: `new VectorialPointValuePair(point, objective)`\n  7. INSERT VariableDeclarationStatement into Block :: `VectorialPointValuePair previous = current;`\n  8. INSERT ExpressionStatement into Block :: `current = new VectorialPointValuePair(point, objective);`\n  9. INSERT IfStatement into Block :: `if (checker != null) { // we use the vectorial convergence checker if (checker.converged(getIterations(), previous, current)) { return current; } } else { //...`\n  10. INSERT SimpleName(current) into ReturnStatement\n  11. INSERT Assignment into ExpressionStatement :: `current = new VectorialPointValuePair(point, objective)`\n  12. INSERT InfixExpression into IfStatement :: `checker != null`\n  13. INSERT Block into IfStatement :: `{ // we use the vectorial convergence checker if (checker.converged(getIterations(), previous, current)) { return current; } }`\n  14. INSERT Block into IfStatement :: `{ // we use the Levenberg-Marquardt specific convergence parameters if (((Math.abs(actRed) <= costRelativeTolerance) && (preRed <= costRelativeTolerance) &&...`\n  15. INSERT SimpleName(current) into Assignment\n  16. INSERT ASSIGNMENT_OPERATOR(=) into Assignment\n  17. MOVE ClassInstanceCreation into Assignment :: `new VectorialPointValuePair(point, objective)`\n  18. MOVE IfStatement into Block :: `if (((Math.abs(actRed) <= costRelativeTolerance) && (preRed <= costRelativeTolerance) && (ratio <= 2.0)) || (delta <= parRelativeTolerance * xNorm)) { return...`\n  19. INSERT SimpleName(current) into ReturnStatement"
+    },
+    {
+      "bug_key": "Math-69",
+      "success": true,
+      "error": null,
+      "action_count": 8,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/stat/correlation/PearsonsCorrelation.java\nEnclosing Method: getCorrelationPValues\nAST Edit Operations (8):\n  1. MOVE MethodInvocation into InfixExpression :: `tDistribution.cumulativeProbability(t)`\n  2. INSERT PrefixExpression into METHOD_INVOCATION_ARGUMENTS :: `-t`\n  3. INSERT PREFIX_EXPRESSION_OPERATOR(-) into PrefixExpression\n  4. MOVE SimpleName(t) into PrefixExpression\n  5. DELETE NumberLiteral(1)\n  6. DELETE INFIX_EXPRESSION_OPERATOR(-)\n  7. DELETE InfixExpression :: `1 - tDistribution.cumulativeProbability(t)`\n  8. DELETE ParenthesizedExpression :: `(1 - tDistribution.cumulativeProbability(t))`"
+    },
+    {
+      "bug_key": "Math-75",
+      "success": true,
+      "error": null,
+      "action_count": 1,
+      "empty_subtree_actions": [],
+      "empty_update_actions": [],
+      "header_noise_actions": [],
+      "normalized_text": "File: src/main/java/org/apache/commons/math/stat/Frequency.java\nEnclosing Method: getPct\nAST Edit Operations (1):\n  1. UPDATE SimpleName: `getCumPct` -> `getPct`"
+    }
+  ]
+}

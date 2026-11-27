@@ -33,11 +33,14 @@ def _load_dotenv_if_present(dotenv_path: Path = Path(".env")) -> None:
 
 def _retry_with_backoff(
     fn: Callable[[], Any],
-    max_retries: int = 4,
+    max_retries: int = 6,
     initial_delay: float = 2.0,
     backoff_factor: float = 2.0,
+    max_delay: float = 60.0,
 ) -> Any:
-    """Execute `fn` with exponential backoff on transient network or rate-limit errors."""
+    """Execute `fn` with exponential backoff + jitter on transient rate-limit/network errors."""
+    import random
+
     delay = initial_delay
     last_exc: Optional[Exception] = None
     for attempt in range(max_retries + 1):
@@ -46,7 +49,19 @@ def _retry_with_backoff(
         except Exception as exc:
             last_exc = exc
             exc_str = str(exc).lower()
-            is_transient = any(
+            # Never retry permanent billing, quota-exhaustion, or authentication failures
+            is_permanent_billing_or_auth = any(
+                tok in exc_str
+                for tok in (
+                    "your account is not active",
+                    "insufficient_quota",
+                    "billing",
+                    "invalid_api_key",
+                    "authentication",
+                    "unauthorized",
+                )
+            )
+            is_transient = (not is_permanent_billing_or_auth) and any(
                 tok in exc_str
                 for tok in (
                     "rate_limit",
@@ -63,8 +78,9 @@ def _retry_with_backoff(
             )
             if attempt == max_retries or not is_transient:
                 raise
-            time.sleep(delay)
-            delay *= backoff_factor
+            sleep_sec = min(max_delay, delay) + random.uniform(0.0, 1.0)
+            time.sleep(sleep_sec)
+            delay = min(max_delay, delay * backoff_factor)
     raise last_exc  # type: ignore
 
 

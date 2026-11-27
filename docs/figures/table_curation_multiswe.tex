@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Multi-SWE-bench (Java) Curation Audit with Explicit Five-Stage Exclusion Criteria.}
+\label{tab:curation_multiswe}
+\begin{tabular}{lr}
+\toprule
+Screening Stage / Exclusion Filter & PR Count \\
+\midrule
+Total Java PRs scanned (across 9 repositories) & 128 \\
+Excluded: Issue/PR leaked JUnit test code (Filter 1) & 25 \\
+Excluded: Touched non-Java/test files or $\neq 1$ file (Filter 2) & 62 \\
+Excluded: Multi-method or class-level edit (Filter 3) & 23 \\
+Excluded: Base checkout / patch failure (Filter 4) & 0 \\
+Excluded: GumTree AST parse failure (Filter 5) & 0 \\
+\midrule
+\textbf{Curated Single-Method Java PRs (7 repositories)} & \textbf{18} \\
+\bottomrule
+\end{tabular}
+\end{table}

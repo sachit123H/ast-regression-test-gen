@@ -62,6 +62,7 @@ class AgentConfig:
     max_tool_calls_per_retry: int = 6
     api_base_url: Optional[str] = None
     inline_enclosing_method: bool = True
+    repeats: int = 1
 
 
 @dataclass

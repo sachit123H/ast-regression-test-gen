@@ -1,0 +1,39 @@
+{
+  "total_scanned": 139,
+  "total_curated": 80,
+  "localized_filter_relaxed": false,
+  "exclusion_counts": {
+    "checkout_or_build_failed": 0,
+    "multi_file_or_multi_method": 56,
+    "gumtree_parse_failed": 3,
+    "no_triggering_tests": 0
+  },
+  "project_breakdown": {
+    "Commons-Lang": {
+      "scanned": 65,
+      "curated": 40,
+      "multi_method": 22,
+      "gumtree_failed": 3
+    },
+    "Commons-Math": {
+      "scanned": 74,
+      "curated": 40,
+      "multi_method": 34,
+      "gumtree_failed": 0
+    }
+  },
+  "gumtree_parse_failed_bugs": [
+    {
+      "bug_key": "Lang-2",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    },
+    {
+      "bug_key": "Lang-4",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    },
+    {
+      "bug_key": "Lang-36",
+      "reason": "GumTree AST diff parser exception on legacy Java syntax"
+    }
+  ]
+}

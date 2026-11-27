@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from unittest.mock import patch
 
+from src.dataset.defects4j_curate import find_enclosing_methods, parse_diff_changed_lines
 from src.dataset.multi_swe_bench import build_multi_swe_manifest
 from src.evaluation.pipeline import extract_relevant_passing_test_fqns
 
@@ -81,3 +82,45 @@ def test_extract_relevant_passing_test_fqns(tmp_path: Path):
         "org.demo.FooTest::testPassOne",
         "org.demo.FooTest::testPassLegacy",
     ]
+
+
+def test_parse_multiline_java_method_signature_and_seed_schema(tmp_path: Path):
+    src = (
+        "package org.demo;\n"
+        "public class Pop {\n"
+        "  public Pop(final int limit,\n"
+        "             final double rate) {\n"
+        "    this.rate = rate;\n"
+        "  }\n"
+        "  public Pop(final double rate) {\n"
+        "    this.rate = rate;\n"
+        "  }\n"
+        "}\n"
+    )
+    methods = find_enclosing_methods(src, [5, 8])
+    assert len(methods) == 2
+    assert methods[0].start_line == 3 and methods[0].end_line == 6
+    assert methods[1].start_line == 7 and methods[1].end_line == 9
+
+    # Verify ByteDance-Seed/Multi-SWE-bench nested schema is handled
+    seed_rows = [
+        {
+            "instance_id": "google__gson-1",
+            "org": "google",
+            "repo": "gson",
+            "base": {"sha": "deadbeef"},
+            "title": "Fix bug",
+            "body": "Crash on null input",
+            "resolved_issues": "[{'title': 'Issue', 'body': 'Use @Test assertEquals here'}]",
+            "fix_patch": "diff --git a/src/A.java b/src/A.java\n",
+        }
+    ]
+    items = build_multi_swe_manifest(
+        rows=seed_rows,
+        repos_cache_dir=tmp_path / "cache",
+        output_path=tmp_path / "out.json",
+        exclusion_log_path=tmp_path / "excl.json",
+    )
+    assert len(items) == 0
+    excl = json.loads((tmp_path / "excl.json").read_text(encoding="utf-8"))
+    assert excl["exclusion_counts"]["issue_leaked_brt"] == 1
