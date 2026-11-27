@@ -1,15 +1,11 @@
-"""Multi-SWE-bench (Java) contamination-free validation adapter.
+"""Multi-SWE-bench (Java) exploratory adapter prototype.
 
-Directly implements Prof. Shin Yoo's Aug 12, 2026 email recommendation:
-  "SWE-Bench is another benchmark you can consider - many issue reports there
-   are missing BRTs."
-
-Loads Java instances from Hugging Face `ByteDance-Seed/Multi-SWE-bench` (or a
-local JSONL export), filters for post-cutoff PRs whose issue descriptions do
-not already contain a JUnit BRT, extracts both raw `git diff` and normalized
-GumTree AST edit scripts from `patch`, and exports a manifest compatible with
-the same Control vs. Treatment agentic loop and differential execution oracle
-for RQ1 (BRT validity rate).
+PROTOTYPE ADAPTER (Future Work / Not Executed in Primary Evaluation):
+This module is a prototype adapter designed to explore potential expansion to
+Multi-SWE-bench (ByteDance-Seed/Multi-SWE-bench). Full multi-repository sandbox
+isolation and multi-turn execution were not executed in the primary thesis evaluation.
+The primary thesis evaluation is conducted strictly and end-to-end on the Defects4J
+benchmark (65 curated bugs across Commons-Lang and Commons-Math, 130 trials).
 """
 
 from __future__ import annotations

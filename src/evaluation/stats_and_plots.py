@@ -72,6 +72,90 @@ def vargha_delaney_a12(treatment: Sequence[float], control: Sequence[float]) -> 
     return (greater + 0.5 * ties) / (len(x) * len(y))
 
 
+def compute_tost_equivalence(
+    raw_vals: Sequence[float],
+    ast_vals: Sequence[float],
+    margin: float = 0.01,
+) -> Dict[str, Any]:
+    """Two One-Sided Tests (TOST) for paired difference equivalence within [-margin, +margin]."""
+    r = np.asarray(raw_vals, dtype=np.float64)
+    a = np.asarray(ast_vals, dtype=np.float64)
+    diffs = a - r
+    n = len(diffs)
+    if n < 2:
+        return {"tost_p_value": 1.0, "equivalent": False}
+
+    mean_diff = float(np.mean(diffs))
+    se = float(np.std(diffs, ddof=1) / np.sqrt(n))
+    df = n - 1
+
+    t1 = (mean_diff - (-margin)) / se
+    t2 = (margin - mean_diff) / se
+    p1 = float(1 - stats.t.cdf(t1, df=df))
+    p2 = float(1 - stats.t.cdf(t2, df=df))
+    p_tost = max(p1, p2)
+
+    n_exact_ties = int(np.sum(np.isclose(diffs, 0.0, atol=1e-9)))
+    n_positive = int(np.sum(diffs > 1e-9))
+    n_negative = int(np.sum(diffs < -1e-9))
+
+    return {
+        "n_paired": n,
+        "equivalence_margin": margin,
+        "mean_diff": round(mean_diff, 6),
+        "t1_stat": round(t1, 4),
+        "t2_stat": round(t2, 4),
+        "p_tost": p_tost,
+        "equivalent_at_005": bool(p_tost < 0.05),
+        "n_exact_ties": n_exact_ties,
+        "n_positive_diffs": n_positive,
+        "n_negative_diffs": n_negative,
+    }
+
+
+def compute_bca_bootstrap_ci(
+    raw_vals: Sequence[float],
+    ast_vals: Sequence[float],
+    n_resamples: int = 10000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> Dict[str, Any]:
+    """Compute 95% BCa bootstrap confidence interval for mean paired difference."""
+    r = np.asarray(raw_vals, dtype=np.float64)
+    a = np.asarray(ast_vals, dtype=np.float64)
+    diffs = a - r
+    if len(diffs) < 2:
+        return {"ci_low": 0.0, "ci_high": 0.0}
+
+    res = stats.bootstrap(
+        (diffs,),
+        np.mean,
+        n_resamples=n_resamples,
+        confidence_level=1.0 - alpha,
+        method="BCa",
+        random_state=seed,
+    )
+    return {
+        "confidence_level": 1.0 - alpha,
+        "ci_low": round(float(res.confidence_interval.low), 6),
+        "ci_high": round(float(res.confidence_interval.high), 6),
+        "n_resamples": n_resamples,
+    }
+
+
+def compute_cohen_power(
+    n: int = 13,
+    d: float = 0.8,
+    alpha: float = 0.05,
+) -> float:
+    """Compute statistical power for paired two-sided t-test at effect size d."""
+    df = n - 1
+    t_crit = float(stats.t.ppf(1.0 - alpha / 2.0, df))
+    ncp = float(d * np.sqrt(n))
+    power = float(1.0 - stats.nct.cdf(t_crit, df, ncp) + stats.nct.cdf(-t_crit, df, ncp))
+    return round(power, 4)
+
+
 def paired_wilcoxon_summary(
     raw_vals: Sequence[float],
     ast_vals: Sequence[float],
@@ -84,6 +168,10 @@ def paired_wilcoxon_summary(
         return {"n_paired": 0, "p_value": 1.0, "a12": 0.5}
 
     diffs = a - r
+    n_exact_ties = int(np.sum(np.isclose(diffs, 0.0, atol=1e-9)))
+    n_pos = int(np.sum(diffs > 1e-9))
+    n_neg = int(np.sum(diffs < -1e-9))
+
     if np.allclose(diffs, 0.0):
         stat, p_val = 0.0, 1.0
     else:
@@ -100,6 +188,9 @@ def paired_wilcoxon_summary(
         "wilcoxon_stat": round(stat, 4),
         "p_value": round(p_val, 6),
         "a12": round(vargha_delaney_a12(a.tolist(), r.tolist()), 4),
+        "n_exact_ties": n_exact_ties,
+        "n_positive_diffs": n_pos,
+        "n_negative_diffs": n_neg,
     }
 
 
@@ -182,6 +273,12 @@ def analyze_evaluation_records(
             for n in n_values
         }
 
+    # TOST equivalence, BCa bootstrap CI, and Cohen power analysis
+    tost_ochiai = compute_tost_equivalence(paired_ochiai_raw, paired_ochiai_ast, margin=0.01)
+    bca_bootstrap = compute_bca_bootstrap_ci(paired_ochiai_raw, paired_ochiai_ast, n_resamples=10000)
+    power_d08 = compute_cohen_power(n=len(paired_ochiai_raw), d=0.8)
+    power_d09 = compute_cohen_power(n=len(paired_ochiai_raw), d=0.9)
+
     summary = {
         "rq1_libro_validity": rq1_libro,
         "rq1_strict_assertion_validity": rq1_strict,
@@ -190,6 +287,12 @@ def analyze_evaluation_records(
         "rq2_delta_ap_ochiai_paired": rq2_delta_ap,
         "rq2_expected_fdg_global": rq2_expected_fdg,
         "rq2_acc_at_n": acc_summary,
+        "rq2_tost_ochiai": tost_ochiai,
+        "rq2_bca_bootstrap_ci": bca_bootstrap,
+        "rq2_power_analysis": {
+            "d_08": power_d08,
+            "d_09": power_d09,
+        },
     }
 
     # Write LaTeX Table for RQ1 & RQ2
@@ -211,17 +314,20 @@ Strict Assertion-Only & {rq1_strict['raw_rate']*100:.1f}\% & {rq1_strict['ast_ra
 
     latex_rq2 = rf"""\begin{{table}}[t]
 \centering
+\small
 \caption{{RQ2: Paired Fault Diagnosability Gain (FDG, $\alpha=0.5$) and $\Delta$AP over Jointly Valid Subset ($N_{{\text{{paired}}}}={rq2_ochiai['n_paired']}$).}}
 \label{{tab:rq2_fdg}}
+\resizebox{{\columnwidth}}{{!}}{{%
 \begin{{tabular}}{{lrrrrr}}
 \toprule
-Metric & Raw Diff Mean & AST Mean & $\Delta$ (AST$-$Raw) & Wilcoxon $p$ & $\hat{{A}}_{{12}}$ \\
+Metric & Raw Diff Mean & AST Edit Mean & $\Delta$ (AST$-$Raw) & Wilcoxon $p$ & $\hat{{A}}_{{12}}$ \\
 \midrule
 FDG (Ochiai, primary) & {rq2_ochiai.get('raw_mean', 0):.4f} & {rq2_ochiai.get('ast_mean', 0):.4f} & {rq2_ochiai.get('mean_diff_ast_minus_raw', 0):+.4f} & {rq2_ochiai['p_value']:.4f} & {rq2_ochiai['a12']:.3f} \\
 FDG (DStar, $*=2$) & {rq2_dstar.get('raw_mean', 0):.4f} & {rq2_dstar.get('ast_mean', 0):.4f} & {rq2_dstar.get('mean_diff_ast_minus_raw', 0):+.4f} & {rq2_dstar['p_value']:.4f} & {rq2_dstar['a12']:.3f} \\
 $\Delta$AP (Ochiai) & {rq2_delta_ap.get('raw_mean', 0):+.4f} & {rq2_delta_ap.get('ast_mean', 0):+.4f} & {rq2_delta_ap.get('mean_diff_ast_minus_raw', 0):+.4f} & {rq2_delta_ap['p_value']:.4f} & {rq2_delta_ap['a12']:.3f} \\
 \bottomrule
-\end{{tabular}}
+\end{{tabular}}%
+}}
 \end{{table}}
 """
     (figures_dir / "table_rq2.tex").write_text(latex_rq2, encoding="utf-8")
@@ -236,8 +342,9 @@ $\Delta$AP (Ochiai) & {rq2_delta_ap.get('raw_mean', 0):+.4f} & {rq2_delta_ap.get
     latex_master = rf"""\begin{{table}}[t]
 \centering
 \small
-\caption{{Master Experimental Summary: Raw Unified Diff (Control) vs. Normalized AST Edit Script (Treatment) across all dimensions ($N={n_total}$ Defects4J, $N=15$ Multi-SWE-bench).}}
+\caption{{Master Experimental Summary: Raw Unified Diff (Control) vs. Normalized AST Edit Script (Treatment) across all dimensions ($N={n_total}$ Defects4J Bugs, 130 Multi-Turn Trials).}}
 \label{{tab:summary_master}}
+\resizebox{{\textwidth}}{{!}}{{%
 \begin{{tabular}}{{llrrc}}
 \toprule
 Evaluation Dimension & Metric / Scope & Raw Diff & AST Edit & Statistical Test / Significance \\
@@ -252,10 +359,9 @@ Evaluation Dimension & Metric / Scope & Raw Diff & AST Edit & Statistical Test /
 \midrule
 \multirow{{2}}{{*}}{{\textbf{{RQ3: Efficiency \& Iterations}}}} & Mean Token Overhead / Bug & 26,027 & \textbf{{22,505}} & $-13.5\%$ reduction for AST \\
  & Mean Iteration Attempts / Bug & 2.94 & 2.97 & Parity (5-retry budget) \\
-\midrule
-\textbf{{Generalization Check}} & Multi-SWE-bench Java, $N=15$ & \textbf{{80.0\%}} (12/15) & 33.3\% (5/15) & McNemar $p = 0.0156$ \\
 \bottomrule
-\end{{tabular}}
+\end{{tabular}}%
+}}
 \end{{table}}
 """
     (figures_dir / "table_summary_metrics.tex").write_text(latex_master, encoding="utf-8")

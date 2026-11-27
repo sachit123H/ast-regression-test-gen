@@ -96,7 +96,8 @@ We evaluated all $N=65$ bugs end-to-end under both conditions (130 total multi-t
 (i)~\textbf{RQ1 (Validity):} Raw diffs achieved a 41.5\% (27/65) differential execution validity rate compared to 24.6\% (16/65) for AST edit scripts (exact McNemar $p = 0.0127$); under strict assertion-only verification, raw diffs achieved 32.3\% (21/65) versus 18.5\% (12/65) ($p = 0.0225$).
 (ii)~\textbf{RQ2 (Diagnostic Quality):} Over the jointly valid paired subset ($N_{\text{paired}} = 13$), both representations yielded virtually equivalent Fault Diagnosability Gain (mean Ochiai FDG 0.5144 for raw diff vs.\ 0.5148 for AST, $\Delta = +0.0004$, paired Wilcoxon $p = 0.2500$, Vargha--Delaney $\hat{A}_{12} = 0.524$). Two One-Sided Tests (TOST) confirm statistical equivalence within a practical $\pm 0.01$ margin ($p < 10^{-12}$), with realized fault ranking gains showing slight refinement under AST ($\Delta\text{AP} = +0.0676$ vs.\ $+0.0574$, $p = 1.0000$). Globally across all $N=65$ bugs, the Intention-To-Treat Expected Diagnosability Gain ($E[\text{FDG}]$) decisively favors raw diffs ($0.2131$ vs.\ $0.1263$, paired Wilcoxon $p = 0.0157$, $\hat{A}_{12} = 0.420$, a 68.7\% advantage).
 (iii)~\textbf{RQ3 (Efficiency):} Normalized AST edit scripts reduced total token consumption by 13.5\% (mean 22,505 vs.\ 26,027 tokens) with comparable iteration dynamics (2.97 vs.\ 2.94 mean attempts).
-A secondary cross-repository validation across 15 contemporary Java pull requests outside Defects4J from Multi-SWE-bench~\citep{multiswebench2025} lacking BRTs confirmed directional consistency with statistical significance (80.0\% vs.\ 33.3\% validity, exact McNemar $p = 0.0156$), demonstrating that results are not an artifact of benchmark-specific overfitting.
+Detailed failure-mode audit reveals that over-normalized AST edit scripts, which strip subtree bodies down to bare node types and omit operand literals, force the model to guess post-fix semantics, causing overconstrained assertion hallucinations (\texttt{FAIL\_FAIL}, accounting for 67.3\% of AST failures).
+Our findings demonstrate that preserving lexical literals within change representations is critical for agentic test synthesis, motivating hybrid representations that fuse lexical diffs with structural syntax typing.
 \end{abstract}
 
 \tableofcontents
@@ -205,8 +206,8 @@ Bugs were filtered using a three-stage screening pipeline:
 Our primary Defects4J benchmark focuses on Apache Commons-Lang and Commons-Math, representing the two largest, most widely studied algorithmic repositories in Defects4J~\citep{just2014defects4j,an2022fdg}.
 These repositories span foundational programming paradigms: general string and object manipulation, reflection, parsing, mathematical transformations, numerical analysis, and complex linear algebra routines.
 Both codebases compile with rapid, deterministic execution cycles under Defects4J v2.0.1 (averaging 2--5 seconds per test cycle), ensuring that agent feedback latency remains tightly bounded and compilation outcomes reflect true code semantics rather than container timeouts.
-Other Defects4J projects were intentionally excluded from our primary benchmark due to complex, platform-dependent runtime side-effects that would confound prompt representation effects: JFreeChart requires active X11/Xvfb display server emulators for headless Java AWT rendering; Joda-Time requires strict, process-wide timezone and locale pinning (\texttt{America/New\_York}, \texttt{en\_US.UTF-8}) that cause non-deterministic test failures across subshells; and Closure Compiler requires customized Ant memory allocations (\texttt{-Xmx2048m}) and multi-pass compiler flags.
-To guarantee cross-ecosystem generalizability beyond Defects4J without these legacy container quirks, we complemented this benchmark with 15 contemporary production repositories outside Defects4J from Multi-SWE-bench (\Cref{sec:multiswe}).
+Other Defects4J projects were intentionally excluded from our benchmark due to complex, platform-dependent runtime side-effects that would confound prompt representation effects: JFreeChart requires active X11/Xvfb display server emulators for headless Java AWT rendering; Joda-Time requires strict, process-wide timezone and locale pinning (\texttt{America/New\_York}, \texttt{en\_US.UTF-8}) that cause non-deterministic test failures across subshells; and Closure Compiler requires customized Ant memory allocations (\texttt{-Xmx2048m}) and multi-pass compiler flags.
+By focusing on Commons-Lang and Commons-Math, our benchmark establishes a clean, self-contained, and deterministic experimental testbed that strictly isolates prompt representation effects under automated double-sandbox verification without confounding runtime side effects.
 
 As reported in Table~\ref{tab:curation}, scanning all 139 available bugs across Commons-Lang and Commons-Math yielded an initial curated benchmark of 80 bugs (40 Lang and 40 Math).
 Only 3 bugs failed GumTree AST parsing (all in Lang: Lang-2, Lang-4, and Lang-36, due to legacy Java syntax structures), and 56 bugs were excluded due to multi-method or multi-file modifications, leaving a single-method evaluation corpus.
@@ -370,11 +371,11 @@ An exact McNemar's test yields $p = 0.0127$, demonstrating a statistically signi
 Under the strict assertion-only criterion (requiring an \texttt{AssertionError} rather than a crash), raw diffs maintained a significant lead: 32.3\% (21/65) versus 18.5\% (12/65) ($p = 0.0225$).
 
 \textbf{Failure mode breakdown.}
-Across the 130 trials:
+Across all 130 trials:
 \begin{enumerate}[leftmargin=*]
-  \item \textbf{Pre-fix non-triggering (\texttt{PREFIX\_PASS}):} The dominant failure mode in the AST condition was synthesizing a syntactically correct test that passed on the buggy code, failing to reproduce the defect (accounting for 64\% of AST failures). AST edit scripts present tree modifications divorced from surrounding lexical literals, making it harder for the model to deduce boundary inputs that trigger failures.
-  \item \textbf{Overconstrained assertions (\texttt{FAIL\_FAIL}):} Both representations produced tests asserting postconditions that the developer fix did not satisfy (28\% of AST failures, 34\% of raw diff failures), indicating over-interpretation of patch scope.
-  \item \textbf{Compilation failures:} Both representations maintained $<4\%$ final uncompilable tests, confirming that the 5-retry agentic feedback loop effectively resolves syntax errors across both projects.
+  \item \textbf{Overconstrained assertions (\texttt{FAIL\_FAIL}):} The dominant failure mode for normalized AST edit scripts was synthesizing tests asserting overconstrained postconditions that failed on both the buggy and fixed versions (accounting for \textbf{67.3\%} of AST failures, 33/49; and 50.0\% of raw diff failures, 19/38). As detailed in \Cref{sec:threats}, our normalizer stripped subtree bodies down to bare node types and was burdened by class modifier noise, depriving the LLM of variable identifiers, method arguments, and concrete literals, forcing the model to guess postconditions.
+  \item \textbf{Pre-fix non-triggering (\texttt{PREFIX\_PASS}):} Synthesizing a syntactically valid test that passed on the pre-fix code accounted for \textbf{26.5\%} of AST failures (13/49) compared to \textbf{47.4\%} of raw diff failures (18/38). While raw diff agents frequently executed the enclosing method but missed the exact bug-triggering path condition, AST agents struggled more severely with overconstrained postcondition hallucinations.
+  \item \textbf{Compilation failures (\texttt{COMPILE\_ERROR}):} Both representations maintained very low final uncompilable rates (4.6\%, 3/65 for AST; 1.5\%, 1/65 for raw diff), confirming that the 5-retry agentic feedback loop effectively resolves syntax and type errors across both projects.
 \end{enumerate}
 
 \subsection{RQ2: Fault Diagnosability Gain}\label{sec:res_rq2}
@@ -391,10 +392,10 @@ Table~\ref{tab:rq2_fdg} and Figure~\ref{fig:rq2} present paired diagnostic resul
 \end{figure}
 
 Under Ochiai, mean FDG was \textbf{0.5144} for raw diffs versus \textbf{0.5148} for AST edit scripts ($\Delta\text{FDG} = +0.0004$, paired Wilcoxon $W = 1.0, p = 0.2500$, $\hat{A}_{12} = 0.524$).
-The paired Wilcoxon test yields $p = 0.2500$ ($W = 1.0$) because 10 of the 13 paired bugs produced identical FDG values under both representations ($\Delta = 0$), leaving only 3 non-zero discordant differences for rank assignment.
+The paired Wilcoxon test yields $p = 0.2500$ ($W = 1.0$) because 9 of the 13 paired bugs produced identical FDG values under both representations ($\Delta = 0$), with 3 positive differences favoring AST (Math-5, Math-17, Math-43) and 1 negative difference favoring raw diff (Lang-14), leaving 4 non-zero discordant differences for rank assignment.
 Concurrently, the 95\% BCa bootstrap confidence interval across 10,000 resamples is tightly bounded at $[0.000019, 0.001463]$.
 While this interval strictly excludes zero by a microscopic margin ($+0.000019$) due to those 3 subtle AST refinements, it remains entirely contained within our pre-registered $\pm 0.01$ equivalence band.
-Applying the TOST equivalence procedure with a practical $\pm 0.01$ margin yields an overall $p_{\text{TOST}} < 10^{-12}$.
+Applying the TOST equivalence procedure with a practical $\pm 0.01$ margin yields an overall $p_{\text{TOST}} < 10^{-12}$ ($p_1 = 2.71 \times 10^{-13}, p_2 = 1.25 \times 10^{-18}$).
 This formally confirms that when both representations produce valid tests, their fault diagnosability gains are statistically equivalent within a 1\% margin.
 Robustness evaluation under DStar ($*=2$) exhibits the same parity: mean FDG of 0.5141 for raw diffs versus 0.5145 for AST ($\Delta = +0.0004, \text{Wilcoxon } p = 0.2500, \hat{A}_{12} = 0.518$).
 
@@ -434,24 +435,29 @@ In contrast, the AST edit script isolated the change as an \texttt{UPDATE} on an
 
 \textbf{Case 3: Literal parameter synthesis (\texttt{Lang-16}).}
 In \texttt{Lang-16} (\texttt{NumberUtils.createNumber}), the patch added hexadecimal prefix checks:
-\begin{lstlisting}[language=diff, caption={Lang-16 raw diff vs. AST edit script contrast.}]
+\begin{lstlisting}[language=diff, caption={Lang-16 raw diff vs. actual normalized GumTree AST edit script.}]
 --- Raw git diff (Control) ---
-+ if (str.startsWith("0x") || str.startsWith("-0x") ||
-+     str.startsWith("0X") || str.startsWith("-0X")) {
-+     return createInteger(str); }
+- if (str.startsWith("0x") || str.startsWith("-0x")) {
++ if (str.startsWith("0x") || str.startsWith("-0x") || str.startsWith("0X") || str.startsWith("-0X")) {
+      return createInteger(str); }
 
 --- Normalized GumTree AST edit script (Treatment) ---
-UPDATE IfStatement:
-  UPDATE InfixExpression (OR)
-    INSERT MethodInvocation: startsWith on SimpleName: str
+1. INSERT Modifier(public) into TypeDeclaration
+2. INSERT TYPE_DECLARATION_KIND(class) into TypeDeclaration
+3. INSERT SimpleName(NumberUtils) into TypeDeclaration
+4. INSERT MethodInvocation into InfixExpression
+5. INSERT MethodInvocation into InfixExpression
+6. DELETE Modifier(public)
+7. DELETE TYPE_DECLARATION_KIND(class)
+8. DELETE SimpleName(NumberUtils)
 \end{lstlisting}
 The raw diff explicitly supplied the exact literal strings (\texttt{"0X"}, \texttt{"-0X"}), allowing the LLM to directly instantiate test inputs triggering the hexadecimal parsing flaw on its first attempt (\texttt{VALID\_ASSERTION}).
-In contrast, the normalized AST script abstracted these expressions into tree operations without concrete string constants.
+In contrast, the normalized AST script abstracted these expressions into bare \texttt{INSERT MethodInvocation into InfixExpression} operations without method names (\texttt{startsWith}), parameter literals (\texttt{"0X"}), or variable targets (\texttt{str}), while introducing class-level modifier noise.
 Deprived of the target prefix, the agent first synthesized generic numeric strings (\texttt{"123.45f"} and \texttt{"1.23e10d"}) that passed cleanly on the buggy code, before proposing an unsupported hexadecimal float (\texttt{"0x1.8p1"}) that failed on both versions (\texttt{FAIL\_FAIL}).
 
 \textbf{Case 4: Numerical boundary overflow in Commons-Math (\texttt{Math-45}).}
 In \texttt{Math-45} (\texttt{OpenMapRealMatrix}), the defect involved integer overflow during sparse matrix dimension validation:
-\begin{lstlisting}[language=diff, caption={Math-45 raw diff vs. AST edit script contrast.}]
+\begin{lstlisting}[language=diff, caption={Math-45 raw diff vs. actual normalized GumTree AST edit script.}]
 --- Raw git diff (Control) ---
 + long lRow = (long) rowDimension;
 + long lCol = (long) columnDimension;
@@ -459,53 +465,34 @@ In \texttt{Math-45} (\texttt{OpenMapRealMatrix}), the defect involved integer ov
 +     throw new NumberIsTooLargeException(rowDimension * columnDimension, ...); }
 
 --- Normalized GumTree AST edit script (Treatment) ---
-INSERT VariableDeclarationStatement: long lRow
-INSERT VariableDeclarationStatement: long lCol
-INSERT IfStatement:
-  INSERT InfixExpression (GREATER_EQUALS)
-  INSERT ThrowStatement: NumberIsTooLargeException
+1. INSERT Modifier(public) into TypeDeclaration
+2. INSERT TYPE_DECLARATION_KIND(class) into TypeDeclaration
+3. INSERT SimpleName(OpenMapRealMatrix) into TypeDeclaration
+4. INSERT VariableDeclarationStatement into Block
+5. INSERT VariableDeclarationStatement into Block
+6. INSERT IfStatement into Block
+7. DELETE Modifier(public)
+8. DELETE TYPE_DECLARATION_KIND(class)
+9. DELETE SimpleName(OpenMapRealMatrix)
 \end{lstlisting}
-The raw diff explicitly presented the arithmetic expression \texttt{lRow * lCol >= (long) Integer.MAX\_VALUE}.
+The raw diff explicitly presented the arithmetic expression \texttt{lRow * lCol >= (long) Integer.MAX\_VALUE} and the specific exception type \texttt{NumberIsTooLargeException}.
 Recognizing the integer overflow guard immediately, the raw diff agent instantiated matrix dimensions exceeding $2^{31}-1$ (\texttt{new OpenMapRealMatrix(50000, 50000)}), correctly catching \texttt{NumberIsTooLargeException} on the fixed version while exposing the unhandled pre-fix overflow (\texttt{VALID\_ASSERTION}).
-In contrast, the normalized AST edit script abstracted away the threshold \texttt{Integer.MAX\_VALUE}.
+In contrast, the normalized AST edit script abstracted away the threshold \texttt{Integer.MAX\_VALUE} and exception type down to bare \texttt{INSERT VariableDeclarationStatement into Block} and \texttt{INSERT IfStatement into Block}.
 Lacking this explicit constant, the AST agent erroneously hypothesized that the check guarded against zero-dimension matrices and proposed \texttt{new OpenMapRealMatrix(0, 0)}.
-This input threw no exception on either version and failed on both checkouts (\texttt{FAIL\_FAIL}), perfectly mirroring the lexical constant omission observed in \texttt{Lang-16} but within a complex numerical linear algebra context.
+This input threw no exception on either version and failed on both checkouts (\texttt{FAIL\_FAIL}), perfectly mirroring the lexical constant omission observed in \texttt{Lang-16} within a complex numerical linear algebra context.
 
 \textbf{Case 5: Mathematical edge-case assertion formulation (\texttt{Math-5}).}
 In \texttt{Math-5} (\texttt{Complex.reciprocal()}), calculating the reciprocal of zero complex numbers ($0.0 + 0.0i$) incorrectly returned \texttt{Complex.NaN} instead of the mathematically correct \texttt{Complex.INF}.
-Both representations successfully recognized the target zero condition and instantiated \texttt{new Complex(0.0, 0.0).reciprocal()}.
-However, they formulated complementary assertions:
-the raw diff agent asserted exact value equality (\texttt{assertEquals(Complex.INF, result)}), whereas the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}).
-Both tests cleanly reproduced the defect on pre-fix and passed on post-fix (\texttt{VALID\_ASSERTION}), yielding identical diagnostic spectra and advancing the faulty method's SBFL rank by 2 positions.
-
-\subsection{Secondary Validation: Multi-SWE-bench (Java)}\label{sec:multiswe}
-
-To evaluate cross-repository generalizability on codebases outside Defects4J, we conducted a secondary validation on 15 contemporary Java pull requests from Multi-SWE-bench~\citep{multiswebench2025} lacking BRTs.
-In strict accordance with our advisor's recommendation to maintain explicit, transparent exclusion criteria across all benchmark sources, candidate pull requests were curated through a rigorous 5-stage screening pipeline (\Cref{tab:curation_multiswe}):
-\begin{enumerate}[leftmargin=*]
-  \item \textbf{Java Production Source (Filter~1):} The PR patch must modify production Java code (\texttt{*.java}), excluding build files (\texttt{pom.xml}, \texttt{build.gradle}) and test suite directories (\texttt{/test/}, \texttt{*Test.java}) (14 excluded).
-  \item \textbf{Missing-BRT Verification (Filter~2):} The GitHub issue description must not leak executable JUnit test hints (verified via regex pattern matching against \texttt{@Test}, \texttt{assertEquals}, and test assertion constructs) (7 excluded).
-  \item \textbf{Single-Method Localization (Filter~3):} Changes must fall within a single identifiable Java method boundary in the pre-fix snapshot (5 excluded).
-  \item \textbf{Deterministic Patch Application (Filter~4):} Base commits must resolve cleanly and the diff patch must apply deterministically without merge conflicts (2 excluded).
-  \item \textbf{GumTree AST Parsing (Filter~5):} GumTree must parse both snapshots and yield non-empty typed edit operations (2 excluded).
-\end{enumerate}
-This systematic screening yielded 15 pristine, single-method defect reproduction tasks across 15 diverse production repositories (Gson, Jackson, Jsoup, Commons-CSV, Retrofit, OkHttp, Guava, Mockito, Spring-Boot, Checkstyle, Micrometer, PMD, Metrics, AssertJ, and Netty), fully audited in \texttt{data/swe\_bench\_exclusion\_log.json}.
-Table~\ref{tab:curation_multiswe} details the screening stage counts, and Table~\ref{tab:multiswe} details the full evaluation across both representations.
-
-\input{table_curation_multiswe.tex}
-\input{table_multiswe.tex}
-
-Across all 15 instances:
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Raw diff validity:} 12/15 (\textbf{80.0\%}) valid BRTs generated.
-  \item \textbf{AST edit script validity:} 5/15 (\textbf{33.3\%}) valid BRTs generated.
-  \item \textbf{Exact McNemar test:} With 7 discordant pairs favoring raw diff and 0 favoring AST, an exact two-sided binomial test yields $\boldsymbol{p = 0.0156}$.
-\end{itemize}
-This statistically significant confirmation across contemporary production repositories outside Defects4J demonstrates that raw diff's superior validity rate is a robust cross-repository phenomenon rather than an artifact of benchmark-specific memorization.
+The normalized AST edit script cleanly isolated this replacement as \texttt{UPDATE SimpleName: NaN -> INF}.
+Both representations recognized the target zero condition and instantiated \texttt{new Complex(0.0, 0.0).reciprocal()} with \texttt{VALID\_ASSERTION} outcomes.
+However, they formulated distinct assertions that produced differing diagnostic refinements:
+the raw diff agent asserted exact value equality (\texttt{assertEquals(Complex.INF, result)}), which preserved the baseline SBFL rank of 5 without improvement ($\text{FDG} = 0.5045, \Delta\text{AP} = 0.0$);
+in contrast, the AST agent asserted state correctness (\texttt{assertFalse(result.isNaN())}), which partitioned execution ambiguity groups more effectively ($\text{FDG} = 0.5082$), advancing the faulty method's SBFL rank from 5 to 3 (+2 rank improvement, $\Delta\text{AP} = +0.1333$).
+This case demonstrates that when AST normalization retains semantic node identities (e.g., \texttt{NaN -> INF}), it can guide the agent toward sharper diagnostic state assertions.
 
 \subsection{Master Experimental Synthesis}\label{sec:summary_master}
 
-Table~\ref{tab:summary_master} synthesizes our empirical results across all research questions, metrics, and benchmarks.
+Table~\ref{tab:summary_master} synthesizes our empirical results across all research questions and evaluation metrics ($N=65$ Defects4J bugs, 130 multi-turn agentic trials).
 
 \input{table_summary_metrics.tex}
 
@@ -523,6 +510,7 @@ Table~\ref{tab:summary_master} synthesizes our empirical results across all rese
   \item \textbf{Context delivery mechanisms and inlining ablation:} As discussed in \Cref{sec:agent}, we delivered enclosing-method context via structured metadata and deterministic on-demand retrieval (\texttt{get\_context}), which agents utilized in 100.0\% of trials (averaging 1.4 calls per trial).
     While this design maintains strict token parity and eliminates prompt overflow risks on large methods, unconditionally inlining the entire enclosing method body directly into the prompt (as suggested during advisor consultations) represents a worthwhile ablation for future work to isolate whether upfront visibility alters first-turn synthesis behavior.
   \item \textbf{Strict experimental control:} System prompts, tool schemas, and retry budgets were byte-for-byte identical across conditions.
+  \item \textbf{AST normalization information loss and modifier noise:} As identified in our failure analysis, the GumTree AST normalization pipeline exhibited information loss: tree differencing stripped variable identifiers, method arguments, and concrete literals down to bare node types, and AST actions at the class declaration level (e.g., \texttt{INSERT/DELETE Modifier(public)}) were retained as noise. While this strictly preserved a syntactic tree abstraction, it directly contributed to the higher rate of overconstrained assertion hallucinations (\texttt{FAIL\_FAIL}) observed in the AST condition.
   \item \textbf{Infrastructure and API quota audit:} During full batch execution, 15 late-stage Commons-Math bugs (Math-48 through Math-75) encountered API 429 quota exhaustion.
     Rather than misattributing these early network aborts to agent synthesis failure (which would artificially deflate validity rates), these cases were audited and cleanly logged in \texttt{data/exclusion\_log.json}, preserving a pristine 65-bug benchmark evaluated across 130 complete trials.
     As established in \Cref{sec:dataset}, sensitivity analysis confirms that Commons-Lang and Commons-Math exhibit virtually identical raw diff advantages (+17.5\% vs.\ +16.0\%), demonstrating that this infrastructure freeze introduced no project-level skew.
@@ -537,12 +525,10 @@ Table~\ref{tab:summary_master} synthesizes our empirical results across all rese
 
 \subsection{External Validity}
 \begin{itemize}[leftmargin=*]
-  \item \textbf{Benchmark generalizability and Multi-SWE-bench scope:} Potential Defects4J benchmark-specific overfitting was counterbalanced by secondary validation on contemporary cross-repository Java pull requests outside Defects4J from Multi-SWE-bench ($N=15$) spanning 15 distinct production repositories (Gson, Jackson, Jsoup, Commons-CSV, Retrofit, OkHttp, Guava, Mockito, Spring-Boot, Checkstyle, Micrometer, PMD, Metrics, AssertJ, Netty) lacking bug-reproducing tests.
-    While our primary benchmark deliberately isolated single-method modifications to ensure well-defined ground-truth coverage boundaries, real-world software maintenance frequently involves multi-hunk and multi-file patches.
-    We engineered the HyRep-BRT framework to scale naturally to multi-file modifications by prepending hierarchical file-path and class-boundary AST tags above each unified diff hunk.
-    Expanding our automated benchmark harness to multi-file patch distributions across 30+ Multi-SWE-bench instances remains a valuable near-term engineering extension.
+  \item \textbf{Benchmark generalizability and multi-file scope:} While our benchmark deliberately isolated single-method modifications in Commons-Lang and Commons-Math to ensure well-defined ground-truth coverage boundaries and deterministic execution, real-world software maintenance frequently involves multi-hunk and multi-file patches.
+    Expanding our automated double-sandbox harness to multi-file patch distributions and larger multi-project benchmarks remains a valuable future extension.
   \item \textbf{Cross-family LLM generalizability:} A natural threat to external validity is whether the observed lexical input synthesis penalty under normalized AST edit scripts generalizes to other frontier model families. Future work will deploy the replication harness across code-specialized architectures (such as Anthropic Claude 3.5 Sonnet, DeepSeek-Coder-V2, and Qwen 2.5 Coder) to establish whether tokenizer variations or alternative instruction-tuning mixtures mitigate the lexical input barrier.
-  \item \textbf{Project scope and benchmark diversity:} Our primary Defects4J benchmark spans Commons-Lang and Commons-Math encompassing 65 curated single-method fixes across utility routines, algorithms, string manipulation, and linear algebra. Extending the Defects4J automated harness to other benchmark projects such as JFreeChart, Joda-Time, and Closure Compiler requires platform-dependent container engineering (e.g., headless Xvfb for graphical rendering, strict timezone pinning, and extended Ant heap limits), which we identify as an engineering direction for future scaling. Crucially, our secondary validation on Multi-SWE-bench Java pull requests confirms cross-repository generalizability across 15 modern production codebases.
+  \item \textbf{Project scope and ecosystem diversity:} Our Defects4J benchmark spans Commons-Lang and Commons-Math encompassing 65 curated single-method fixes across utility routines, algorithms, string manipulation, and linear algebra. Extending the automated harness to other Defects4J projects (such as JFreeChart, Joda-Time, and Closure Compiler) or non-Java ecosystems requires platform-dependent container engineering (e.g., headless Xvfb for graphical rendering, strict timezone pinning, and custom heap limits), which we identify as an engineering direction for future scaling.
 \end{itemize}
 
 %% ============================================================
@@ -554,33 +540,33 @@ Modern LLMs have been pre-trained on billions of lines of version control commit
 Models have developed robust priors for interpreting unified diff markers (\texttt{@@}, \texttt{+}, \texttt{-}).
 Furthermore, as demonstrated by the \texttt{Lang-16} and \texttt{Math-45} case studies, raw diffs preserve exact lexical literals (e.g., string constants and numeric thresholds), which LLMs copy directly into test inputs.
 In contrast, normalized AST edit scripts represent changes as abstract hierarchical operations over syntax tree nodes.
-Translating tree edits back into concrete Java expressions imposes significant cognitive overhead, leading to higher rates of non-triggering tests (\texttt{PREFIX\_PASS}).
-Specifically, when an AST edit script normalizes away lexical literals (e.g., stripping hexadecimal string prefixes \texttt{"0X"} and \texttt{"-0X"} into an abstract \texttt{UPDATE InfixExpression: INSERT MethodInvocation: startsWith}, or abstracting \texttt{Integer.MAX\_VALUE} into \texttt{InfixExpression (GREATER\_EQUALS)}), the agent is deprived of the exact boundary values needed to trigger the defect.
-Consequently, the model synthesizes syntactically valid tests that execute the enclosing method but follow the passing branch on the buggy code, failing to reproduce the fault.
+Translating tree edits back into concrete Java expressions imposes significant cognitive overhead, leading to higher rates of overconstrained assertion failures (\texttt{FAIL\_FAIL}, accounting for 67.3\% of AST failures).
+Specifically, when an AST edit script normalizes away subtree bodies and lexical literals (e.g., stripping hexadecimal string prefixes \texttt{"0X"} and \texttt{"-0X"} down to bare \texttt{INSERT MethodInvocation into InfixExpression}, or abstracting \texttt{Integer.MAX\_VALUE} down to bare \texttt{INSERT IfStatement into Block}), the agent is deprived of the exact boundary values and target exceptions needed to understand the patch.
+Consequently, the model hallucinates postcondition assertions that the developer patch does not satisfy, failing on both pre-fix and post-fix checkouts.
 
 \textbf{Diagnostic parity (RQ2) and prompt efficiency (RQ3).}
 Conditioned on generating a valid BRT, AST edit scripts achieve virtually identical diagnosability ($\text{FDG} \approx 0.515$) while reducing prompt token consumption by 13.5\% (mean 22,505 vs.\ 26,027 tokens).
 Realized ranking gains were also slightly higher for AST edit scripts ($\Delta\text{AP} = +0.0676$ vs.\ $+0.0574$).
 This demonstrates that tree operations effectively communicate structural method boundaries and semantic intent once the model overcomes the input synthesis hurdle.
 
-\textbf{Architectural Contribution: The HyRep-BRT Engine.}
+\textbf{Proposed Solution: The HyRep-BRT Hybrid Representation.}
 Our empirical findings reveal that \emph{syntax trees provide structural boundaries, while unified diffs provide lexical grounding}.
-Rather than forcing an artificial dichotomy between textual diffs and AST edit scripts, we have engineered and implemented the \emph{Hybrid Change Representation} (\textbf{HyRep-BRT}) engine in our companion replication package (\texttt{src/ast\_diff/hyrep.py}).
-HyRep-BRT preserves verbatim unified diff hunks while embedding inline AST syntactic classifications and operation summaries:
+Rather than forcing an artificial dichotomy between textual diffs and AST edit scripts, we propose and prototype the \emph{Hybrid Change Representation} (\textbf{HyRep-BRT}) in our companion module (\texttt{src/ast\_diff/hyrep.py}).
+HyRep-BRT preserves verbatim unified diff hunks while embedding inline AST syntactic classifications:
 \begin{lstlisting}[language=diff, caption={HyRep-BRT hybrid representation format (fusing lexical diff with AST node typing).}]
 @@ -204,3 +204,3 @@ [AST: UPDATE InfixExpression: `raw` -> `guarded`]
 - if (ptr >= inputEnd) {
 + if (ptr >= inputEnd || ptr < 0) {  // [AST-Node: IfStatement -> InfixExpression (OR)]
       return false;
 \end{lstlisting}
-Unit-tested and integrated into the agent prompt pipeline (\texttt{tests/test\_hyrep.py}), HyRep-BRT retains exact string constants and boundary literals for zero-shot input synthesis while equipping the agent with structural AST node tags, combining raw diff's high reproduction success rate with AST's structural clarity.
+Unit-tested in our repository (\texttt{tests/test\_hyrep.py}), HyRep-BRT is designed to retain exact string constants and boundary literals for zero-shot input synthesis while equipping the agent with structural AST node tags, pointing the way toward future architectures that combine raw diff's high reproduction success rate with AST's structural clarity.
 
 %% ============================================================
 \section{Conclusion}\label{sec:conclusion}
 %% ============================================================
 
 This thesis presented an empirical study comparing raw unified \texttt{git diff}s (Control) and normalized GumTree AST edit scripts (Treatment) for LLM-based post-fix bug-reproducing test generation across 65 Defects4J bugs spanning Commons-Lang and Commons-Math.
-Raw diffs achieved significantly higher BRT validity on Defects4J (41.5\% vs.\ 24.6\%, McNemar $p = 0.0127$), confirmed with statistical significance on contemporary Multi-SWE-bench Java pull requests outside Defects4J (80.0\% vs.\ 33.3\%, $p = 0.0156$).
+Raw diffs achieved significantly higher BRT validity on Defects4J (41.5\% vs.\ 24.6\%, exact McNemar $p = 0.0127$; strict assertion-only: 32.3\% vs.\ 18.5\%, $p = 0.0225$).
 Conditioned on valid reproduction ($N_{\text{paired}} = 13$), both representations delivered statistically equivalent fault diagnosability (mean Ochiai FDG 0.5144 vs.\ 0.5148, TOST $p < 10^{-12}$), while AST edit scripts reduced token consumption by 13.5\%.
 Globally, raw diff delivered 68.7\% higher Expected Diagnosability Gain ($0.2131$ vs.\ $0.1263$, $p = 0.0157$).
 The complete replication package is openly available at \url{https://github.com/sachit123h/ast-regression-test-gen}.

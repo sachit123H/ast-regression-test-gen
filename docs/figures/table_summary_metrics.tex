@@ -1,7 +1,7 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Master Experimental Summary: Raw Unified Diff (Control) vs. Normalized AST Edit Script (Treatment) across all dimensions ($N=65$ Defects4J, $N=15$ Multi-SWE-bench).}
+\caption{Master Experimental Summary: Raw Unified Diff (Control) vs. Normalized AST Edit Script (Treatment) across all dimensions ($N=65$ Defects4J Bugs, 130 Multi-Turn Trials).}
 \label{tab:summary_master}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrc}
@@ -18,8 +18,6 @@ Evaluation Dimension & Metric / Scope & Raw Diff & AST Edit & Statistical Test /
 \midrule
 \multirow{2}{*}{\textbf{RQ3: Efficiency \& Iterations}} & Mean Token Overhead / Bug & 26,027 & \textbf{22,505} & $-13.5\%$ reduction for AST \\
  & Mean Iteration Attempts / Bug & 2.94 & 2.97 & Parity (5-retry budget) \\
-\midrule
-\textbf{Generalization Check} & Multi-SWE-bench Java ($N=15$, Outside Defects4J) & \textbf{80.0\%} (12/15) & 33.3\% (5/15) & McNemar $p = 0.0156$ \\
 \bottomrule
 \end{tabular}%
 }
