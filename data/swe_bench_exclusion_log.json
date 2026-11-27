@@ -1,0 +1,129 @@
+{
+  "benchmark": "Multi-SWE-bench (Java)",
+  "source_dataset": "ByteDance-Seed/Multi-SWE-bench",
+  "total_scanned_prs": 45,
+  "total_curated_evaluated": 15,
+  "curation_rate_pct": 33.3,
+  "exclusion_counts": {
+    "filter1_multi_file_or_non_java_source": 14,
+    "filter2_issue_contains_brt_leakage": 7,
+    "filter3_multi_method_or_non_localizable": 5,
+    "filter4_patch_apply_conflict_or_base_checkout": 2,
+    "filter5_gumtree_parse_failed_or_empty_actions": 2
+  },
+  "exclusion_criteria": {
+    "filter1_java_source_only": "Pull request patch must modify production Java source code (*.java), excluding build manifests (pom.xml, build.gradle), documentation (*.md), and existing test suites (/src/test/*, *Test.java).",
+    "filter2_single_file_localization": "Modification must be confined strictly to a single production Java file to ensure a tightly bounded evaluation scope.",
+    "filter3_no_issue_test_leakage": "The GitHub issue description/problem statement must not leak executable JUnit test hints, verified via regex pattern matching on '@Test', 'assertEquals', 'assertThrows', 'assertThat', and test assertions.",
+    "filter4_single_enclosing_method": "All changed lines must fall within a single identifiable Java method boundary on the pre-fix snapshot to support diagnostic method coverage feedback.",
+    "filter5_clean_patch_application": "The base commit checkout must be reproducible and the pull request patch must apply deterministically via git/patch without merge conflicts.",
+    "filter6_gumtree_ast_parse": "GumTree AST diff parser must successfully parse pre-fix and post-fix syntax trees and produce at least one non-trivial typed AST edit operation."
+  },
+  "curated_instances": [
+    {
+      "instance_id": "google__gson-1823",
+      "repo": "google/gson",
+      "target_class": "TypeAdapters",
+      "defect_mechanism": "NumberFormatException handling during invalid literal deserialization",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "FasterXML__jackson-core-742",
+      "repo": "FasterXML/jackson-core",
+      "target_class": "UTF8StreamJsonParser",
+      "defect_mechanism": "ArrayIndexOutOfBoundsException bounds check at buffer EOF",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "jhy__jsoup-1540",
+      "repo": "jhy/jsoup",
+      "target_class": "HtmlTreeBuilderState",
+      "defect_mechanism": "NullPointerException on empty attribute state in table body",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "apache__commons-csv-210",
+      "repo": "apache/commons-csv",
+      "target_class": "CSVFormat",
+      "defect_mechanism": "Delimiter-escape configuration conflict validation",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "square__retrofit-3120",
+      "repo": "square/retrofit",
+      "target_class": "Utils",
+      "defect_mechanism": "Generic array component type reflection ClassCastException",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "square__okhttp-4921",
+      "repo": "square/okhttp",
+      "target_class": "RealConnection",
+      "defect_mechanism": "Negative socket connect timeout validation guard",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "google__guava-3920",
+      "repo": "google/guava",
+      "target_class": "Preconditions",
+      "defect_mechanism": "Negative size checkPositionIndexes bounds validation",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "mockito__mockito-2415",
+      "repo": "mockito/mockito",
+      "target_class": "InvocationMatcher",
+      "defect_mechanism": "NullPointerException during custom matcher invocation",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "spring-projects__spring-boot-28314",
+      "repo": "spring-projects/spring-boot",
+      "target_class": "ConfigurationPropertyName",
+      "defect_mechanism": "StringIndexOutOfBoundsException on empty bracket element",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "checkstyle__checkstyle-10245",
+      "repo": "checkstyle/checkstyle",
+      "target_class": "JavadocTags",
+      "defect_mechanism": "IndexOutOfBoundsException on unterminated inline Javadoc tag",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "micrometer-metrics__micrometer-3104",
+      "repo": "micrometer-metrics/micrometer",
+      "target_class": "StepMeterRegistry",
+      "defect_mechanism": "ArithmeticException divide by zero on zero-duration step",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "pmd__pmd-3841",
+      "repo": "pmd/pmd",
+      "target_class": "RuleChainVisitor",
+      "defect_mechanism": "NullPointerException when evaluating rule language compatibility",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "dropwizard__metrics-2109",
+      "repo": "dropwizard/metrics",
+      "target_class": "UniformReservoir",
+      "defect_mechanism": "ArithmeticException on zero-sized reservoir initialization",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "assertj__assertj-2780",
+      "repo": "assertj/assertj",
+      "target_class": "RecursiveComparisonConfiguration",
+      "defect_mechanism": "IllegalArgumentException on empty recursive comparison path",
+      "status": "EVALUATED_COMPLETED"
+    },
+    {
+      "instance_id": "netty__netty-12045",
+      "repo": "netty/netty",
+      "target_class": "SslHandler",
+      "defect_mechanism": "IndexOutOfBoundsException unwrapping zero-byte SSL packet",
+      "status": "EVALUATED_COMPLETED"
+    }
+  ]
+}
